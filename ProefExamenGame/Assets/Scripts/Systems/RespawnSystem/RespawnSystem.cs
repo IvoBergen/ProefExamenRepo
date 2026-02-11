@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class RespawnSystem : MonoBehaviour
 {
+    /// <summary>
+    /// Handles respawning the player at the current checkpoint when they fall out of bounds or trigger a respawn area.
+    /// </summary>
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -10,6 +13,9 @@ public class RespawnSystem : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Respawns the player at the current checkpoint, resetting their position, rotation, and physics state.
+    /// </summary>
     private void Respawn(GameObject player)
     {
         if (CheckPointManager.Instance == null || CheckPointManager.Instance.CurrentCheckpoint == null)

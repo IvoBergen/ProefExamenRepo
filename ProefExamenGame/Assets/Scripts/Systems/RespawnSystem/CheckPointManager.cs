@@ -2,12 +2,17 @@ using UnityEngine;
 
 public class CheckPointManager : MonoBehaviour
 {
+    /// <summary>
+    /// Manages all checkpoints in the scene.
+    /// Handles activating the next checkpoint and tracking the current checkpoint.
+    /// Uses a singleton pattern for global access.
+    /// </summary>
     public static CheckPointManager Instance { get; private set; }
 
     public CheckPoint[] allCheckPoints; // drag checkpoints in Inspector in order
-    private int currentIndex = 0;
+    private int _currentIndex = 0;
 
-    public CheckPoint CurrentCheckpoint => allCheckPoints.Length > 0 ? allCheckPoints[currentIndex] : null;
+    public CheckPoint CurrentCheckpoint => allCheckPoints.Length > 0 ? allCheckPoints[_currentIndex] : null;
 
     private void Awake()
     {
@@ -22,10 +27,10 @@ public class CheckPointManager : MonoBehaviour
 
     public void ActivateNextCheckpoint()
     {
-        if (currentIndex + 1 < allCheckPoints.Length)
+        if (_currentIndex + 1 < allCheckPoints.Length)
         {
-            currentIndex++;
-            Debug.Log("Checkpoint activated: " + currentIndex);
+            _currentIndex++;
+            Debug.Log("Checkpoint activated: " + _currentIndex);
         }
     }
 
@@ -33,7 +38,7 @@ public class CheckPointManager : MonoBehaviour
     {
         if (index >= 0 && index < allCheckPoints.Length)
         {
-            currentIndex = index;
+            _currentIndex = index;
         }
     }
 }
