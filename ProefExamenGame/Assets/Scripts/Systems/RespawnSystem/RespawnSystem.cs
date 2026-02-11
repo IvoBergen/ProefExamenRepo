@@ -29,7 +29,7 @@ public class RespawnSystem : MonoBehaviour
         Rigidbody rb = player.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.isKinematic = true; // temporarily disable physics
+            rb.isKinematic = true;
         }
 
         player.transform.position = respawnLocation.position;
@@ -39,7 +39,7 @@ public class RespawnSystem : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
-            rb.isKinematic = false; // re-enable physics
+            rb.isKinematic = false;
         }
     }
 }

@@ -24,7 +24,9 @@ public class CheckPointManager : MonoBehaviour
         }
         Instance = this;
     }
-
+    /// <summary>
+    /// Sets the index to the next checkpoint
+    /// </summary>
     public void ActivateNextCheckpoint()
     {
         if (_currentIndex + 1 < allCheckPoints.Length)
@@ -33,7 +35,9 @@ public class CheckPointManager : MonoBehaviour
             Debug.Log("Checkpoint activated: " + _currentIndex);
         }
     }
-
+    /// <summary>
+    /// makes sure the index stays inside of the bounds 
+    /// </summary>
     public void SetCheckpoint(int index)
     {
         if (index >= 0 && index < allCheckPoints.Length)
