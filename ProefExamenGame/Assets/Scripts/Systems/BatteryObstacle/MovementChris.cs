@@ -1,57 +1,88 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class MovementChris : MonoBehaviour
 {
-    public float moveSpeed = 5f;
-    public float jumpForce = 5f;
+    [Header("Movement Settings")]
+    [SerializeField] private float _moveSpeed = 6f;
+    [SerializeField] private float _acceleration = 20f;
 
-    private Rigidbody rb;
-    private bool isGrounded;
+    [Header("Jump Settings")]
+    [SerializeField] private float _jumpForce = 6f;
 
-    private Vector3 moveDirection;
+    [Header("Tags")]
+    [SerializeField] private string _groundTag = "Ground";
 
-    void Start()
+    private Rigidbody _rb;
+    private Vector2 _moveInput;
+    private bool _jumpPressed;
+    private bool _isGrounded;
+
+    private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
     }
 
-    void Update()
+    private void Update()
     {
-        float moveX = Input.GetAxis("Horizontal");
-        float moveZ = Input.GetAxis("Vertical");
-
-        moveDirection = new Vector3(moveX, 0f, moveZ);
-
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
+        ReadInput();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        rb.velocity = new Vector3(
-            moveDirection.x * moveSpeed,
-            rb.velocity.y,
-            moveDirection.z * moveSpeed
+        HandleMovement();
+        HandleJump();
+
+        _jumpPressed = false;
+    }
+
+    private void ReadInput()
+    {
+        _moveInput.x = Input.GetAxisRaw("Horizontal");
+        _moveInput.y = Input.GetAxisRaw("Vertical");
+
+        if (Input.GetKeyDown(KeyCode.Space))
+            _jumpPressed = true;
+    }
+
+    private void HandleMovement()
+    {
+        Vector3 wishDirection = new Vector3(_moveInput.x, 0f, _moveInput.y);
+        wishDirection = Vector3.ClampMagnitude(wishDirection, 1f);
+
+        Vector3 currentVelocity = _rb.velocity;
+        Vector3 currentHorizontal = new Vector3(currentVelocity.x, 0f, currentVelocity.z);
+
+        Vector3 targetHorizontal = wishDirection * _moveSpeed;
+
+        Vector3 newHorizontal = Vector3.MoveTowards(
+            currentHorizontal,
+            targetHorizontal,
+            _acceleration * Time.fixedDeltaTime
         );
+
+        _rb.velocity = new Vector3(newHorizontal.x, currentVelocity.y, newHorizontal.z);
     }
 
-    void OnCollisionStay(Collision collision)
+    private void HandleJump()
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
+        if (!_jumpPressed || !_isGrounded)
+            return;
+
+        // Reset vertical velocity for consistent jump height
+        _rb.velocity = new Vector3(_rb.velocity.x, 0f, _rb.velocity.z);
+        _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
     }
 
-    void OnCollisionExit(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = false;
-        }
+        if (collision.gameObject.CompareTag(_groundTag))
+            _isGrounded = true;
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag(_groundTag))
+            _isGrounded = false;
     }
 }
