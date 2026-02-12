@@ -333,7 +333,6 @@ GameObject:
   - component: {fileID: 4395113423080795642}
   - component: {fileID: 5220296442290074370}
   - component: {fileID: 2476569890880696858}
-  - component: {fileID: 3567788602447782556}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: Untagged
@@ -445,10 +444,10 @@ MonoBehaviour:
     m_ActionId: 2ae19437-9191-440a-864f-13cf2fd8540a
     m_ActionName: Gameplay/Jump[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Keyboard
-  m_DefaultActionMap: 
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 7336569461287706926}
 --- !u!114 &2476569890880696858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,22 +463,10 @@ MonoBehaviour:
   _isGrounded: 0
   _moveSpeed: 10
   _jumpForce: 10
-  _rotationSpeed: 20
+  _rotationSpeed: 5
   _gravityScale: 150
   springStrength: 200
   springDamping: 25
---- !u!114 &3567788602447782556
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8186210900544303326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93c386113ff53f14fafeee2180491e40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2609919372078065472
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -540,5 +527,10 @@ PrefabInstance:
 --- !u!4 &514505046161416322 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2529800652662982594, guid: 3f45159d06db8fb428b5562fc45db6f7, type: 3}
+  m_PrefabInstance: {fileID: 2609919372078065472}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &7336569461287706926 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4749310629026186862, guid: 3f45159d06db8fb428b5562fc45db6f7, type: 3}
   m_PrefabInstance: {fileID: 2609919372078065472}
   m_PrefabAsset: {fileID: 0}
