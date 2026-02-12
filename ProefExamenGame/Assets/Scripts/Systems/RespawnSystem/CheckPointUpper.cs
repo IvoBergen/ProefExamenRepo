@@ -11,6 +11,7 @@ public class CheckPointUpper : MonoBehaviour
         {
             Debug.Log("NextCheckPoint");
             manager.ActivateNextCheckpoint();
+            Destroy(gameObject);
         }
     }
 }
