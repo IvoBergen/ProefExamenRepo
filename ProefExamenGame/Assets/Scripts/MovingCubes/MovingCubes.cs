@@ -1,55 +1,56 @@
 using UnityEngine;
 
+/// <summary>
+/// <c>MovingCubes</c> moves the cube in a random direction and when it reaches the target position, 
+/// it generates a new random position within the specified boundaries and moves towards it.
+/// </summary>
 public class MovingCubes : MonoBehaviour
 {
-    [SerializeField] private GameObject _obstacle;
-    [SerializeField] private float _speed = 1f;
+    [Header("Movement Boundaries")]
+    [SerializeField] private float _minX;
+    [SerializeField] private float _maxX;
+    [SerializeField] private float _minZ;
+    [SerializeField] private float _maxZ;
 
-    private int _direction;
-    private float _moveTime = 4f;
+    private Vector3 _targetposition;
+
+    [Header("Movement Settings")]
+    public float speed;
+
 
     private void Start()
     {
-        MoveInRandomDirection();
-    }
-    private void RandomDirection()
-    {
-        _direction = Random.Range(1, 4);
+        _targetposition = RandomPosition();
     }
 
-    private void MoveInRandomDirection()
+    private void Update()
     {
-        RandomDirection();
-        switch (_direction)
+        MoveTowardsTarget();
+    }
+
+    /// <summary>
+    /// <c>RandomPosition</c> generates a random position within the specified boundaries for the cube to move towards.
+    /// </summary>
+    /// <returns>The random position</returns>
+    private Vector3 RandomPosition()
+    {
+        float randomX = Random.Range(_minX, _maxX);
+        float randomZ = Random.Range(_minZ, _maxZ);
+        return new Vector3(randomX, transform.position.y, randomZ);
+    }
+
+    /// <summary>
+    /// <c>MoveTowardsTarget</c> Moves the cube to the given target position 
+    /// and checks if the cube is close enough to the target position to generate a new random position.
+    /// </summary>
+    private void MoveTowardsTarget()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, _targetposition, speed * Time.deltaTime);
+
+        if (Vector3.Distance(transform.position, _targetposition) < 0.1f)
         {
-            default:
-                RandomDirection();
-                break;
-            case 1:
-                _obstacle.transform.position = Vector3.forward * _speed * Time.deltaTime;
-                new WaitForSeconds(_moveTime);
-                RandomDirection();
-                _direction = 0;
-                break;
-            case 2:
-                _obstacle.transform.position = Vector3.forward * _speed * Time.deltaTime;
-                new WaitForSeconds(_moveTime);
-                RandomDirection();
-                _direction = 0;
-                break;
-            case 3:
-                _obstacle.transform.position = Vector3.forward * _speed * Time.deltaTime;
-                new WaitForSeconds(_moveTime);
-                RandomDirection();
-                _direction = 0;
-                break;
-            case 4:
-                _obstacle.transform.position = Vector3.forward * _speed * Time.deltaTime;
-                new WaitForSeconds(_moveTime);
-                RandomDirection();
-                _direction = 0;
-                break;
+            _targetposition = RandomPosition();
         }
-
     }
+
 }
