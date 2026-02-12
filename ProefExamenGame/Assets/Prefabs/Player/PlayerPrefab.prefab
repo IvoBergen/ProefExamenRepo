@@ -333,6 +333,7 @@ GameObject:
   - component: {fileID: 4395113423080795642}
   - component: {fileID: 5220296442290074370}
   - component: {fileID: 2476569890880696858}
+  - component: {fileID: 3567788602447782556}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: Untagged
@@ -400,6 +401,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 0dd6725fc9e68f949944e641a8d67aea, type: 3}
   m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -426,10 +428,6 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 1e9a7b68-b836-4071-ab78-771efb33608d
     m_ActionName: Gameplay/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: fb91acaa-561c-49ae-934c-03fc481594a0
-    m_ActionName: Gameplay/Interact
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2476569890880696858}
@@ -470,6 +468,18 @@ MonoBehaviour:
   _gravityScale: 150
   springStrength: 200
   springDamping: 25
+--- !u!114 &3567788602447782556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8186210900544303326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93c386113ff53f14fafeee2180491e40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2609919372078065472
 PrefabInstance:
   m_ObjectHideFlags: 0

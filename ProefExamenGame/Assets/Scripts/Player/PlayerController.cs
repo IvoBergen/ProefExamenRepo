@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rb;
 
     private Vector3 _moveDirection;
+    private Vector3 localMoveDirection;
     private Vector3 _currentVelocity = Vector3.zero;
 
 
@@ -32,7 +33,7 @@ public class PlayerController : MonoBehaviour
         if (_moveDirection != Vector3.zero)
         {
             // Rotate towards the movement direction
-            Quaternion targetRotation = Quaternion.LookRotation(_moveDirection);
+            Quaternion targetRotation = Quaternion.LookRotation(localMoveDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
         }
     }
@@ -51,7 +52,8 @@ public class PlayerController : MonoBehaviour
         float currentYVelocity = _rb.velocity.y;
 
         // Apply movement to X and Z axes with a smooth diagonal movement
-        Vector3 horizontalVelocity = new Vector3(_moveDirection.x, 0f, _moveDirection.z) * _moveSpeed;
+        localMoveDirection = transform.TransformDirection(_moveDirection); // Convert input to local space
+        Vector3 horizontalVelocity = new Vector3(localMoveDirection.x, 0f, localMoveDirection.z) * _moveSpeed;
 
         // If not grounded, apply gravity manually with a custom fall speed multiplier
         if (!_isGrounded)
