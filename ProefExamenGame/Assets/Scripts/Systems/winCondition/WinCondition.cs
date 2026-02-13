@@ -4,6 +4,7 @@ using UnityEngine.Events;
 public class WinCondition : MonoBehaviour
 {
     [SerializeField] UnityEvent Eventwin;
+    [SerializeField] GameObject StatsUi;
     private void OnTriggerEnter(Collider other)
     {
         win();
@@ -14,5 +15,6 @@ public class WinCondition : MonoBehaviour
     void win()
     {
         Eventwin.Invoke();
+        StatsUi.SetActive(true);
     }
 }
