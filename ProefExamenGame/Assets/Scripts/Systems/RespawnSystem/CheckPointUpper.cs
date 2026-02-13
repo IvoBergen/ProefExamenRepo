@@ -5,12 +5,12 @@ public class CheckPointUpper : MonoBehaviour
     /// <summary>
     /// Detects when a player reaches a checkpoint and notifies the CheckPointManager to activate the next checkpoint.
     /// </summary>
-    [SerializeField] CheckPointManager manager;
+    [SerializeField] CheckPointManager _manager;
     private void OnTriggerEnter(Collider other)
     {
         {
             Debug.Log("NextCheckPoint");
-            manager.ActivateNextCheckpoint();
+            _manager.ActivateNextCheckpoint();
             Destroy(gameObject);
         }
     }
