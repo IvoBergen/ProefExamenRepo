@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class debugnavmeshagent : MonoBehaviour
+public class DebugNavMeshaAent : MonoBehaviour
 {
     public bool velocity;
     public bool desiredvelocity;
