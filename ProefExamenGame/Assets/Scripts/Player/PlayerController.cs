@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour
     [Header("Camera")]
     [SerializeField] private Transform cameraTransform;
 
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
+
     [Header("Upright Settings")]
     [SerializeField] private float springStrength = 200f;
     [SerializeField] private float springDamping = 25f;
@@ -20,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rb;
     private Vector2 _moveInput;
     private Vector3 lastForwardDirection; // Track last forward direction
+
 
     private void Awake()
     {
@@ -38,6 +42,7 @@ public class PlayerController : MonoBehaviour
         if (_moveInput != Vector2.zero)
         {
             Vector3 moveDir = GetCameraRelativeMovement(_moveInput);
+            animator.SetBool("isWalking", true);
             
             if (moveDir != Vector3.zero)
             {
@@ -60,6 +65,10 @@ public class PlayerController : MonoBehaviour
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
                 }
             }
+        }
+        else
+        {
+            animator.SetBool("isWalking", false);
         }
     }
 
@@ -111,19 +120,26 @@ public class PlayerController : MonoBehaviour
             _rb.velocity = vel;
             
             _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
+
+            animator.SetBool("isJumping", true);
+        }
+        else
+        {
+            animator.SetBool("isJumping", false);
         }
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
         _moveInput = context.ReadValue<Vector2>();
+        animator.SetBool("isWalking", true);
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
         if (_isGrounded && context.performed)
         {
-            _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
+            _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse); 
         }
     }
 
