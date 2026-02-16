@@ -3,6 +3,9 @@ using UnityEngine.UI;
 
 public class PlayerStatsTracker : MonoBehaviour
 {
+    /// <summary>
+    /// Keeps track of the stats of the player  
+    /// </summary>
     private int _deaths;
     private float _currentTime;
     private bool _hasWon = false;
@@ -38,17 +41,24 @@ public class PlayerStatsTracker : MonoBehaviour
 
         _currentTime = Mathf.FloorToInt(_currentTime % 60);
         _WinTime.text = "Completed In: " + _currentTime.ToString();
-        if (_currentTime <= 10f)
         {
-            Debug.Log("minder dan 10");
-        }
-        if (_currentTime <= 30f && _currentTime >= 10)
-        {
-            Debug.Log("minder dan 30");
-        }
-        if (_currentTime <= 120f && _currentTime >= 30)
-        {
-            Debug.Log("120");
+            switch (_currentTime)
+            {
+                case 0:
+                    Debug.Log("minder dan 10");
+                    break;
+
+                case 1:
+                    Debug.Log("minder dan 30");
+                    break;
+
+                case 2:
+                    Debug.Log("120");
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 
