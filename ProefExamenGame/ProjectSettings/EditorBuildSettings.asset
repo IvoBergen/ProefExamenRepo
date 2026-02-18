@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Dev Scenes/Akari/Akari Scene.unity
+    guid: 503b50e35fe17374e87c61b66f9de488
   m_configObjects: {}
