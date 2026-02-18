@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
-
+/// <summary>
+/// Keeps track of the stats of the player  
+/// </summary>
 public class PlayerStatsTracker : MonoBehaviour
 {
-    /// <summary>
-    /// Keeps track of the stats of the player  
-    /// </summary>
+
     private int _deaths;
     private float _currentTime;
     private bool _hasWon = false;
@@ -33,6 +33,7 @@ public class PlayerStatsTracker : MonoBehaviour
     /// <summary>
     /// Wins the game. activates Winscreen and shows deaths and time it took to complete 
     /// </summary>
+
     public void win()
     {
         _hasWon = true;
@@ -42,6 +43,7 @@ public class PlayerStatsTracker : MonoBehaviour
         _currentTime = Mathf.FloorToInt(_currentTime % 60);
         _WinTime.text = "Completed In: " + _currentTime.ToString();
         {
+            /// this is for later development so that its easy to have things trigger when the timer reached a certain treshold 
             switch (_currentTime)
             {
                 case 0:
