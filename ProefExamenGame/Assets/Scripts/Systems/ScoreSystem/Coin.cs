@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.Events;
-
+/// <summary>
+/// Acts as a coin, rotates and fires an event when collected
+/// </summary>
 public class Coin : MonoBehaviour
 {
-    /// <summary>
-    /// Acts as a coin, rotates and fires an event when collected
-    /// </summary>
+
 
     [SerializeField] private UnityEvent collectedCoin;
     [SerializeField] private float rotateSpeed = 120f;
