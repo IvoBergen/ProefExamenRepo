@@ -7,8 +7,8 @@ public class Coin : MonoBehaviour
 {
 
 
-    [SerializeField] private UnityEvent collectedCoin;
-    [SerializeField] private float rotateSpeed = 120f;
+    [SerializeField] private UnityEvent _collectedCoin;
+    [SerializeField] private float _rotateSpeed = 120f;
 
     private void Update()
     {
