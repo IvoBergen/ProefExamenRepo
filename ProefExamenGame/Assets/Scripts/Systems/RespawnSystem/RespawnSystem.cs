@@ -1,7 +1,8 @@
 using UnityEngine;
-
+using UnityEngine.Events;
 public class RespawnSystem : MonoBehaviour
 {
+    public UnityEvent died;
     /// <summary>
     /// Handles respawning the player at the current checkpoint when they fall out of bounds or trigger a respawn area.
     /// </summary>
@@ -14,10 +15,11 @@ public class RespawnSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Respawns the player at the current checkpoint, resetting their position, rotation, and physics state.
+    /// Respawns the player at the current checkpoint, resetting their position, rotation, and physics state. and invokes the death event
     /// </summary>
     private void Respawn(GameObject player)
     {
+        died.Invoke();
         if (CheckPointManager.Instance == null || CheckPointManager.Instance.CurrentCheckpoint == null)
         {
             Debug.LogWarning("No checkpoint set!");

@@ -9,7 +9,7 @@ public class CheckPointManager : MonoBehaviour
     /// </summary>
     public static CheckPointManager Instance { get; private set; }
 
-    public CheckPoint[] allCheckPoints; // drag checkpoints in Inspector in order
+    public CheckPoint[] allCheckPoints;
     private int _currentIndex = 0;
 
     public CheckPoint CurrentCheckpoint => allCheckPoints.Length > 0 ? allCheckPoints[_currentIndex] : null;
@@ -32,7 +32,6 @@ public class CheckPointManager : MonoBehaviour
         if (_currentIndex + 1 < allCheckPoints.Length)
         {
             _currentIndex++;
-            Debug.Log("Checkpoint activated: " + _currentIndex);
         }
     }
     /// <summary>
