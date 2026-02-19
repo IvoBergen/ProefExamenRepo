@@ -203,7 +203,7 @@ public class NavMeshJumpAgent : MonoBehaviour
 
         ResetAfterRespawn(CheckPointManager.Instance.CurrentCheckpoint.transform.position);
 
-        //change this when we make the bots use thier own check point
+        //change this when we make the bots use their own check point
     }
 
     public void ResetAfterRespawn(Vector3 respawnPosition)
