@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.AI;
-
+/// <summary>
+/// used for debugging the path of the AI 
+/// </summary>
 public class DebugNavMeshaAent : MonoBehaviour
 {
     public bool velocity;
