@@ -12,13 +12,13 @@ public class Coin : MonoBehaviour
 
     private void Update()
     {
-        transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
+        transform.Rotate(Vector3.up * _rotateSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
-        collectedCoin?.Invoke();
+        _collectedCoin?.Invoke();
         Debug.Log("collected");
         Destroy(gameObject);
     }

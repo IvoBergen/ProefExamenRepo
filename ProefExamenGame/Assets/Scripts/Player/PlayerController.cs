@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// <c>PlayerController</c> Controls the movement + camera + Animations of the player
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
     [Header("Player Settings")]
@@ -8,17 +11,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _jumpForce = 12f;
     [SerializeField] private float _rotationSpeed = 10f;
-    [SerializeField] private bool allowBackwardMovement = true; // New option
+    [SerializeField] private bool _allowBackwardMovement = true; // New option
 
     [Header("Camera")]
-    [SerializeField] private Transform cameraTransform;
+    [SerializeField] private Transform _cameraTransform;
 
     [Header("Animation")]
-    [SerializeField] private Animator animator;
+    [SerializeField] private Animator _animator;
 
     [Header("Upright Settings")]
-    [SerializeField] private float springStrength = 200f;
-    [SerializeField] private float springDamping = 25f;
+    [SerializeField] private float _springStrength = 200f;
+    [SerializeField] private float _springDamping = 25f;
 
     private Rigidbody _rb;
     private Vector2 _moveInput;
@@ -28,12 +31,12 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        
-        if (cameraTransform == null)
+
+        if (_cameraTransform == null)
         {
-            cameraTransform = Camera.main.transform;
+            _cameraTransform = Camera.main.transform;
         }
-        
+
         lastForwardDirection = transform.forward;
     }
 
@@ -42,14 +45,14 @@ public class PlayerController : MonoBehaviour
         if (_moveInput != Vector2.zero)
         {
             Vector3 moveDir = GetCameraRelativeMovement(_moveInput);
-            animator.SetBool("isWalking", true);
-            
+            _animator.SetBool("isWalking", true);
+
             if (moveDir != Vector3.zero)
             {
                 // Only rotate if moving forward or sideways (not backward)
                 float inputMagnitude = _moveInput.magnitude;
                 float forwardInput = _moveInput.y;
-                
+
                 // If moving forward or mostly sideways, update rotation
                 if (forwardInput >= -0.5f) // Allow slight backward without spinning
                 {
@@ -58,7 +61,7 @@ public class PlayerController : MonoBehaviour
                     transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
                 }
                 // If moving backward, keep current rotation
-                else if (allowBackwardMovement)
+                else if (_allowBackwardMovement)
                 {
                     // Maintain current forward direction
                     Quaternion targetRotation = Quaternion.LookRotation(lastForwardDirection);
@@ -68,7 +71,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            animator.SetBool("isWalking", false);
+            _animator.SetBool("isWalking", false);
         }
     }
 
@@ -81,28 +84,28 @@ public class PlayerController : MonoBehaviour
     private void ApplyMovement()
     {
         float currentYVelocity = _rb.velocity.y;
-        
+
         Vector3 moveDirection = GetCameraRelativeMovement(_moveInput);
         Vector3 newVelocity = moveDirection * _moveSpeed;
-        
+
         newVelocity.y = currentYVelocity;
-        
+
         _rb.velocity = newVelocity;
     }
 
     private Vector3 GetCameraRelativeMovement(Vector2 input)
     {
-        Vector3 cameraForward = cameraTransform.forward;
-        Vector3 cameraRight = cameraTransform.right;
-        
+        Vector3 cameraForward = _cameraTransform.forward;
+        Vector3 cameraRight = _cameraTransform.right;
+
         cameraForward.y = 0f;
         cameraRight.y = 0f;
-        
+
         cameraForward.Normalize();
         cameraRight.Normalize();
-        
+
         Vector3 moveDirection = (cameraRight * input.x) + (cameraForward * input.y);
-        
+
         return moveDirection;
     }
 
@@ -118,28 +121,28 @@ public class PlayerController : MonoBehaviour
             Vector3 vel = _rb.velocity;
             vel.y = 0;
             _rb.velocity = vel;
-            
+
             _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
 
-            animator.SetBool("isJumping", true);
+            _animator.SetBool("isJumping", true);
         }
         else
         {
-            animator.SetBool("isJumping", false);
+            _animator.SetBool("isJumping", false);
         }
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
         _moveInput = context.ReadValue<Vector2>();
-        animator.SetBool("isWalking", true);
+        _animator.SetBool("isWalking", true);
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
         if (_isGrounded && context.performed)
         {
-            _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse); 
+            _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
         }
     }
 
@@ -173,8 +176,8 @@ public class PlayerController : MonoBehaviour
         }
 
         Vector3 rotationVector = new Vector3(delta.x, delta.y, delta.z);
-        Vector3 torque = (2f * rotationVector * springStrength) - (_rb.angularVelocity * springDamping);
-        
+        Vector3 torque = (2f * rotationVector * _springStrength) - (_rb.angularVelocity * _springDamping);
+
         _rb.AddTorque(torque, ForceMode.Acceleration);
     }
 }
