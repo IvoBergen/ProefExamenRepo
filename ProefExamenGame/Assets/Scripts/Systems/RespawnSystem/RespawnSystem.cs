@@ -9,6 +9,10 @@ public class RespawnSystem : MonoBehaviour
     /// </summary>
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Player"))
+        {
+            died.Invoke();
+        }
         if (other.CompareTag("Player") || other.CompareTag("Bot"))
         {
             RespawnCharacter(other.gameObject);
