@@ -78,7 +78,9 @@ public class LevelTimer : MonoBehaviour
         }
     }
 
-    /// <summary>Convert seconds → MM:SS and update text.</summary>
+    /// <summary>
+    /// Convert seconds → MM:SS and update text.
+    /// </summary>
     private void UpdateUI()
     {
         int minutes = Mathf.FloorToInt(_currentTime / 60);
