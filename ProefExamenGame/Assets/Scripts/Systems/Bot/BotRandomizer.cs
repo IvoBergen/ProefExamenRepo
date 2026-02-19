@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 /// <summary>
-/// Makes the bot choose a random path and gives it random stats
+/// Makes the bot choose a path that is not the most optimal and gives it random stats
 /// </summary>
 public class BotPathRandomizer : MonoBehaviour
 {
@@ -13,7 +13,7 @@ public class BotPathRandomizer : MonoBehaviour
     public float maxSpeed = 6f;
 
     [Header("Path Randomness")]
-    public float pathOffsetStrength = 1.8f;   // how far they deviate from path
+    public float pathOffsetStrength = 1.8f;
     public float waypointChangeInterval = 1.2f;
 
     [Header("Human Mistakes")]
@@ -33,7 +33,6 @@ public class BotPathRandomizer : MonoBehaviour
 
         StartCoroutine(RandomizePathRoutine());
     }
-    //
     IEnumerator RandomizePathRoutine()
     {
         while (true)

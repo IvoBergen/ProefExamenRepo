@@ -24,19 +24,15 @@ public class AIMoveNavMesh : MonoBehaviour
     void Update()
     {
         if (Locations.Length == 0) return;
-
-        // Check of agent bijna aangekomen is
         if (!_agent.pathPending && _agent.remainingDistance < 0.5f)
         {
             GoToNextLocation();
         }
     }
-
+    // set de volgende locatie van de AI
     void GoToNextLocation()
     {
         _currentIndex++;
-
-        // terug naar begin → loop route
         if (_currentIndex >= Locations.Length)
             _currentIndex = 0;
 
