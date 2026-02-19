@@ -208,7 +208,7 @@ MonoBehaviour:
   on90Seconds:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1134361496}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelTriggerer, Assembly-CSharp
         m_MethodName: negetigseconde
         m_Mode: 1
@@ -223,7 +223,7 @@ MonoBehaviour:
   on60Seconds:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1134361496}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelTriggerer, Assembly-CSharp
         m_MethodName: zestigseconde
         m_Mode: 1
@@ -238,7 +238,7 @@ MonoBehaviour:
   on30Seconds:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1134361496}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelTriggerer, Assembly-CSharp
         m_MethodName: dertigeconde
         m_Mode: 1
@@ -253,7 +253,7 @@ MonoBehaviour:
   onTimeUp:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1134361496}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelTriggerer, Assembly-CSharp
         m_MethodName: gameOver
         m_Mode: 1
@@ -4669,7 +4669,6 @@ SceneRoots:
   - {fileID: 863200697}
   - {fileID: 1210112371}
   - {fileID: 516243235}
-  - {fileID: 1134361497}
   - {fileID: 42314431}
   - {fileID: 493015018}
   - {fileID: 816948275}
