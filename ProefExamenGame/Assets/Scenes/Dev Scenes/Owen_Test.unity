@@ -283,6 +283,7 @@ GameObject:
   - component: {fileID: 111135402}
   - component: {fileID: 111135401}
   - component: {fileID: 111135400}
+  - component: {fileID: 111135410}
   m_Layer: 0
   m_Name: Capsule (5)
   m_TagString: Bot
@@ -482,6 +483,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &111135410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111135399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f77daac487eca64b838ca52e6761779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpeed: 3.5
+  maxSpeed: 6
+  pathOffsetStrength: 10
+  waypointChangeInterval: 5
+  hesitationChance: 0.15
+  hesitationTime: 0.6
 --- !u!1 &185451913
 GameObject:
   m_ObjectHideFlags: 0
@@ -1422,6 +1441,7 @@ GameObject:
   - component: {fileID: 718905286}
   - component: {fileID: 718905285}
   - component: {fileID: 718905284}
+  - component: {fileID: 718905294}
   m_Layer: 0
   m_Name: Capsule (4)
   m_TagString: Bot
@@ -1621,6 +1641,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &718905294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718905283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f77daac487eca64b838ca52e6761779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpeed: 3.5
+  maxSpeed: 6
+  pathOffsetStrength: 10
+  waypointChangeInterval: 5
+  hesitationChance: 0.15
+  hesitationTime: 0.6
 --- !u!1 &863200692
 GameObject:
   m_ObjectHideFlags: 0
@@ -2086,6 +2124,7 @@ GameObject:
   - component: {fileID: 1131806905}
   - component: {fileID: 1131806904}
   - component: {fileID: 1131806903}
+  - component: {fileID: 1131806913}
   m_Layer: 0
   m_Name: Capsule (2)
   m_TagString: Bot
@@ -2285,6 +2324,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1131806913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1131806902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f77daac487eca64b838ca52e6761779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpeed: 3.5
+  maxSpeed: 6
+  pathOffsetStrength: 10
+  waypointChangeInterval: 5
+  hesitationChance: 0.15
+  hesitationTime: 0.6
 --- !u!1 &1134361495
 GameObject:
   m_ObjectHideFlags: 0
@@ -2474,6 +2531,7 @@ GameObject:
   - component: {fileID: 1246448796}
   - component: {fileID: 1246448795}
   - component: {fileID: 1246448794}
+  - component: {fileID: 1246448804}
   m_Layer: 0
   m_Name: Capsule (3)
   m_TagString: Bot
@@ -2673,6 +2731,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1246448804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246448793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f77daac487eca64b838ca52e6761779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpeed: 3.5
+  maxSpeed: 6
+  pathOffsetStrength: 10
+  waypointChangeInterval: 5
+  hesitationChance: 0.15
+  hesitationTime: 0.6
 --- !u!1 &1252093260
 GameObject:
   m_ObjectHideFlags: 0
@@ -3605,6 +3681,7 @@ GameObject:
   - component: {fileID: 1870448922}
   - component: {fileID: 1870448921}
   - component: {fileID: 1870448920}
+  - component: {fileID: 1870448930}
   m_Layer: 0
   m_Name: Capsule (6)
   m_TagString: Bot
@@ -3804,6 +3881,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1870448930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870448919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f77daac487eca64b838ca52e6761779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpeed: 3.5
+  maxSpeed: 6
+  pathOffsetStrength: 10
+  waypointChangeInterval: 5
+  hesitationChance: 0.15
+  hesitationTime: 0.6
 --- !u!1 &2014651512
 GameObject:
   m_ObjectHideFlags: 0
@@ -3972,6 +4067,7 @@ GameObject:
   - component: {fileID: 2022902824}
   - component: {fileID: 2022902823}
   - component: {fileID: 2022902822}
+  - component: {fileID: 2022902832}
   m_Layer: 0
   m_Name: Capsule (7)
   m_TagString: Bot
@@ -4171,6 +4267,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2022902832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022902821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f77daac487eca64b838ca52e6761779, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpeed: 3.5
+  maxSpeed: 6
+  pathOffsetStrength: 10
+  waypointChangeInterval: 5
+  hesitationChance: 0.15
+  hesitationTime: 0.6
 --- !u!1 &2114405620
 GameObject:
   m_ObjectHideFlags: 0

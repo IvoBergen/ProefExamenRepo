@@ -1,7 +1,9 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-
+/// <summary>
+/// Makes the bot choose a random path and gives it random stats
+/// </summary>
 public class BotPathRandomizer : MonoBehaviour
 {
     private NavMeshAgent _agent;
@@ -26,12 +28,12 @@ public class BotPathRandomizer : MonoBehaviour
 
         // Give each bot unique movement stats
         _agent.speed = Random.Range(minSpeed, maxSpeed);
-        _agent.acceleration *= Random.Range(0.8f, 1.3f);
-        _agent.angularSpeed *= Random.Range(0.7f, 1.4f);
+        _agent.acceleration *= Random.Range(0.9f, 1.1f);
+        _agent.angularSpeed *= Random.Range(1f, 1.2f);
 
         StartCoroutine(RandomizePathRoutine());
     }
-
+    //
     IEnumerator RandomizePathRoutine()
     {
         while (true)
@@ -39,16 +41,12 @@ public class BotPathRandomizer : MonoBehaviour
             yield return new WaitForSeconds(waypointChangeInterval);
 
             if (!_agent.hasPath) continue;
-
-            // Random hesitation (human behaviour)
             if (Random.value < hesitationChance)
             {
                 _agent.isStopped = true;
                 yield return new WaitForSeconds(Random.Range(0.2f, hesitationTime));
                 _agent.isStopped = false;
             }
-
-            // Add sideways drift to path
             Vector3 dir = _agent.desiredVelocity.normalized;
 
             Vector3 sideways = Vector3.Cross(Vector3.up, dir);
