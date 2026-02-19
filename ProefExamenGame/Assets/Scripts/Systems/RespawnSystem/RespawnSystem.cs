@@ -4,20 +4,21 @@ public class RespawnSystem : MonoBehaviour
 {
     public UnityEvent died;
     /// <summary>
-    /// Handles respawning the player at the current checkpoint when they fall out of bounds or trigger a respawn area.
+    /// Triggered when player or bots enter the kill volume.
+    /// Respawns them at the current checkpoint.
     /// </summary>
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("Bot"))
         {
-            Respawn(other.gameObject);
+            RespawnCharacter(other.gameObject);
         }
     }
 
     /// <summary>
-    /// Respawns the player at the current checkpoint, resetting their position, rotation, and physics state. and invokes the death event
+    /// Respawns any character (player or bot) and resets physics + navmesh state.
     /// </summary>
-    private void Respawn(GameObject player)
+    private void RespawnCharacter(GameObject character)
     {
         died.Invoke();
         if (CheckPointManager.Instance == null || CheckPointManager.Instance.CurrentCheckpoint == null)
@@ -26,21 +27,33 @@ public class RespawnSystem : MonoBehaviour
             return;
         }
 
-        Transform respawnLocation = CheckPointManager.Instance.CurrentCheckpoint.transform;
+        Transform checkpoint = CheckPointManager.Instance.CurrentCheckpoint.transform;
+        Vector3 respawnPos = checkpoint.position;
+        Quaternion respawnRot = checkpoint.rotation;
 
-        Rigidbody rb = player.GetComponent<Rigidbody>();
+        Rigidbody rb = character.GetComponent<Rigidbody>();
+
+        // Disable physics while teleporting
         if (rb != null)
         {
             rb.isKinematic = true;
-        }
-
-        player.transform.position = respawnLocation.position;
-        player.transform.rotation = respawnLocation.rotation;
-
-        if (rb != null)
-        {
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
+        }
+
+        // Teleport
+        character.transform.SetPositionAndRotation(respawnPos, respawnRot);
+
+        // If this character is a bot, reset its NavMeshAgent correctly
+        NavMeshJumpAgent bot = character.GetComponent<NavMeshJumpAgent>();
+        if (bot != null)
+        {
+            bot.ResetAfterRespawn(respawnPos);
+        }
+
+        // Re-enable physics
+        if (rb != null)
+        {
             rb.isKinematic = false;
         }
     }

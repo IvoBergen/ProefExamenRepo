@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _springStrength = 200f;
     [SerializeField] private float _springDamping = 25f;
 
+    [Header("References")]
+    [SerializeField] private KnockbackReceiver _knockback;
+
     private Rigidbody _rb;
     private Vector2 _moveInput;
     private Vector3 lastForwardDirection; // Track last forward direction
@@ -42,6 +45,13 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        // Check for knockback control lock before processing movement input
+        if (_knockback != null && _knockback.IsControlLocked)
+        {
+            _animator.SetBool("isWalking", false);
+            return;
+        }
+
         if (_moveInput != Vector2.zero)
         {
             Vector3 moveDir = GetCameraRelativeMovement(_moveInput);
@@ -77,7 +87,12 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        ApplyMovement();
+        // Only apply movement if not under knockback control lock
+        if (_knockback == null || !_knockback.IsControlLocked)
+        {
+            ApplyMovement();
+        }
+
         ApplyUprightTorque();
     }
 
@@ -135,15 +150,21 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         _moveInput = context.ReadValue<Vector2>();
-        _animator.SetBool("isWalking", true);
+        _animator.SetBool("isWalking", _moveInput != Vector2.zero);
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (_isGrounded && context.performed)
-        {
-            _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
-        }
+        // Check for knockback control lock before allowing jump
+        if (!context.performed) return;
+        if (!_isGrounded) return;
+
+        Vector3 velocity = _rb.velocity;
+        velocity.y = 0f;
+        _rb.velocity = velocity;
+
+        _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
+        _animator.SetBool("isJumping", true);
     }
 
     private void OnCollisionEnter(Collision collision)
