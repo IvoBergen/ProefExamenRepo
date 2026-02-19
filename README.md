@@ -93,7 +93,7 @@ Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots 
 
 ![example](https://user-images.githubusercontent.com/1262745/189135129-34d15823-0311-46b5-a041-f0bbfede9e78.png)
 
-## RespawnMechanic Door Owen
+## Respawnmechanic door Owen
 
 Dit respawn-systeem zorgt ervoor dat de speler automatisch terug wordt geplaatst op het laatst bereikte checkpoint wanneer hij van het platform valt of een respawn-trigger raakt.
 Wanneer de speler de trigger binnenkomt:
@@ -103,7 +103,7 @@ De speler wordt verplaatst naar de positie en rotatie van het checkpoint.
 Daarna wordt de physics weer geactiveerd zodat de speler normaal verder kan spelen.
 Kort gezegd: vallen = resetten naar checkpoint zonder rare physics-bugs.
 
-![example](<img width="1280" height="720" alt="image" src="https://github.com/user-attachments/assets/e03ba522-d38f-4266-a4f0-89df9401cf6e" />)
+![example](https://github.com/user-attachments/assets/e03ba522-d38f-4266-a4f0-89df9401cf6e>)
 
 
 ## Water Shader by Student Y
