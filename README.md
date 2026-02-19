@@ -93,11 +93,18 @@ Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots 
 
 ![example](https://user-images.githubusercontent.com/1262745/189135129-34d15823-0311-46b5-a041-f0bbfede9e78.png)
 
-## Some other Mechanic Y by Student X
+## RespawnMechanic Door Owen
 
-Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+Dit respawn-systeem zorgt ervoor dat de speler automatisch terug wordt geplaatst op het laatst bereikte checkpoint wanneer hij van het platform valt of een respawn-trigger raakt.
+Wanneer de speler de trigger binnenkomt:
+Het systeem controleert of er een actief checkpoint is.
+De huidige physics van de speler (velocity en angular velocity) worden gereset zodat hij niet blijft bewegen of doorschieten.
+De speler wordt verplaatst naar de positie en rotatie van het checkpoint.
+Daarna wordt de physics weer geactiveerd zodat de speler normaal verder kan spelen.
+Kort gezegd: vallen = resetten naar checkpoint zonder rare physics-bugs.
 
-![example](https://user-images.githubusercontent.com/1262745/189135129-34d15823-0311-46b5-a041-f0bbfede9e78.png)
+![example](<img width="1280" height="720" alt="image" src="https://github.com/user-attachments/assets/e03ba522-d38f-4266-a4f0-89df9401cf6e" />)
+
 
 ## Water Shader by Student Y
 
