@@ -1,7 +1,8 @@
 using UnityEngine;
-
+using UnityEngine.Events;
 public class RespawnSystem : MonoBehaviour
 {
+    public UnityEvent died;
     /// <summary>
     /// Triggered when player or bots enter the kill volume.
     /// Respawns them at the current checkpoint.
@@ -19,6 +20,7 @@ public class RespawnSystem : MonoBehaviour
     /// </summary>
     private void RespawnCharacter(GameObject character)
     {
+        died.Invoke();
         if (CheckPointManager.Instance == null || CheckPointManager.Instance.CurrentCheckpoint == null)
         {
             Debug.LogWarning("No checkpoint set!");
