@@ -9,10 +9,14 @@ public class RespawnSystem : MonoBehaviour
     /// </summary>
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") || other.CompareTag("Bot"))
-        {
+        if (!other.CompareTag("Player") && !other.CompareTag("Bot"))
             RespawnCharacter(other.gameObject);
-        }
+        return;
+
+        if (!other.CompareTag("Player")) return;
+
+        died?.Invoke();
+
     }
 
     /// <summary>
@@ -20,7 +24,6 @@ public class RespawnSystem : MonoBehaviour
     /// </summary>
     private void RespawnCharacter(GameObject character)
     {
-        died.Invoke();
         if (CheckPointManager.Instance == null || CheckPointManager.Instance.CurrentCheckpoint == null)
         {
             Debug.LogWarning("No checkpoint set!");
