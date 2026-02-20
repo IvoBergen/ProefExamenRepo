@@ -1,21 +1,7 @@
-# VoorbeeldExamenRepo
-Een voorbeeld repository voor het examenwerk
-
-In deze repository vind je de informatie over het examen project.
-
-Omschrijf de examenopdracht evt de klant en wat het doel voor de klant is.
-Omschrijf ook beknopt wat het idee van je game is. 
-Een complete en uitgebreide beschrijving komt in het functioneel ontwerp (onderdeel van de [wiki](https://github.com/erwinhenraat/VoorbeeldExamenRepo/wiki))
-
-# Geproduceerde Game Onderdelen
-
-Geef per teammember aan welke game onderdelen je hebt geproduceerd. Doe dit met behulp van omschrijvingen visual sheets en screenshots.
-Maak ook een overzicht van alle onderdelen met een link naar de map waarin deze terug te vinden zijn.
-
-Bijv..
+# ReadME van team 04 Stumble guys 
 
 Ivo Bergen 
-  * [Wave System](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/some)
+  * [Moving platform](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/some)
   * [Some other mechanic X](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/mechanic_x)
   * [Some other mechanic Y](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/mechanic_y)
     
@@ -24,96 +10,48 @@ Owen Stas:
   * [Some textured and rigged model](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/assets/monsters)
 
 Christiaan Oosterwouder
-  * [Some beautifull script](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/beautifull)
+  * [Moving obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadME%20imgs/Battery_movement_spread_sheet.png)
   * Some other Game object
 
 Akari
 
 
-## Wave System by Student X
+## Wave  X
 
 Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line.
 
-![Animation](https://user-images.githubusercontent.com/1262745/217570184-90dc4701-d60d-4816-80d0-5007fdd3f6be.gif)
 
-### flowchart voor enemy wave system:
-```mermaid
-flowchart TD
+## Moving obstackle by Christiaan Oosterwouder
+This moving obstacle is designed to increase the level of challenge and encourage the player to interact with the environment in a more dynamic way. Instead of allowing the player to move through the level in a static or predictable pattern, the obstacle forces them to constantly adjust their timing, positioning, and movement strategy.
 
-start((Start)) -->|wait 10 seconds| spawn_w(spawn wave)
-spawn_w --> checken(check enemies in list)
-checken --> spawn_e(spawn enemies at once)
-spawn_e --> reached_base{enemy reached base?}
-reached_base -->|yes| lose_life(player loses a life)
-reached_base -->|no| money(player makes money)
-lose_life --> wave_done{wave done?}
-money --> wave_done
-wave_done -->|no| reached_base
-no_more_waves{no more waves?} -->|no more| more_lev(more levels?)
-wave_done -->|yes| no_more_waves
-no_more_waves -->|still waves| next_wave(goto next wave)
-next_wave --> start_wave
-start_wave --> spawn_w
-more_lev -->|yes, there's more| next_lev(start next level)
-more_lev -->|no more levels| end_d((end))
-next_lev --> start
+As the obstacle moves, it creates changing gaps, shifting hazards, or temporary blockades that require the player to observe its behavior and respond accordingly. This adds a layer of timing-based gameplay, where success depends on reading movement patterns and choosing the right moment to act.
 
+Because the obstacle is not stationary, it keeps the gameplay engaging and prevents the level from feeling repetitive. The player must stay alert, react quickly, and adapt to the environment as it changes in real time.
 
+In short: a moving obstacle = dynamic gameplay, increased challenge, and more active player decision-making.
 
-```
-### class diagram voor game entities:
+![moving obstackle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadME%20imgs/Battery_movement_spread_sheet.png)
 
-```mermaid
-classDiagram
+## Respawnmechanic by Owen
 
-Unit <|-- Tower:Is A
-Unit <|-- Monster
-Unit <|-- Boss
-Unit : +int life
-Unit : +int speed
-Unit : +bool alive
-Unit: +isMovable()
-Unit: +Destroy()
-class Tower{
-+String turretType
-+target()
-+shoot()
-}
-class Monster{
--int reward
--regenerates()
-}
-class Boss{
-+bool is_unique
-+specialSkill()
-}
-```
+This respawn system ensures that the player is automatically placed back at the last reached checkpoint when they fall off the platform or hit a respawn trigger.
+
+When the player enters the trigger:
+The system checks whether there is an active checkpoint.
+The player’s current physics (velocity and angular velocity) are reset so they do not keep moving or sliding forward.
+The player is moved to the position and rotation of the checkpoint.
+After that, physics is reactivated so the player can continue playing normally.
+
+In short: falling = reset to checkpoint without any strange physics bugs
+
+![Foto van respawn systeem](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadME%20imgs/BWP-VWO-Visualsheet.png)
 
 
-## Some other Mechanic X by Student X
+## moving platform by Ivo
 
 Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
 
-![example](https://user-images.githubusercontent.com/1262745/189135129-34d15823-0311-46b5-a041-f0bbfede9e78.png)
-
-## Respawnmechanic door Owen
-
-Dit respawn-systeem zorgt ervoor dat de speler automatisch terug wordt geplaatst op het laatst bereikte checkpoint wanneer hij van het platform valt of een respawn-trigger raakt.
-Wanneer de speler de trigger binnenkomt:
-Het systeem controleert of er een actief checkpoint is.
-De huidige physics van de speler (velocity en angular velocity) worden gereset zodat hij niet blijft bewegen of doorschieten.
-De speler wordt verplaatst naar de positie en rotatie van het checkpoint.
-Daarna wordt de physics weer geactiveerd zodat de speler normaal verder kan spelen.
-Kort gezegd: vallen = resetten naar checkpoint zonder rare physics-bugs.
-
-![example](https://github.com/IvoBergen/ProefExamenRepo/blob/readme/draft/ReadME%20imgs/BWP-VWO-Visualsheet.png)
-
-
-## Water Shader by Student Y
-
-Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-![example](https://user-images.githubusercontent.com/1262745/189135129-34d15823-0311-46b5-a041-f0bbfede9e78.png)
+![example](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadME%20imgs/VisualSheetMovingCube.png)
 
 ## Some textured and rigged model by Student Y
 
