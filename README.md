@@ -1,18 +1,4 @@
-# VoorbeeldExamenRepo
-Een voorbeeld repository voor het examenwerk
-
-In deze repository vind je de informatie over het examen project.
-
-Omschrijf de examenopdracht evt de klant en wat het doel voor de klant is.
-Omschrijf ook beknopt wat het idee van je game is. 
-Een complete en uitgebreide beschrijving komt in het functioneel ontwerp (onderdeel van de [wiki](https://github.com/erwinhenraat/VoorbeeldExamenRepo/wiki))
-
-# Geproduceerde Game Onderdelen
-
-Geef per teammember aan welke game onderdelen je hebt geproduceerd. Doe dit met behulp van omschrijvingen visual sheets en screenshots.
-Maak ook een overzicht van alle onderdelen met een link naar de map waarin deze terug te vinden zijn.
-
-Bijv..
+# ReadME van team 04 Stumble guys 
 
 Ivo Bergen 
   * [Moving Cubes](ProefExamenGame/Assets/Scripts/MovingCubes)
@@ -20,16 +6,47 @@ Ivo Bergen
   * [Some other mechanic Y](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/mechanic_y)
     
 Owen Stas:
-  * [respawnSysteem](https://github.com/IvoBergen/ProefExamenRepo/wiki/RespawnSystem)
-  * [Some textured and rigged model](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/assets/monsters)
+  * [Respawnsysteem](https://github.com/IvoBergen/ProefExamenRepo/wiki/RespawnSystem)
+  * [AI PathFinding]()
 
 Christiaan Oosterwouder
-  * [Some beautifull script](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/beautifull)
+  * [Moving obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadME%20imgs/Battery_movement_spread_sheet.png)
   * Some other Game object
 
-Akari
+Akari Le
+  * [Moving obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadME%20imgs/Battery_movement_spread_sheet.png)
+  * Some other Game object
 
 
+## Moving obstackle by Christiaan Oosterwouder
+This moving obstacle is designed to increase the level of challenge and encourage the player to interact with the environment in a more dynamic way. Instead of allowing the player to move through the level in a static or predictable pattern, the obstacle forces them to constantly adjust their timing, positioning, and movement strategy.
+
+As the obstacle moves, it creates changing gaps, shifting hazards, or temporary blockades that require the player to observe its behavior and respond accordingly. This adds a layer of timing-based gameplay, where success depends on reading movement patterns and choosing the right moment to act.
+
+Because the obstacle is not stationary, it keeps the gameplay engaging and prevents the level from feeling repetitive. The player must stay alert, react quickly, and adapt to the environment as it changes in real time.
+
+In short: a moving obstacle = dynamic gameplay, increased challenge, and more active player decision-making.
+
+![moving obstackle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadME%20imgs/Battery_movement_spread_sheet.png)
+
+## Respawnmechanic by Owen
+
+This respawn system ensures that the player is automatically placed back at the last reached checkpoint when they fall off the platform or hit a respawn trigger.
+
+When the player enters the trigger:
+The system checks whether there is an active checkpoint.
+The player’s current physics (velocity and angular velocity) are reset so they do not keep moving or sliding forward.
+The player is moved to the position and rotation of the checkpoint.
+After that, physics is reactivated so the player can continue playing normally.
+
+In short: falling = reset to checkpoint without any strange physics bugs
+
+![Foto van respawn systeem](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadME%20imgs/BWP-VWO-Visualsheet.png)
+
+
+## moving platform by Ivo
+
+The moving platforms are added to challenge the player’s movement, timing, and overall control. Instead of simply walking or jumping across static surfaces, the player must carefully observe the platform’s motion and choose the right moment to move.
 ## Moving Cubes
 
 The moving cubes are made as an obstacle for the player. They Move to random locations decided by the input values on the X an Z axis. The cube also rotates between 90, 0 and -90 degrees to add for an extra layer of difficulty 
@@ -42,61 +59,15 @@ This is the visual sheet for the moving cube scripts
 
 ### class diagram voor game entities:
 
-```mermaid
-classDiagram
+Because the platforms shift position over time, they require precise timing and accurate jumps. The player has to anticipate where the platform will be, not just where it currently is. This improves reaction speed, spatial awareness, and movement consistency.
 
-Unit <|-- Tower:Is A
-Unit <|-- Monster
-Unit <|-- Boss
-Unit : +int life
-Unit : +int speed
-Unit : +bool alive
-Unit: +isMovable()
-Unit: +Destroy()
-class Tower{
-+String turretType
-+target()
-+shoot()
-}
-class Monster{
--int reward
--regenerates()
-}
-class Boss{
-+bool is_unique
-+specialSkill()
-}
-```
+In addition, moving platforms create variation in pacing. Sometimes the player must wait patiently for the correct opportunity, and other times they must act quickly before the platform moves out of reach. This balance between patience and quick decision-making adds depth to the gameplay.
 
+![example](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadME%20imgs/VisualSheetMovingCube.png)
 
-## Some other Mechanic X by Student X
+## Player movement by Akari 
 
-Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-![example](https://user-images.githubusercontent.com/1262745/189135129-34d15823-0311-46b5-a041-f0bbfede9e78.png)
-
-## Respawnmechanic door Owen
-
-Dit respawn-systeem zorgt ervoor dat de speler automatisch terug wordt geplaatst op het laatst bereikte checkpoint wanneer hij van het platform valt of een respawn-trigger raakt.
-Wanneer de speler de trigger binnenkomt:
-Het systeem controleert of er een actief checkpoint is.
-De huidige physics van de speler (velocity en angular velocity) worden gereset zodat hij niet blijft bewegen of doorschieten.
-De speler wordt verplaatst naar de positie en rotatie van het checkpoint.
-Daarna wordt de physics weer geactiveerd zodat de speler normaal verder kan spelen.
-Kort gezegd: vallen = resetten naar checkpoint zonder rare physics-bugs.
-
-![example](https://github.com/IvoBergen/ProefExamenRepo/blob/readme/draft/ReadME%20imgs/BWP-VWO-Visualsheet.png)
-
-
-## Water Shader by Student Y
-
-Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-![example](https://user-images.githubusercontent.com/1262745/189135129-34d15823-0311-46b5-a041-f0bbfede9e78.png)
-
-## Some textured and rigged model by Student Y
-
-Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+movement for the player 
 
 ![example](https://user-images.githubusercontent.com/1262745/189135129-34d15823-0311-46b5-a041-f0bbfede9e78.png)
 
