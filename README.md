@@ -14,7 +14,7 @@ Maak ook een overzicht van alle onderdelen met een link naar de map waarin deze 
 
 Bijv..
 
-Student X:
+Ivo Bergen 
   * [Wave System](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/some)
   * [Some other mechanic X](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/mechanic_x)
   * [Some other mechanic Y](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/mechanic_y)
@@ -23,9 +23,11 @@ Owen Stas:
   * [respawnSysteem](https://github.com/IvoBergen/ProefExamenRepo/wiki/RespawnSystem)
   * [Some textured and rigged model](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/assets/monsters)
 
-Student Z:
+Christiaan Oosterwouder
   * [Some beautifull script](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/beautifull)
   * Some other Game object
+
+Akari
 
 
 ## Wave System by Student X
