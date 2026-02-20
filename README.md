@@ -7,18 +7,15 @@ Ivo Bergen
     
 Owen Stas:
   * [respawnSysteem](https://github.com/IvoBergen/ProefExamenRepo/wiki/RespawnSystem)
-  * [Some textured and rigged model](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/assets/monsters)
+  * [AI PathFinding]
 
 Christiaan Oosterwouder
   * [Moving obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadME%20imgs/Battery_movement_spread_sheet.png)
   * Some other Game object
 
 Akari
-
-
-## Wave  X
-
-Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line.
+  *[Player movement]() 
+  *[multiTouch]()
 
 
 ## Moving obstackle by Christiaan Oosterwouder
@@ -49,7 +46,11 @@ In short: falling = reset to checkpoint without any strange physics bugs
 
 ## moving platform by Ivo
 
-Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+The moving platforms are added to challenge the player’s movement, timing, and overall control. Instead of simply walking or jumping across static surfaces, the player must carefully observe the platform’s motion and choose the right moment to move.
+
+Because the platforms shift position over time, they require precise timing and accurate jumps. The player has to anticipate where the platform will be, not just where it currently is. This improves reaction speed, spatial awareness, and movement consistency.
+
+In addition, moving platforms create variation in pacing. Sometimes the player must wait patiently for the correct opportunity, and other times they must act quickly before the platform moves out of reach. This balance between patience and quick decision-making adds depth to the gameplay.
 
 ![example](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadME%20imgs/VisualSheetMovingCube.png)
 
