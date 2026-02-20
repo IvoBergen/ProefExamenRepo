@@ -13,9 +13,9 @@ Christiaan Oosterwouder
   * [Moving obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadME%20imgs/Battery_movement_spread_sheet.png)
   * Some other Game object
 
-Akari Le 
-  *[Player movement]() 
-  *[multiTouch]()
+Akari Le
+  * [Moving obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadME%20imgs/Battery_movement_spread_sheet.png)
+  * Some other Game object
 
 
 ## Moving obstackle by Christiaan Oosterwouder
