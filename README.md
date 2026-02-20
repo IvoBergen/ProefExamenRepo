@@ -1,7 +1,7 @@
 # ReadME van team 04 Stumble guys 
 
 Ivo Bergen 
-  * [Moving platform](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/some)
+  * [Moving Cubes](ProefExamenGame/Assets/Scripts/MovingCubes)
   * [Some other mechanic X](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/mechanic_x)
   * [Some other mechanic Y](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/mechanic_y)
     
@@ -47,6 +47,17 @@ In short: falling = reset to checkpoint without any strange physics bugs
 ## moving platform by Ivo
 
 The moving platforms are added to challenge the player’s movement, timing, and overall control. Instead of simply walking or jumping across static surfaces, the player must carefully observe the platform’s motion and choose the right moment to move.
+## Moving Cubes
+
+The moving cubes are made as an obstacle for the player. They Move to random locations decided by the input values on the X an Z axis. The cube also rotates between 90, 0 and -90 degrees to add for an extra layer of difficulty 
+
+![MovingCubes gif](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/MovingCubes.gif)
+
+This is the visual sheet for the moving cube scripts
+
+![Moving Cubes visualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/VisualSheetMovingCube.png)
+
+### class diagram voor game entities:
 
 Because the platforms shift position over time, they require precise timing and accurate jumps. The player has to anticipate where the platform will be, not just where it currently is. This improves reaction speed, spatial awareness, and movement consistency.
 
