@@ -103,7 +103,7 @@ De speler wordt verplaatst naar de positie en rotatie van het checkpoint.
 Daarna wordt de physics weer geactiveerd zodat de speler normaal verder kan spelen.
 Kort gezegd: vallen = resetten naar checkpoint zonder rare physics-bugs.
 
-![example](https://github.com/IvoBergen/ProefExamenRepo/blob/readme/draft/BWP-VWO-Visualsheet.png)
+![example](https://github.com/IvoBergen/ProefExamenRepo/blob/readme/draft/ReadME%20imgs/BWP-VWO-Visualsheet.png)
 
 
 ## Water Shader by Student Y
