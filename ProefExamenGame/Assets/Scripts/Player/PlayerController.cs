@@ -13,6 +13,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _rotationSpeed = 10f;
     [SerializeField] private bool _allowBackwardMovement = true; // New option
 
+    [Header("Ink Spot")]
+    [SerializeField] private float _decreasedMovementSpeed = 3f;
+    private float _originalMovementSpeed;
+
     [Header("Camera")]
     [SerializeField] private Transform _cameraTransform;
 
@@ -31,6 +35,18 @@ public class PlayerController : MonoBehaviour
     private Vector3 lastForwardDirection; // Track last forward direction
 
 
+    private void OnEnable()
+    {
+        InkSpot.onInkEntered += DecreaseMovementSpeed;
+        InkSpot.onInkExited += ResetMovementSpeed;
+    }
+
+    private void OnDisable()
+    {
+        InkSpot.onInkEntered -= DecreaseMovementSpeed;
+        InkSpot.onInkExited -= ResetMovementSpeed;
+    }
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -41,6 +57,7 @@ public class PlayerController : MonoBehaviour
         }
 
         lastForwardDirection = transform.forward;
+        _originalMovementSpeed = _moveSpeed;
     }
 
     private void Update()
@@ -106,6 +123,16 @@ public class PlayerController : MonoBehaviour
         newVelocity.y = currentYVelocity;
 
         _rb.velocity = newVelocity;
+    }
+
+    private void DecreaseMovementSpeed()
+    {
+        _moveSpeed = _decreasedMovementSpeed;
+    }
+
+    private void ResetMovementSpeed()
+    {
+        _moveSpeed = _originalMovementSpeed;
     }
 
     private Vector3 GetCameraRelativeMovement(Vector2 input)
