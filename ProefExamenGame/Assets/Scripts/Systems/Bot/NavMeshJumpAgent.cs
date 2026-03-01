@@ -36,8 +36,7 @@ public class NavMeshJumpAgent : MonoBehaviour
     [Tooltip("How long after the stumble before we give up and respawn.")]
     public float failSettleTime = 1.5f;
 
-    [Header("Collision")]
-    [Tooltip("Create a layer called 'JumpingAgent' in Unity and disable its collision with your Agent layer in Physics settings.")]
+
     public bool useJumpingLayer = true;
 
     [Header("Debug")]
