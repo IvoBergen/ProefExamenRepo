@@ -69,7 +69,7 @@ In addition, moving platforms create variation in pacing. Sometimes the player m
 
 movement for the player 
 
-![example](https://user-images.githubusercontent.com/1262745/189135129-34d15823-0311-46b5-a041-f0bbfede9e78.png)
+![example](Player-Movement-Visualsheet.png)
 
 ## Some beautifull script by Student Z
 
