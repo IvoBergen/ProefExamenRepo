@@ -14,7 +14,7 @@ Christiaan Oosterwouder
   * Some other Game object
 
 Akari Le
-  * [Moving obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Battery_movement_spread_sheet.png)
+  * [PlayerMovement](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Player-Movement-Visualsheet.png)
   * Some other Game object
 
 
@@ -69,7 +69,7 @@ In addition, moving platforms create variation in pacing. Sometimes the player m
 
 movement for the player 
 
-![example](Player-Movement-Visualsheet.png)
+![example](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Player-Movement-Visualsheet.png)
 
 ## Some beautifull script by Student Z
 
