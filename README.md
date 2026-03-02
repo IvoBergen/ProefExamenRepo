@@ -7,14 +7,14 @@ Ivo Bergen
     
 Owen Stas:
   * [Respawnsysteem](https://github.com/IvoBergen/ProefExamenRepo/wiki/RespawnSystem)
-  * [AI PathFinding]()
+  * [AI PathFinding](ProefExamenGame/Assets/Scripts/systems/bot)
 
 Christiaan Oosterwouder
-  * [Moving obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadME%20imgs/Battery_movement_spread_sheet.png)
+  * [Moving obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Battery_movement_spread_sheet.png)
   * Some other Game object
 
 Akari Le
-  * [Moving obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadME%20imgs/Battery_movement_spread_sheet.png)
+  * [Moving obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Battery_movement_spread_sheet.png)
   * Some other Game object
 
 
@@ -27,7 +27,7 @@ Because the obstacle is not stationary, it keeps the gameplay engaging and preve
 
 In short: a moving obstacle = dynamic gameplay, increased challenge, and more active player decision-making.
 
-![moving obstackle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadME%20imgs/Battery_movement_spread_sheet.png)
+![moving obstackle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Battery_movement_spread_sheet.png)
 
 ## Respawnmechanic by Owen
 
@@ -41,7 +41,7 @@ After that, physics is reactivated so the player can continue playing normally.
 
 In short: falling = reset to checkpoint without any strange physics bugs
 
-![Foto van respawn systeem](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadME%20imgs/BWP-VWO-Visualsheet.png)
+![Foto van respawn systeem](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/BWP-VWO-Visualsheet.png)
 
 
 ## moving platform by Ivo
@@ -63,7 +63,7 @@ Because the platforms shift position over time, they require precise timing and 
 
 In addition, moving platforms create variation in pacing. Sometimes the player must wait patiently for the correct opportunity, and other times they must act quickly before the platform moves out of reach. This balance between patience and quick decision-making adds depth to the gameplay.
 
-![example](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadME%20imgs/VisualSheetMovingCube.png)
+![example](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEfiles/VisualSheetMovingCube.png)
 
 ## Player movement by Akari 
 
