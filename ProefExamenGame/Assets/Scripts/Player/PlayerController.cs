@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// <c>PlayerController</c> Controls the movement + camera + Animations of the player
 /// </summary>
+//TO-DO: Seperate the camera and animation code from the player movement 
 public class PlayerController : MonoBehaviour
 {
     [Header("Player Settings")]
