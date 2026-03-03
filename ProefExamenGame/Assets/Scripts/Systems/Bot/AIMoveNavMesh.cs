@@ -11,11 +11,13 @@ public class AIMoveNavMesh : MonoBehaviour
     private NavMeshAgent _agent;
     private int _currentIndex = 0;
 
+    public bool IsJumping { get; set; } = false;
+
     void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
 
-        if (Locations.Length > 0)
+        if (Locations.Length > 0 && _agent.isOnNavMesh)
         {
             _agent.SetDestination(Locations[_currentIndex].position);
         }
@@ -24,12 +26,20 @@ public class AIMoveNavMesh : MonoBehaviour
     void Update()
     {
         if (Locations.Length == 0) return;
-        if (!_agent.pathPending && _agent.remainingDistance < 0.5f)
+        if (_agent == null) return;
+        if (!_agent.enabled) return;
+        if (!_agent.isOnNavMesh) return;
+
+        // 🚫 Don't run patrol logic while jumping
+        if (IsJumping) return;
+
+        if (!_agent.pathPending &&
+            _agent.remainingDistance <= _agent.stoppingDistance)
         {
             GoToNextLocation();
         }
     }
-    // set de volgende locatie van de AI
+
     void GoToNextLocation()
     {
         _currentIndex++;

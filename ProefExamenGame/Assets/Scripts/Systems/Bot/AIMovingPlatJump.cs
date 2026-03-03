@@ -6,40 +6,51 @@ public class AIMovingPlatJump : MonoBehaviour
 {
     public MovingCubes movingPlatform;
 
+    public float jumpDuration = 0.8f;
+    public float archHeight = 2f;
+    public float waitOnPlatform = 2f;
+
     private void OnTriggerEnter(Collider other)
     {
-        Debug.LogWarning("player touched me");
         if (movingPlatform == null) return;
         if (!other.CompareTag("Bot")) return;
 
         NavMeshAgent agent = other.GetComponent<NavMeshAgent>();
         if (agent == null) return;
 
-        StartCoroutine(JumpToPlatform(other.transform, agent));
+        AIMoveNavMesh patrol = other.GetComponent<AIMoveNavMesh>();
+        if (patrol == null) return;
+
+        StartCoroutine(JumpToPlatform(other.transform, agent, patrol));
     }
 
-    private IEnumerator JumpToPlatform(Transform aiTransform, NavMeshAgent agent)
+    private IEnumerator JumpToPlatform(
+        Transform aiTransform,
+        NavMeshAgent agent,
+        AIMoveNavMesh patrol)
     {
-        agent.enabled = false;
+        patrol.IsJumping = true;
+
+        // 🛑 Pause agent safely
+        agent.isStopped = true;
+        agent.updatePosition = false;
+        agent.updateRotation = false;
 
         Vector3 startPos = aiTransform.position;
 
         Vector3 targetPos = movingPlatform.transform.position;
-        float platformHeight = 0f;
 
         Renderer rend = movingPlatform.GetComponent<Renderer>();
-        if (rend != null)
-            platformHeight = rend.bounds.size.y;
-        else
-            platformHeight = movingPlatform.transform.localScale.y;
+        float platformHeight = rend != null
+            ? rend.bounds.size.y
+            : movingPlatform.transform.localScale.y;
 
         targetPos.y += platformHeight;
 
-        float jumpDuration = 0.6f;
-        float elapsed = 0f;
-        float archHeight = 2f;
+        Quaternion uprightRotation =
+            Quaternion.Euler(0f, aiTransform.eulerAngles.y, 0f);
 
-        Quaternion uprightRotation = Quaternion.Euler(0f, aiTransform.eulerAngles.y, 0f); // lock X/Z rotation
+        float elapsed = 0f;
 
         while (elapsed < jumpDuration)
         {
@@ -50,26 +61,23 @@ public class AIMovingPlatJump : MonoBehaviour
             currentPos.y += archHeight * Mathf.Sin(Mathf.PI * t);
 
             aiTransform.position = currentPos;
-            aiTransform.rotation = uprightRotation; // keep upright
+            aiTransform.rotation = uprightRotation;
 
             yield return null;
         }
 
         aiTransform.position = targetPos;
         aiTransform.rotation = uprightRotation;
-        aiTransform.SetParent(movingPlatform.transform);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(waitOnPlatform);
 
-        aiTransform.SetParent(null);
-        agent.enabled = true;
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        // Safety unparent if something slips through
-        if (other.transform.parent == movingPlatform.transform)
-        {
-            other.transform.SetParent(null);
-        }
+        // 🔄 Re-sync agent to new position
+        agent.Warp(aiTransform.position);
+
+        agent.updatePosition = true;
+        agent.updateRotation = true;
+        agent.isStopped = false;
+
+        patrol.IsJumping = false;
     }
 }
