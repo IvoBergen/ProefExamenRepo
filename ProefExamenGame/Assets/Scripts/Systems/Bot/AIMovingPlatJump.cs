@@ -4,15 +4,17 @@ using UnityEngine.AI;
 
 public class AIMovingPlatJump : MonoBehaviour
 {
-    public MovingCubes movingPlatform;
+    [Header("Platform settings")]
+    public MovingCubes _movingPlatform;
 
-    public float jumpDuration = 0.8f;
-    public float archHeight = 2f;
-    public float waitOnPlatform = 2f;
+    [Header("Jump settings")]
+    public float _jumpDuration = 1.2f;
+    public float _archHeight = 1.5f;
+    public float _jumpDelay = 0.2f;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (movingPlatform == null) return;
+        if (_movingPlatform == null) return;
         if (!other.CompareTag("Bot")) return;
 
         NavMeshAgent agent = other.GetComponent<NavMeshAgent>();
@@ -21,63 +23,53 @@ public class AIMovingPlatJump : MonoBehaviour
         AIMoveNavMesh patrol = other.GetComponent<AIMoveNavMesh>();
         if (patrol == null) return;
 
-        StartCoroutine(JumpToPlatform(other.transform, agent, patrol));
+        StartCoroutine(JumpRoutine(other.transform, agent, patrol));
     }
 
-    private IEnumerator JumpToPlatform(
-        Transform aiTransform,
-        NavMeshAgent agent,
-        AIMoveNavMesh patrol)
+    private IEnumerator JumpRoutine(Transform aiTransform, NavMeshAgent agent, AIMoveNavMesh patrol)
     {
+        // korte delay voor sprong
+        yield return new WaitForSeconds(_jumpDelay);
+
         patrol.IsJumping = true;
 
-        // 🛑 Pause agent safely
-        agent.isStopped = true;
-        agent.updatePosition = false;
-        agent.updateRotation = false;
+        // 🔥 agent volledig uitzetten
+        agent.enabled = false;
 
         Vector3 startPos = aiTransform.position;
-
-        Vector3 targetPos = movingPlatform.transform.position;
-
-        Renderer rend = movingPlatform.GetComponent<Renderer>();
-        float platformHeight = rend != null
-            ? rend.bounds.size.y
-            : movingPlatform.transform.localScale.y;
-
-        targetPos.y += platformHeight;
-
-        Quaternion uprightRotation =
-            Quaternion.Euler(0f, aiTransform.eulerAngles.y, 0f);
-
         float elapsed = 0f;
 
-        while (elapsed < jumpDuration)
+        Renderer rend = _movingPlatform.GetComponent<Renderer>();
+        float platformHeight = rend != null ? rend.bounds.size.y : _movingPlatform.transform.localScale.y;
+
+        Quaternion uprightRotation = Quaternion.Euler(0f, aiTransform.eulerAngles.y, 0f);
+
+        // Sprong
+        while (elapsed < _jumpDuration)
         {
             elapsed += Time.deltaTime;
-            float t = elapsed / jumpDuration;
+            float t = elapsed / _jumpDuration;
 
-            Vector3 currentPos = Vector3.Lerp(startPos, targetPos, t);
-            currentPos.y += archHeight * Mathf.Sin(Mathf.PI * t);
+            Vector3 dynamicTarget = _movingPlatform.transform.position;
+            dynamicTarget.y += platformHeight;
 
-            aiTransform.position = currentPos;
+            Vector3 pos = Vector3.Lerp(startPos, dynamicTarget, t);
+            pos.y += _archHeight * Mathf.Sin(Mathf.PI * t);
+
+            aiTransform.position = pos;
             aiTransform.rotation = uprightRotation;
 
             yield return null;
         }
 
-        aiTransform.position = targetPos;
-        aiTransform.rotation = uprightRotation;
-
-        yield return new WaitForSeconds(waitOnPlatform);
-
-        // 🔄 Re-sync agent to new position
-        agent.Warp(aiTransform.position);
-
-        agent.updatePosition = true;
-        agent.updateRotation = true;
-        agent.isStopped = false;
+        // Landen op platform
+        Vector3 finalPos = _movingPlatform.transform.position;
+        finalPos.y += platformHeight;
+        aiTransform.position = finalPos;
 
         patrol.IsJumping = false;
+
+        // NIET inschakelen van agent hier!  
+        // De agent blijft uit totdat de AI weer op de grond staat
     }
 }
