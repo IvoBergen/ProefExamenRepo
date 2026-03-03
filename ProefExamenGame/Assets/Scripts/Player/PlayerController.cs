@@ -8,14 +8,14 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Player Settings")]
     [SerializeField] private bool _isGrounded;
-    [SerializeField] private float _moveSpeed = 5f;
+    public float _moveSpeed { get; set; } = 5f;
     [SerializeField] private float _jumpForce = 12f;
     [SerializeField] private float _rotationSpeed = 10f;
     [SerializeField] private bool _allowBackwardMovement = true; // New option
 
     [Header("Ink Spot")]
     [SerializeField] private float _decreasedMovementSpeed = 3f;
-    private float _originalMovementSpeed;
+    public float _originalMovementSpeed { get; private set; }
 
     [Header("Camera")]
     [SerializeField] private Transform _cameraTransform;
