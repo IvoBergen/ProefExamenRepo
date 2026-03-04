@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// <c>PlayerAnimations</c> Controls player animations.
+/// </summary>
 public class PlayerAnimations : MonoBehaviour
 {
     [SerializeField] private Animator _animator;

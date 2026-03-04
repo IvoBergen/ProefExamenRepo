@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/// <summary>
+/// <c>CameraSettings</c> Controls camera settings and relative movement calculations.
+/// </summary>
+
 public class CameraSettings : MonoBehaviour
 {
     [SerializeField] private Transform _cameraTransform;
