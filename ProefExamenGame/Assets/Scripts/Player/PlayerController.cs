@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool _isGrounded;
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _jumpForce = 12f;
+    [SerializeField] private float _doubleJumpForce;
+    [SerializeField] private int _maxJumpCount = 2;
     [SerializeField] private float _rotationSpeed = 10f;
     [SerializeField] private bool _allowBackwardMovement = true; // New option
 
@@ -29,6 +31,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rb;
     private Vector2 _moveInput;
     private Vector3 lastForwardDirection; // Track last forward direction
+    private int _jumpsUsed;
     private bool _missingAnimationsWarned;
     private bool _missingCameraSettingsWarned;
 
@@ -51,6 +54,7 @@ public class PlayerController : MonoBehaviour
 
         lastForwardDirection = transform.forward;
         _originalMovementSpeed = _moveSpeed;
+        _doubleJumpForce = _jumpForce * 0.85f;
     }
 
     private void Update()
@@ -96,6 +100,12 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // reset jumps when grounded
+        if (_isGrounded)
+        {
+            _jumpsUsed = 0;
+        }
+
         // Only apply movement if not under knockback control lock
         if (_knockback == null || !_knockback.IsControlLocked)
         {
@@ -205,13 +215,17 @@ public class PlayerController : MonoBehaviour
     private void TryJump()
     {
         if (_knockback != null && _knockback.IsControlLocked) return;
-        if (!_isGrounded) return;
+        if (_jumpsUsed >= _maxJumpCount) return;
+        if (_jumpsUsed == 0 && !_isGrounded) return;
 
         Vector3 velocity = _rb.velocity;
         velocity.y = 0f;
         _rb.velocity = velocity;
 
-        _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
+        float jumpForce = _jumpsUsed == 0 ? _jumpForce : _doubleJumpForce;
+        _rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        _isGrounded = false;
+        _jumpsUsed++;
         SetJumpingAnimation(true);
     }
 
