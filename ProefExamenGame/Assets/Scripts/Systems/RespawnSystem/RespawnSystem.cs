@@ -1,22 +1,24 @@
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
+
+/// <summary>
+/// Handles killing volume logic and respawning players or bots.
+/// Ensures bot NavMeshAgents are re-enabled after respawn.
+/// </summary>
 public class RespawnSystem : MonoBehaviour
 {
     public UnityEvent died;
-    /// <summary>
-    /// Triggered when player or bots enter the kill volume.
-    /// Respawns them at the current checkpoint.
-    /// </summary>
+
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player") && !other.CompareTag("Bot"))
             return;
 
         RespawnCharacter(other.gameObject);
+
         if (!other.CompareTag("Player")) return;
-
         died?.Invoke();
-
     }
 
     /// <summary>
@@ -52,6 +54,12 @@ public class RespawnSystem : MonoBehaviour
         if (bot != null)
         {
             bot.ResetAfterRespawn(respawnPos);
+            NavMeshAgent agent = bot.GetComponent<NavMeshAgent>();
+            if (agent != null)
+            {
+                agent.enabled = true;          // Re-enable agent
+                agent.Warp(respawnPos);        // Correct internal NavMesh position
+            }
         }
 
         // Re-enable physics

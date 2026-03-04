@@ -31,6 +31,7 @@ public class KnockbackObstacle : MonoBehaviour
     [Header("Detection")]
 
     [SerializeField] private string _playerTag = "Player";
+    [SerializeField] private string _AiTag = "Bot";
 
     #endregion
 
@@ -56,7 +57,7 @@ public class KnockbackObstacle : MonoBehaviour
     /// </summary>
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag(_playerTag))
+        if (!other.CompareTag(_playerTag) && !other.CompareTag(_AiTag))
         {
             return;
         }

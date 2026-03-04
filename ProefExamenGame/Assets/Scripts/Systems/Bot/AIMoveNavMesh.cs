@@ -1,40 +1,30 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-/// <summary>
-/// Moves the AI between multiple waypoint locations
-/// </summary>
 public class AIMoveNavMesh : MonoBehaviour
 {
     public Transform[] Locations;
-
     private NavMeshAgent _agent;
     private int _currentIndex = 0;
-
+    [SerializeField] private AIAnimator _animator;
     public bool IsJumping { get; set; } = false;
 
     void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
-
         if (Locations.Length > 0 && _agent.isOnNavMesh)
         {
             _agent.SetDestination(Locations[_currentIndex].position);
+            _animator?.SetBool("isWalking", true);
         }
     }
 
     void Update()
     {
-        if (Locations.Length == 0) return;
-        if (_agent == null) return;
-        if (!_agent.enabled) return;
-        if (!_agent.isOnNavMesh) return;
+        if (Locations.Length == 0 || _agent == null || !_agent.enabled || !_agent.isOnNavMesh || IsJumping)
+            return;
 
-        // 🚫 Don't run patrol logic while jumping
-        if (IsJumping) return;
-
-        if (!_agent.pathPending &&
-            _agent.remainingDistance <= _agent.stoppingDistance)
+        if (!_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance)
         {
             GoToNextLocation();
         }
@@ -47,5 +37,6 @@ public class AIMoveNavMesh : MonoBehaviour
             _currentIndex = 0;
 
         _agent.SetDestination(Locations[_currentIndex].position);
+        _animator?.SetBool("isWalking", true);
     }
 }

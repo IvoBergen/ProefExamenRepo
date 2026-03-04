@@ -8,6 +8,7 @@ using UnityEngine.AI;
 /// </summary>
 public class NavMeshJumpAgent : MonoBehaviour
 {
+    [SerializeField] private AIAnimator _animator;
     private NavMeshAgent _agent;
     private Rigidbody _rb;
     private Collider _col;
@@ -122,6 +123,8 @@ public class NavMeshJumpAgent : MonoBehaviour
 
     IEnumerator JumpAcross()
     {
+        _animator.SetBool("isWalking", false);
+        _animator.SetBool("isJumping", true);
         _isJumping = true;
 
         OffMeshLinkData data = _agent.currentOffMeshLinkData;
@@ -185,19 +188,32 @@ public class NavMeshJumpAgent : MonoBehaviour
             Debug.Log($"[NavMeshJumpAgent] {gameObject.name} SUCCESS jump, duration: {jumpDuration:F2}s");
 
         _failChance = Mathf.Min(_failChance * 2f, 1f);
+
         _rb.isKinematic = false;
         _rb.velocity = perfectVelocity;
 
+        // Blijf in jump anim tijdens hele sprong
+        _animator.SetBool("isJumping", true);
+        _animator.SetBool("isWalking", false);
+
         yield return new WaitForSeconds(jumpDuration);
 
+        // LANDING
         _rb.velocity = Vector3.zero;
         _rb.isKinematic = true;
+
         transform.position = endPos;
+
         _agent.CompleteOffMeshLink();
         _agent.updatePosition = true;
         _agent.isStopped = false;
 
         SetJumpingState(false);
+
+        // Nu pas terug naar walking
+        _animator.SetBool("isJumping", false);
+        _animator.SetBool("isWalking", true);
+
         _isJumping = false;
         _jumpCoroutine = null;
 
