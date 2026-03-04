@@ -328,7 +328,7 @@ MonoBehaviour:
   joystickBackground: {fileID: 388246243}
   joystickHandle: {fileID: 665719594}
   handleRange: 50
-  playerController: {fileID: 1582713027}
+  playerController: {fileID: 1582713036}
 --- !u!1 &517849934
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,6 +414,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 514505046161416322, guid: 3b23402a07a9bc642a2728ba61489f53, type: 3}
   m_PrefabInstance: {fileID: 776856852}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &615538511 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8011185532086294002, guid: 3b23402a07a9bc642a2728ba61489f53, type: 3}
+  m_PrefabInstance: {fileID: 776856852}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &615538512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 615538511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0f26768981fa0949b7d55300fca33d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraTransform: {fileID: 549044895}
 --- !u!1 &665719593
 GameObject:
   m_ObjectHideFlags: 0
@@ -610,7 +628,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1582713027}
+      - m_Target: {fileID: 1582713036}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
         m_MethodName: OnJumpButtonPressed
         m_Mode: 1
@@ -636,7 +654,7 @@ PrefabInstance:
       objectReference: {fileID: 540660000}
     - target: {fileID: 2476569890880696858, guid: 3b23402a07a9bc642a2728ba61489f53, type: 3}
       propertyPath: _jumpForce
-      value: 8
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2476569890880696858, guid: 3b23402a07a9bc642a2728ba61489f53, type: 3}
       propertyPath: _isGrounded
@@ -644,7 +662,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2476569890880696858, guid: 3b23402a07a9bc642a2728ba61489f53, type: 3}
       propertyPath: _rotationSpeed
-      value: 2.5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2476569890880696858, guid: 3b23402a07a9bc642a2728ba61489f53, type: 3}
       propertyPath: springStrength
@@ -654,6 +672,10 @@ PrefabInstance:
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 549044895}
+    - target: {fileID: 2476569890880696858, guid: 3b23402a07a9bc642a2728ba61489f53, type: 3}
+      propertyPath: _allowBackwardMovement
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4395113423080795642, guid: 3b23402a07a9bc642a2728ba61489f53, type: 3}
       propertyPath: m_Constraints
       value: 112
@@ -706,11 +728,11 @@ PrefabInstance:
     - target: {fileID: 5220296442290074370, guid: 3b23402a07a9bc642a2728ba61489f53, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1582713027}
+      objectReference: {fileID: 1582713036}
     - target: {fileID: 5220296442290074370, guid: 3b23402a07a9bc642a2728ba61489f53, type: 3}
       propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1582713027}
+      objectReference: {fileID: 1582713036}
     - target: {fileID: 5220296442290074370, guid: 3b23402a07a9bc642a2728ba61489f53, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -802,6 +824,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8186210900544303326, guid: 3b23402a07a9bc642a2728ba61489f53, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1582713031}
+    - targetCorrespondingSourceObject: {fileID: 8409305169563631074, guid: 3b23402a07a9bc642a2728ba61489f53, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 1583355772}
+    - targetCorrespondingSourceObject: {fileID: 8011185532086294002, guid: 3b23402a07a9bc642a2728ba61489f53, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 615538512}
   m_SourcePrefab: {fileID: 100100000, guid: 3b23402a07a9bc642a2728ba61489f53, type: 3}
 --- !u!20 &776856853 stripped
 Camera:
@@ -1405,17 +1433,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8186210900544303326, guid: 3b23402a07a9bc642a2728ba61489f53, type: 3}
   m_PrefabInstance: {fileID: 776856852}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1582713027 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2476569890880696858, guid: 3b23402a07a9bc642a2728ba61489f53, type: 3}
-  m_PrefabInstance: {fileID: 776856852}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1556280534}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e6afc325de512747b0492f33d0c01d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &1582713030 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 4395113423080795642, guid: 3b23402a07a9bc642a2728ba61489f53, type: 3}
@@ -1436,6 +1453,35 @@ MonoBehaviour:
   _rb: {fileID: 1582713030}
   _controlLockDuration: 1
   _maxHorizontalSpeedAfterHit: 10
+--- !u!114 &1582713036 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2899591990544410691, guid: 3b23402a07a9bc642a2728ba61489f53, type: 3}
+  m_PrefabInstance: {fileID: 776856852}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1556280534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e6afc325de512747b0492f33d0c01d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1583355769 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8409305169563631074, guid: 3b23402a07a9bc642a2728ba61489f53, type: 3}
+  m_PrefabInstance: {fileID: 776856852}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1583355772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1583355769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 574d81f9e65d4834f9f98b4a4641bf3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 540660000}
 --- !u!1 &1638562603
 GameObject:
   m_ObjectHideFlags: 0
@@ -1493,6 +1539,7 @@ GameObject:
   - component: {fileID: 1650297331}
   - component: {fileID: 1650297330}
   - component: {fileID: 1650297329}
+  - component: {fileID: 1650297332}
   m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
@@ -1586,6 +1633,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1650297327}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1650297332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650297327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdfa9515ee7a623458e85810e1941f8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _target: Player
 --- !u!1001 &2146449927
 PrefabInstance:
   m_ObjectHideFlags: 0
