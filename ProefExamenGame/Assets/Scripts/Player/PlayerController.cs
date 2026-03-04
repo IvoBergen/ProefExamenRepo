@@ -52,11 +52,6 @@ public class PlayerController : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
 
-        if (_cameraTransform == null)
-        {
-            _cameraTransform = Camera.main.transform;
-        }
-
         lastForwardDirection = transform.forward;
         _originalMovementSpeed = _moveSpeed;
     }
@@ -169,10 +164,6 @@ public class PlayerController : MonoBehaviour
 
             _animator.SetBool("isJumping", true);
         }
-        else
-        {
-            _animator.SetBool("isJumping", false);
-        }
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -200,6 +191,8 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.layer == 3)
         {
             _isGrounded = true;
+            _animator.SetBool("isJumping", false);
+
         }
     }
 
