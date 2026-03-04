@@ -3,8 +3,8 @@
 Ivo Bergen
 
 * [Moving Cubes](ProefExamenGame/Assets/Scripts/MovingCubes)
-* [Some other mechanic X](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/mechanic_x)
-* [Some other mechanic Y](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/mechanic_y)
+* [Ink Spot](ProefExamenGame/Assets/Scripts/InkSpot/InkSpot.cs)
+* [Speed Boost](ProefExamenGame/Assets/Scripts/PowerUps/SpeedBoost/PowerUpSpeedBoost.cs)
 
 Owen Stas:
 
@@ -43,6 +43,15 @@ will be decreased.
 This is the visual sheet for the ink spot
 
 ![Ink Spot visualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/InkSpot.png)
+
+## Speed Boost by Ivo
+
+The power up, in this case a speed boost is added for extra variety in the gameplay loop. It adds extra challenge and a fun factor to the game. It does a collision check to check if the player touched it and then it
+triggers an Action that calls the other script responsible for increasing and decreasing the player's speed.
+
+This is the visual sheet for the speed boost power up.
+
+![Speed Boost visualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/SpeedBoost.png)
 
 ## Respawnmechanic by Owen
 
