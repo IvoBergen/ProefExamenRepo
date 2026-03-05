@@ -37,8 +37,6 @@ public class RespawnSystem : MonoBehaviour
         Quaternion respawnRot = checkpoint.rotation;
 
         Rigidbody rb = character.GetComponent<Rigidbody>();
-
-        // Disable physics while teleporting
         if (rb != null)
         {
             rb.isKinematic = true;
@@ -46,10 +44,7 @@ public class RespawnSystem : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
         }
 
-        // Teleport
         character.transform.SetPositionAndRotation(respawnPos, respawnRot);
-
-        // If this character is a bot, reset its NavMeshAgent correctly
         NavMeshJumpAgent bot = character.GetComponent<NavMeshJumpAgent>();
         if (bot != null)
         {
@@ -57,12 +52,11 @@ public class RespawnSystem : MonoBehaviour
             NavMeshAgent agent = bot.GetComponent<NavMeshAgent>();
             if (agent != null)
             {
-                agent.enabled = true;          // Re-enable agent
-                agent.Warp(respawnPos);        // Correct internal NavMesh position
+                agent.enabled = true;          
+                agent.Warp(respawnPos);        
             }
         }
 
-        // Re-enable physics
         if (rb != null)
         {
             rb.isKinematic = false;

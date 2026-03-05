@@ -2,10 +2,8 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-/// <summary>
-/// Makes the navmesh agent jump across off-mesh links instantly on contact,
-/// with distance-based duration and respawn on failure.
-/// </summary>
+[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(AIMoveNavMesh))]
 public class NavMeshJumpAgent : MonoBehaviour
 {
     [SerializeField] private AIAnimator _animator;
@@ -13,32 +11,22 @@ public class NavMeshJumpAgent : MonoBehaviour
     private Rigidbody _rb;
     private Collider _col;
     private NavMeshObstacle _obstacle;
+    private AIMoveNavMesh _patrol;
+
     private bool _isJumping = false;
     private Coroutine _jumpCoroutine = null;
-    private ObstacleAvoidanceType _originalAvoidance;
-    private int _originalPriority;
-    private int _originalLayer;
 
     [Header("Jump Settings")]
-    [Tooltip("How fast the agent travels horizontally across a jump (units/sec). Duration = distance / speed.")]
     public float jumpSpeed = 6f;
-    [Tooltip("Minimum allowed jump duration, regardless of distance.")]
     public float minJumpDuration = 0.3f;
-    [Tooltip("Maximum allowed jump duration, regardless of distance.")]
     public float maxJumpDuration = 2.0f;
 
     [Header("Fail System")]
     [Range(0f, 1f)]
     [SerializeField] private float _failChance = 0.1f;
-    [Tooltip("How far sideways the agent drifts on a subtle failed jump.")]
     public float failLateralDrift = 1.2f;
-    [Tooltip("Extra downward nudge applied on fail to pull the agent off the platform naturally.")]
     public float failDownwardNudge = 1.5f;
-    [Tooltip("How long after the stumble before we give up and respawn.")]
     public float failSettleTime = 1.5f;
-
-
-    public bool useJumpingLayer = true;
 
     [Header("Debug")]
     public bool debugLogging = true;
@@ -52,10 +40,7 @@ public class NavMeshJumpAgent : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _col = GetComponent<Collider>();
         _obstacle = GetComponent<NavMeshObstacle>();
-
-        _originalAvoidance = _agent.obstacleAvoidanceType;
-        _originalPriority = _agent.avoidancePriority;
-        _originalLayer = gameObject.layer;
+        _patrol = GetComponent<AIMoveNavMesh>();
 
         _agent.autoTraverseOffMeshLink = false;
 
@@ -73,42 +58,7 @@ public class NavMeshJumpAgent : MonoBehaviour
         }
 
         if (_isJumping && !_agent.updatePosition)
-        {
             _agent.nextPosition = transform.position;
-        }
-    }
-
-    // ─────────────────────────────────────────────
-    //  State helpers
-    // ─────────────────────────────────────────────
-
-    private void SetJumpingState(bool jumping)
-    {
-        if (useJumpingLayer)
-        {
-            if (jumping)
-            {
-                int jumpLayer = LayerMask.NameToLayer("JumpingAgent");
-                if (jumpLayer >= 0) gameObject.layer = jumpLayer;
-            }
-            else
-            {
-                gameObject.layer = _originalLayer;
-            }
-        }
-
-        if (jumping)
-        {
-            _agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
-            _agent.avoidancePriority = 0;
-            if (_obstacle != null) _obstacle.enabled = false;
-        }
-        else
-        {
-            _agent.obstacleAvoidanceType = _originalAvoidance;
-            _agent.avoidancePriority = _originalPriority;
-            if (_obstacle != null) _obstacle.enabled = true;
-        }
     }
 
     private float CalcJumpDuration(Vector3 start, Vector3 end)
@@ -117,26 +67,20 @@ public class NavMeshJumpAgent : MonoBehaviour
         return Mathf.Clamp(dist / jumpSpeed, minJumpDuration, maxJumpDuration);
     }
 
-    // ─────────────────────────────────────────────
-    //  Jump coroutine
-    // ─────────────────────────────────────────────
-
     IEnumerator JumpAcross()
     {
-        _animator.SetBool("isWalking", false);
+        _patrol?.StartJump();
         _animator.SetBool("isJumping", true);
+        _animator.SetBool("isWalking", false);
         _isJumping = true;
 
         OffMeshLinkData data = _agent.currentOffMeshLinkData;
         Vector3 startPos = transform.position;
-
         float halfHeight = _agent.height * 0.5f;
         Vector3 endPos = data.endPos + Vector3.up * halfHeight;
 
         if (debugLogging)
             Debug.Log($"[NavMeshJumpAgent] {gameObject.name} jumping from {startPos} to {endPos}");
-
-        SetJumpingState(true);
 
         _agent.isStopped = true;
         _agent.updatePosition = false;
@@ -176,54 +120,51 @@ public class NavMeshJumpAgent : MonoBehaviour
 
             yield return new WaitForSeconds(failSettleTime);
 
-            SetJumpingState(false);
+            // ─── Reset after fail ───
+            _rb.velocity = Vector3.zero;
+            _rb.isKinematic = true;
+
+            // Move AI back to last patrol position
+            transform.position = _agent.nextPosition; // ensures it doesn't get stuck in the air
+
+            _agent.isStopped = false;               // allow movement again
+            _agent.Warp(_agent.nextPosition);       // re-sync NavMeshAgent
+            _patrol?.EndJump();                     // tells patrol we are done jumping
+            _animator.SetBool("isJumping", false);
+            _animator.SetBool("isWalking", true);
+
             _isJumping = false;
             _jumpCoroutine = null;
-            OnJumpFailed?.Invoke();
+
+            if (debugLogging)
+                Debug.Log($"[NavMeshJumpAgent] {gameObject.name} jump FAILED complete at {Time.time:F2}s");
+
             yield break;
         }
 
         // ───────── SUCCESSFUL JUMP ─────────
-        if (debugLogging)
-            Debug.Log($"[NavMeshJumpAgent] {gameObject.name} SUCCESS jump, duration: {jumpDuration:F2}s");
-
         _failChance = Mathf.Min(_failChance * 2f, 1f);
 
         _rb.isKinematic = false;
         _rb.velocity = perfectVelocity;
-
-        // Blijf in jump anim tijdens hele sprong
-        _animator.SetBool("isJumping", true);
-        _animator.SetBool("isWalking", false);
 
         yield return new WaitForSeconds(jumpDuration);
 
         // LANDING
         _rb.velocity = Vector3.zero;
         _rb.isKinematic = true;
-
         transform.position = endPos;
 
         _agent.CompleteOffMeshLink();
         _agent.updatePosition = true;
         _agent.isStopped = false;
 
-        SetJumpingState(false);
-
-        // Nu pas terug naar walking
         _animator.SetBool("isJumping", false);
-        _animator.SetBool("isWalking", true);
+        _patrol?.EndJump();
 
         _isJumping = false;
         _jumpCoroutine = null;
-
-        if (debugLogging)
-            Debug.Log($"[NavMeshJumpAgent] {gameObject.name} completed jump at {Time.time:F2}s");
     }
-
-    // ─────────────────────────────────────────────
-    //  Respawn
-    // ─────────────────────────────────────────────
 
     private void RespawnMe()
     {
@@ -242,11 +183,12 @@ public class NavMeshJumpAgent : MonoBehaviour
         _rb.isKinematic = true;
         _rb.velocity = Vector3.zero;
 
-        SetJumpingState(false);
-
         transform.position = respawnPosition;
         _agent.Warp(respawnPosition);
         _agent.updatePosition = true;
         _agent.isStopped = false;
+
+        _patrol?.ResetPatrol();
+        _animator.SetBool("isWalking", true);
     }
 }
