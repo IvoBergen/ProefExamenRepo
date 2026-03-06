@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// <c>PlayerController</c> Controls the movement + camera + Animations of the player
+/// <c>PlayerController</c> Controls player movement, rotation, and physics behaviour.
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
@@ -17,22 +17,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _decreasedMovementSpeed = 3f;
     public float _originalMovementSpeed { get; private set; }
 
-    [Header("Camera")]
-    [SerializeField] private Transform _cameraTransform;
-
-    [Header("Animation")]
-    [SerializeField] private Animator _animator;
-
     [Header("Upright Settings")]
     [SerializeField] private float _springStrength = 200f;
     [SerializeField] private float _springDamping = 25f;
 
     [Header("References")]
     [SerializeField] private KnockbackReceiver _knockback;
+    [SerializeField] private PlayerAnimations _playerAnimations;
+    [SerializeField] private CameraSettings _cameraSettings;
 
     private Rigidbody _rb;
     private Vector2 _moveInput;
     private Vector3 lastForwardDirection; // Track last forward direction
+    private bool _missingAnimationsWarned;
+    private bool _missingCameraSettingsWarned;
 
 
     private void OnEnable()
@@ -51,11 +49,6 @@ public class PlayerController : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
 
-        if (_cameraTransform == null)
-        {
-            _cameraTransform = Camera.main.transform;
-        }
-
         lastForwardDirection = transform.forward;
         _originalMovementSpeed = _moveSpeed;
     }
@@ -65,19 +58,18 @@ public class PlayerController : MonoBehaviour
         // Check for knockback control lock before processing movement input
         if (_knockback != null && _knockback.IsControlLocked)
         {
-            _animator.SetBool("isWalking", false);
+            SetWalkingAnimation(false);
             return;
         }
 
         if (_moveInput != Vector2.zero)
         {
-            Vector3 moveDir = GetCameraRelativeMovement(_moveInput);
-            _animator.SetBool("isWalking", true);
+            Vector3 moveDir = GetMoveDirection(_moveInput);
+            SetWalkingAnimation(true);
 
             if (moveDir != Vector3.zero)
             {
                 // Only rotate if moving forward or sideways (not backward)
-                float inputMagnitude = _moveInput.magnitude;
                 float forwardInput = _moveInput.y;
 
                 // If moving forward or mostly sideways, update rotation
@@ -98,7 +90,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            _animator.SetBool("isWalking", false);
+            SetWalkingAnimation(false);
         }
     }
 
@@ -117,7 +109,7 @@ public class PlayerController : MonoBehaviour
     {
         float currentYVelocity = _rb.velocity.y;
 
-        Vector3 moveDirection = GetCameraRelativeMovement(_moveInput);
+        Vector3 moveDirection = GetMoveDirection(_moveInput);
         Vector3 newVelocity = moveDirection * _moveSpeed;
 
         newVelocity.y = currentYVelocity;
@@ -135,22 +127,6 @@ public class PlayerController : MonoBehaviour
         _moveSpeed = _originalMovementSpeed;
     }
 
-    private Vector3 GetCameraRelativeMovement(Vector2 input)
-    {
-        Vector3 cameraForward = _cameraTransform.forward;
-        Vector3 cameraRight = _cameraTransform.right;
-
-        cameraForward.y = 0f;
-        cameraRight.y = 0f;
-
-        cameraForward.Normalize();
-        cameraRight.Normalize();
-
-        Vector3 moveDirection = (cameraRight * input.x) + (cameraForward * input.y);
-
-        return moveDirection;
-    }
-
     public void SetMovementInput(Vector2 input)
     {
         _moveInput = input;
@@ -158,40 +134,19 @@ public class PlayerController : MonoBehaviour
 
     public void OnJumpButtonPressed()
     {
-        if (_isGrounded)
-        {
-            Vector3 vel = _rb.velocity;
-            vel.y = 0;
-            _rb.velocity = vel;
-
-            _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
-
-            _animator.SetBool("isJumping", true);
-        }
-        else
-        {
-            _animator.SetBool("isJumping", false);
-        }
+        TryJump();
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
         _moveInput = context.ReadValue<Vector2>();
-        _animator.SetBool("isWalking", _moveInput != Vector2.zero);
+        SetWalkingAnimation(_moveInput != Vector2.zero);
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        // Check for knockback control lock before allowing jump
         if (!context.performed) return;
-        if (!_isGrounded) return;
-
-        Vector3 velocity = _rb.velocity;
-        velocity.y = 0f;
-        _rb.velocity = velocity;
-
-        _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
-        _animator.SetBool("isJumping", true);
+        TryJump();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -199,6 +154,8 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.layer == 3)
         {
             _isGrounded = true;
+            SetJumpingAnimation(false);
+
         }
     }
 
@@ -227,5 +184,66 @@ public class PlayerController : MonoBehaviour
         Vector3 torque = (2f * rotationVector * _springStrength) - (_rb.angularVelocity * _springDamping);
 
         _rb.AddTorque(torque, ForceMode.Acceleration);
+    }
+
+    private Vector3 GetMoveDirection(Vector2 input)
+    {
+        if (_cameraSettings == null)
+        {
+            if (!_missingCameraSettingsWarned)
+            {
+                Debug.LogWarning("PlayerController is missing a CameraSettings reference.", this);
+                _missingCameraSettingsWarned = true;
+            }
+
+            return Vector3.zero;
+        }
+
+        return _cameraSettings.GetCameraRelativeMovement(input);
+    }
+
+    private void TryJump()
+    {
+        if (_knockback != null && _knockback.IsControlLocked) return;
+        if (!_isGrounded) return;
+
+        Vector3 velocity = _rb.velocity;
+        velocity.y = 0f;
+        _rb.velocity = velocity;
+
+        _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
+        SetJumpingAnimation(true);
+    }
+
+    private void SetWalkingAnimation(bool isWalking)
+    {
+        if (_playerAnimations == null)
+        {
+            if (!_missingAnimationsWarned)
+            {
+                Debug.LogWarning("PlayerController is missing a PlayerAnimations reference.", this);
+                _missingAnimationsWarned = true;
+            }
+
+            return;
+        }
+
+        _playerAnimations.SetWalking(isWalking);
+    }
+
+    private void SetJumpingAnimation(bool isJumping)
+    {
+        if (_playerAnimations == null)
+        {
+            if (!_missingAnimationsWarned)
+            {
+                Debug.LogWarning("PlayerController is missing a PlayerAnimations reference.", this);
+                _missingAnimationsWarned = true;
+            }
+
+            return;
+        }
+
+        _playerAnimations.SetJumping(isJumping);
     }
 }
