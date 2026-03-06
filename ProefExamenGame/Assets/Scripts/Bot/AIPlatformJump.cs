@@ -5,6 +5,9 @@ using UnityEngine.AI;
 
 public class AIPlatformJump : MonoBehaviour
 {
+    /// <summary>
+    /// causes the bot to jump when entering the trigger 
+    /// </summary>
     [Header("Target Platform")]
     public Transform _targetPlatform;
 

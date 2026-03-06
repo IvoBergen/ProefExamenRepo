@@ -4,6 +4,9 @@ using UnityEngine.AI;
 
 public class AIMoveNavMesh : MonoBehaviour
 {
+    /// <summary>
+    /// Makes the ai cycle trough patrol points also handels jumping logic to turn off the agent
+    /// </summary>
     [Header("Patrol Points")]
     public Transform[] Locations;
 

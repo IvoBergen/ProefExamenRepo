@@ -77,6 +77,7 @@ public class KnockbackObstacle : MonoBehaviour
         }
 
         ApplyKnockback(knockbackReceiver);
+        Debug.LogWarning("bothit");
     }
 
 
