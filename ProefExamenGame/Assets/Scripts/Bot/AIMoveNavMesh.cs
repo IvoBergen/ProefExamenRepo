@@ -48,6 +48,12 @@ public class AIMoveNavMesh : MonoBehaviour
     {
         _agent.SetDestination(Locations[_currentIndex].position);
         _animator?.SetBool("isWalking", true);
+
+
+        if (_agent.velocity.sqrMagnitude >= 20f * 20f)
+        {
+            _agent.velocity = Vector3.zero;
+        }
     }
 
     IEnumerator IdleRoutine()
@@ -84,6 +90,7 @@ public class AIMoveNavMesh : MonoBehaviour
         IsJumping = true;
         _agent.isStopped = true;
         _animator?.SetBool("isWalking", false);
+        _animator?.SetBool("isJumping", true);
     }
 
     public void EndJump()
@@ -106,10 +113,25 @@ public class AIMoveNavMesh : MonoBehaviour
         _isWaiting = false;
         _currentIndex = 0;
 
+        // Stop Rigidbody motion
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.isKinematic = true;  // temporarily kinematic to prevent physics interference
+        }
+
         if (_agent.isOnNavMesh && Locations.Length > 0)
         {
             _agent.isStopped = false;
             MoveToNextLocation();
+        }
+
+        // Re-enable physics after a short frame to avoid glitches
+        if (rb != null)
+        {
+            rb.isKinematic = false;
         }
     }
 }

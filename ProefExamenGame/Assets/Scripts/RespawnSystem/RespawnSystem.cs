@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 /// <summary>
 /// Handles killing volume logic and respawning players or bots.
-/// Ensures bot NavMeshAgents are re-enabled after respawn.
+/// Works with AIMoveNavMesh bots for patrol and jump reset.
 /// </summary>
 public class RespawnSystem : MonoBehaviour
 {
@@ -17,12 +17,13 @@ public class RespawnSystem : MonoBehaviour
 
         RespawnCharacter(other.gameObject);
 
-        if (!other.CompareTag("Player")) return;
-        died?.Invoke();
+        if (other.CompareTag("Player"))
+            died?.Invoke();
     }
 
     /// <summary>
     /// Respawns any character (player or bot) and resets physics + navmesh state.
+    /// Works with AIMoveNavMesh bots.
     /// </summary>
     private void RespawnCharacter(GameObject character)
     {
@@ -35,28 +36,26 @@ public class RespawnSystem : MonoBehaviour
         Transform checkpoint = CheckPointManager.Instance.CurrentCheckpoint.transform;
         Vector3 respawnPos = checkpoint.position;
         Quaternion respawnRot = checkpoint.rotation;
-
         Rigidbody rb = character.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.isKinematic = true;
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
+            rb.isKinematic = true;
         }
-
         character.transform.SetPositionAndRotation(respawnPos, respawnRot);
-        NavMeshJumpAgent bot = character.GetComponent<NavMeshJumpAgent>();
+        AIMoveNavMesh bot = character.GetComponent<AIMoveNavMesh>();
         if (bot != null)
         {
-            bot.ResetAfterRespawn(respawnPos);
+            bot.ResetPatrol();
+            bot.EndJump();
             NavMeshAgent agent = bot.GetComponent<NavMeshAgent>();
             if (agent != null)
             {
-                agent.enabled = true;          
-                agent.Warp(respawnPos);        
+                agent.enabled = true;
+                agent.Warp(respawnPos);
             }
         }
-
         if (rb != null)
         {
             rb.isKinematic = false;
