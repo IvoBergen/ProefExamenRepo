@@ -5,37 +5,34 @@ using UnityEngine;
 /// </summary>
 public class CharacterOutfitSwapper : MonoBehaviour
 {
-    public GameObject[] hats;
-    public GameObject[] clothes;
+    public GameObject[] outfits;
+    public static int SelectedOutfitIndex = 0;
 
-    private int _hatCount = 0;
-    private int _clothesCount = 0;
+    private void Start()
+    {
+        RefreshOutfitDisplay();
+    }
 
     public void UpHatCounter()
     {
-        hats[_hatCount].SetActive(false);
-        _hatCount = (_hatCount + 1) % hats.Length;
-        hats[_hatCount].SetActive(true);
+        outfits[SelectedOutfitIndex].SetActive(false);
+        SelectedOutfitIndex = (SelectedOutfitIndex + 1) % outfits.Length;
+        outfits[SelectedOutfitIndex].SetActive(true);
     }
 
     public void LowerHatCounter()
     {
-        hats[_hatCount].SetActive(false);
-        _hatCount = (_hatCount - 1 + hats.Length) % hats.Length;
-        hats[_hatCount].SetActive(true);
+        outfits[SelectedOutfitIndex].SetActive(false);
+        SelectedOutfitIndex = (SelectedOutfitIndex - 1 + outfits.Length) % outfits.Length;
+        outfits[SelectedOutfitIndex].SetActive(true);
     }
 
-    public void UpClothesCounter()
+    // Ensures only the selected outfit is active, all others are hidden
+    private void RefreshOutfitDisplay()
     {
-        clothes[_clothesCount].SetActive(false);
-        _clothesCount = (_clothesCount + 1) % clothes.Length;
-        clothes[_clothesCount].SetActive(true);
-    }
-
-    public void LowerClothesCounter()
-    {
-        clothes[_clothesCount].SetActive(false);
-        _clothesCount = (_clothesCount - 1 + clothes.Length) % clothes.Length;
-        clothes[_clothesCount].SetActive(true);
+        for (int i = 0; i < outfits.Length; i++)
+        {
+            outfits[i].SetActive(i == SelectedOutfitIndex);
+        }
     }
 }
