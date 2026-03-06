@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Player Settings")]
     [SerializeField] private bool _isGrounded;
-    [SerializeField] private float _moveSpeed = 5f;
+    public float _moveSpeed { get; set; } = 5f;
     [SerializeField] private float _jumpForce = 12f;
     [SerializeField] private float _doubleJumpForce;
     [SerializeField] private int _maxJumpCount = 2;
@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Ink Spot")]
     [SerializeField] private float _decreasedMovementSpeed = 3f;
-    private float _originalMovementSpeed;
+    public float _originalMovementSpeed { get; private set; }
 
     [Header("Upright Settings")]
     [SerializeField] private float _springStrength = 200f;
