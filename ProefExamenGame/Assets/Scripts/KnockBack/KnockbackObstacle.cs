@@ -1,12 +1,13 @@
 using UnityEngine;
 
-/// <summary>
-/// Applies a knockback impulse to the player when entering this trigger.
-/// This obstacle is used in the obstacle course level to push the player away.
-/// </summary>
+
 [RequireComponent(typeof(Collider))]
 public class KnockbackObstacle : MonoBehaviour
 {
+    /// <summary>
+    /// Applies a knockback impulse to the player when entering this trigger.
+    /// This obstacle is used in the obstacle course level to push the player away.
+    /// </summary>
     #region Knockback Settings
 
     [Header("Knockback Settings")]

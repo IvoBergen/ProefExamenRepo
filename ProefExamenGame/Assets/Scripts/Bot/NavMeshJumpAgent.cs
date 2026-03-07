@@ -6,6 +6,9 @@ using UnityEngine.AI;
 [RequireComponent(typeof(AIMoveNavMesh))]
 public class NavMeshJumpAgent : MonoBehaviour
 {
+    /// <summary>
+    /// this script isnt used anymore 
+    /// </summary>
     [SerializeField] private AIAnimator _animator;
     private NavMeshAgent _agent;
     private Rigidbody _rb;
