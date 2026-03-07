@@ -6,28 +6,28 @@ using UnityEngine.AI;
 public class AIPlatformJump : MonoBehaviour
 {
     [Header("Target Platform")]
-    public Transform _targetPlatform;
+    public Transform targetPlatform;
 
     [Header("Platform Type Settings")]
-    public bool _useParenting = true;
+    public bool useParenting = true;
 
     [Header("Jump Settings")]
-    public float _jumpDuration = 1.2f;
-    public float _jumpHeight = 1.5f;
-    public float _jumpDelay = 0.2f;
+    public float jumpDuration = 1.2f;
+    public float jumpHeight = 1.5f;
+    public float jumpDelay = 0.2f;
 
     [Header("Fail Settings")]
     [Range(0f, 1f)]
-    public float _failChance = 0.15f;
-    public float _failRespawnDelay = 5f;
-    public float _failForwardLoss = 0.4f;
+    public float failChance = 0.15f;
+    public float failRespawnDelay = 5f;
+    public float failForwardLoss = 0.4f;
 
-    private HashSet<Transform> _jumpingBots = new HashSet<Transform>();
+    private HashSet<Transform> jumpingBots = new HashSet<Transform>();
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Bot") || _targetPlatform == null) return;
-        if (_jumpingBots.Contains(other.transform)) return;
+        if (!other.CompareTag("Bot") || targetPlatform == null) return;
+        if (jumpingBots.Contains(other.transform)) return;
 
         Transform bot = other.transform;
 
@@ -38,15 +38,15 @@ public class AIPlatformJump : MonoBehaviour
 
         if (agent == null || rb == null || cap == null) return;
 
-        _jumpingBots.Add(bot);
+        jumpingBots.Add(bot);
         StartCoroutine(JumpRoutine(bot, agent, rb, cap, patrol));
     }
 
     private IEnumerator JumpRoutine(Transform ai, NavMeshAgent agent, Rigidbody rb, CapsuleCollider cap, AIMoveNavMesh patrol)
     {
-        yield return new WaitForSeconds(_jumpDelay);
+        yield return new WaitForSeconds(jumpDelay);
 
-        Vector3 lookDir = _targetPlatform.position - ai.position;
+        Vector3 lookDir = targetPlatform.position - ai.position;
         lookDir.y = 0;
         if (lookDir != Vector3.zero)
             ai.rotation = Quaternion.LookRotation(lookDir);
@@ -59,10 +59,10 @@ public class AIPlatformJump : MonoBehaviour
         rb.isKinematic = true;
 
         Vector3 startPos = ai.position;
-        Vector3 targetPos = _targetPlatform.position;
+        Vector3 targetPos = targetPlatform.position;
 
         float elapsed = 0f;
-        bool failed = Random.value < _failChance;
+        bool failed = Random.value < failChance;
 
         float botHalfHeight = cap.bounds.extents.y * 0.05f;
         targetPos.y = GetPlatformTopY() + botHalfHeight;
@@ -70,20 +70,19 @@ public class AIPlatformJump : MonoBehaviour
         Vector3 lastPos = startPos;
         Vector3 velocity = Vector3.zero;
 
-        while (elapsed < _jumpDuration)
+        while (elapsed < jumpDuration)
         {
             elapsed += Time.deltaTime;
-            float t = elapsed / _jumpDuration;
+            float t = elapsed / jumpDuration;
 
             Vector3 pos = Vector3.Lerp(startPos, targetPos, t);
-            pos.y += Mathf.Sin(Mathf.PI * t) * _jumpHeight;
+            pos.y += Mathf.Sin(Mathf.PI * t) * jumpHeight;
 
             velocity = (pos - lastPos) / Time.deltaTime;
             lastPos = pos;
 
             ai.position = pos;
 
-            // trigger failure mid-air
             if (failed && t > 0.55f)
                 break;
 
@@ -97,15 +96,13 @@ public class AIPlatformJump : MonoBehaviour
             rb.isKinematic = false;
             rb.useGravity = true;
 
-            // keep forward momentum but reduce it
-            velocity *= _failForwardLoss;
+            velocity *= failForwardLoss;
 
             rb.velocity = velocity;
 
-            // small stumble rotation
             ai.Rotate(Vector3.forward * Random.Range(-15f, 15f));
 
-            yield return new WaitForSeconds(_failRespawnDelay);
+            yield return new WaitForSeconds(failRespawnDelay);
 
             if (CheckPointManager.Instance != null && CheckPointManager.Instance.CurrentCheckpoint != null)
             {
@@ -130,9 +127,9 @@ public class AIPlatformJump : MonoBehaviour
         {
             ai.position = targetPos;
 
-            if (_useParenting)
+            if (useParenting)
             {
-                ai.SetParent(_targetPlatform);
+                ai.SetParent(targetPlatform);
                 rb.isKinematic = true;
             }
             else
@@ -142,15 +139,15 @@ public class AIPlatformJump : MonoBehaviour
             }
         }
 
-        _jumpingBots.Remove(ai);
+        jumpingBots.Remove(ai);
     }
 
     private float GetPlatformTopY()
     {
-        Renderer r = _targetPlatform.GetComponent<Renderer>();
+        Renderer r = targetPlatform.GetComponent<Renderer>();
         if (r != null)
             return r.bounds.max.y;
 
-        return _targetPlatform.position.y + (_targetPlatform.localScale.y * 0.5f);
+        return targetPlatform.position.y + (targetPlatform.localScale.y * 0.5f);
     }
 }
