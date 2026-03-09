@@ -53,7 +53,7 @@ This is the visual sheet for the speed boost power up.
 
 ![Speed Boost visualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/SpeedBoost.png)
 
-## Respawnmechanic by Owen
+## Respawn mechanic by Owen
 
 This respawn system ensures that the player is automatically placed back at the last reached checkpoint when they fall off the platform or hit a respawn trigger.
 
@@ -66,6 +66,11 @@ After that, physics is reactivated so the player can continue playing normally.
 In short: falling = reset to checkpoint without any strange physics bugs
 
 ![Foto van respawn systeem](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/BWP-VWO-Visualsheet.png)
+## AI pathfinding by Owen
+
+This mechanic is used to make the level more interesting to play. the bot is the main win/lose condition of the game. you're supposed to race against it and be faster than 50% of the ai to win the game. 
+
+![Foto van respawn systeem](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/AiJumping.gif)
 
 ## Moving obstackle by Christiaan Oosterwouder
 
