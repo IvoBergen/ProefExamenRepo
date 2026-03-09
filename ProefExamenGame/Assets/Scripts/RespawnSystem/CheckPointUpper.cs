@@ -9,9 +9,14 @@ public class CheckPointUpper : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         {
+            if (!other.CompareTag("Player"))
+            {
+                return;
+            }
             Debug.Log("NextCheckPoint");
             _manager.ActivateNextCheckpoint();
             Destroy(gameObject);
+
         }
     }
 }
