@@ -1,33 +1,57 @@
-# ReadME van team 04 Stumble guys 
+# ReadME van team 04 Stumble guys
 
-Ivo Bergen 
-  * [Moving Cubes](ProefExamenGame/Assets/Scripts/MovingCubes)
-  * [Some other mechanic X](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/mechanic_x)
-  * [Some other mechanic Y](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/mechanic_y)
-    
+Ivo Bergen
+
+* [Moving Cubes](ProefExamenGame/Assets/Scripts/MovingCubes)
+* [Ink Spot](ProefExamenGame/Assets/Scripts/InkSpot/InkSpot.cs)
+* [Speed Boost](ProefExamenGame/Assets/Scripts/PowerUps/SpeedBoost/PowerUpSpeedBoost.cs)
+
 Owen Stas:
-  * [Respawnsysteem](https://github.com/IvoBergen/ProefExamenRepo/wiki/RespawnSystem)
-  * [AI PathFinding](ProefExamenGame/Assets/Scripts/systems/bot)
+
+* [Respawnsysteem](https://github.com/IvoBergen/ProefExamenRepo/wiki/RespawnSystem)
+* [AI PathFinding](ProefExamenGame/Assets/Scripts/systems/bot)
 
 Christiaan Oosterwouder
-  * [Moving obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Battery_movement_spread_sheet.png)
-  * Some other Game object
+
+* [Moving obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Battery_movement_spread_sheet.png)
+* Some other Game object
 
 Akari Le
-  * [Moving obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Battery_movement_spread_sheet.png)
-  * Some other Game object
 
+* [PlayerMovement](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Player-Movement-Visualsheet.png)
+* Some other Game object
 
-## Moving obstackle by Christiaan Oosterwouder
-This moving obstacle is designed to increase the level of challenge and encourage the player to interact with the environment in a more dynamic way. Instead of allowing the player to move through the level in a static or predictable pattern, the obstacle forces them to constantly adjust their timing, positioning, and movement strategy.
+## moving platform by Ivo
 
-As the obstacle moves, it creates changing gaps, shifting hazards, or temporary blockades that require the player to observe its behavior and respond accordingly. This adds a layer of timing-based gameplay, where success depends on reading movement patterns and choosing the right moment to act.
+The moving platforms are added to challenge the player’s movement, timing, and overall control. Instead of simply walking or jumping across static surfaces, the player must carefully observe the platform’s motion and choose the right moment to move.
 
-Because the obstacle is not stationary, it keeps the gameplay engaging and prevents the level from feeling repetitive. The player must stay alert, react quickly, and adapt to the environment as it changes in real time.
+## Moving Cubes
 
-In short: a moving obstacle = dynamic gameplay, increased challenge, and more active player decision-making.
+The moving cubes are made as an obstacle for the player. They Move to random locations decided by the input values on the X an Z axis. The cube also rotates between 90, 0 and -90 degrees to add for an extra layer of difficulty.
 
-![moving obstackle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Battery_movement_spread_sheet.png)
+![MovingCubes gif](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/MovingCubes.gif)
+
+This is the visual sheet for the moving cube scripts
+
+![Moving Cubes visualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/VisualSheetMovingCube.png)
+
+## Ink Spot by Ivo
+
+The Ink spot is added onto the course to add extra challenge for the player to avoid them so their speed doesn't decrease. They work with a collision check and if the player walks through them their movement speed
+will be decreased.
+
+This is the visual sheet for the ink spot
+
+![Ink Spot visualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/InkSpot.png)
+
+## Speed Boost by Ivo
+
+The power up, in this case a speed boost is added for extra variety in the gameplay loop. It adds extra challenge and a fun factor to the game. It does a collision check to check if the player touched it and then it
+triggers an Action that calls the other script responsible for increasing and decreasing the player's speed.
+
+This is the visual sheet for the speed boost power up.
+
+![Speed Boost visualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/SpeedBoost.png)
 
 ## Respawnmechanic by Owen
 
@@ -43,33 +67,23 @@ In short: falling = reset to checkpoint without any strange physics bugs
 
 ![Foto van respawn systeem](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/BWP-VWO-Visualsheet.png)
 
+## Moving obstackle by Christiaan Oosterwouder
 
-## moving platform by Ivo
+This moving obstacle is designed to increase the level of challenge and encourage the player to interact with the environment in a more dynamic way. Instead of allowing the player to move through the level in a static or predictable pattern, the obstacle forces them to constantly adjust their timing, positioning, and movement strategy.
 
-The moving platforms are added to challenge the player’s movement, timing, and overall control. Instead of simply walking or jumping across static surfaces, the player must carefully observe the platform’s motion and choose the right moment to move.
-## Moving Cubes
+As the obstacle moves, it creates changing gaps, shifting hazards, or temporary blockades that require the player to observe its behavior and respond accordingly. This adds a layer of timing-based gameplay, where success depends on reading movement patterns and choosing the right moment to act.
 
-The moving cubes are made as an obstacle for the player. They Move to random locations decided by the input values on the X an Z axis. The cube also rotates between 90, 0 and -90 degrees to add for an extra layer of difficulty 
+Because the obstacle is not stationary, it keeps the gameplay engaging and prevents the level from feeling repetitive. The player must stay alert, react quickly, and adapt to the environment as it changes in real time.
 
-![MovingCubes gif](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/MovingCubes.gif)
+In short: a moving obstacle = dynamic gameplay, increased challenge, and more active player decision-making.
 
-This is the visual sheet for the moving cube scripts
+![moving obstackle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Battery_movement_spread_sheet.png)
 
-![Moving Cubes visualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/VisualSheetMovingCube.png)
+## Player movement by Akari
 
-### class diagram voor game entities:
+movement for the player
 
-Because the platforms shift position over time, they require precise timing and accurate jumps. The player has to anticipate where the platform will be, not just where it currently is. This improves reaction speed, spatial awareness, and movement consistency.
-
-In addition, moving platforms create variation in pacing. Sometimes the player must wait patiently for the correct opportunity, and other times they must act quickly before the platform moves out of reach. This balance between patience and quick decision-making adds depth to the gameplay.
-
-![example](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEfiles/VisualSheetMovingCube.png)
-
-## Player movement by Akari 
-
-movement for the player 
-
-![example](https://user-images.githubusercontent.com/1262745/189135129-34d15823-0311-46b5-a041-f0bbfede9e78.png)
+![example](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Player-Movement-Visualsheet.png)
 
 ## Some beautifull script by Student Z
 

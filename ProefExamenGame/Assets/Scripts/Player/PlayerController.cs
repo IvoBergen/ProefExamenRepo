@@ -2,22 +2,25 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// <c>PlayerController</c> Controls the movement + camera + Animations of the player
+/// <c>PlayerController</c> Controls player movement, rotation, and physics behaviour.
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
     [Header("Player Settings")]
     [SerializeField] private bool _isGrounded;
-    [SerializeField] private float _moveSpeed = 5f;
+    [SerializeField] private bool _isDashing;
+    [SerializeField] private bool _isGettingUp;
+    [SerializeField] private bool _isDead;
+    public float _moveSpeed { get; set; } = 5f;
     [SerializeField] private float _jumpForce = 12f;
+    [SerializeField] private float _doubleJumpForce;
+    [SerializeField] private int _maxJumpCount = 2;
     [SerializeField] private float _rotationSpeed = 10f;
     [SerializeField] private bool _allowBackwardMovement = true; // New option
 
-    [Header("Camera")]
-    [SerializeField] private Transform _cameraTransform;
-
-    [Header("Animation")]
-    [SerializeField] private Animator _animator;
+    [Header("Ink Spot")]
+    [SerializeField] private float _decreasedMovementSpeed = 3f;
+    public float _originalMovementSpeed { get; private set; }
 
     [Header("Upright Settings")]
     [SerializeField] private float _springStrength = 200f;
@@ -25,22 +28,36 @@ public class PlayerController : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private KnockbackReceiver _knockback;
+    [SerializeField] private PlayerAnimations _playerAnimations;
+    [SerializeField] private CameraSettings _cameraSettings;
 
     private Rigidbody _rb;
     private Vector2 _moveInput;
     private Vector3 lastForwardDirection; // Track last forward direction
+    private int _jumpsUsed;
+    private bool _missingAnimationsWarned;
+    private bool _missingCameraSettingsWarned;
 
+
+    private void OnEnable()
+    {
+        InkSpot.onInkEntered += DecreaseMovementSpeed;
+        InkSpot.onInkExited += ResetMovementSpeed;
+    }
+
+    private void OnDisable()
+    {
+        InkSpot.onInkEntered -= DecreaseMovementSpeed;
+        InkSpot.onInkExited -= ResetMovementSpeed;
+    }
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
 
-        if (_cameraTransform == null)
-        {
-            _cameraTransform = Camera.main.transform;
-        }
-
         lastForwardDirection = transform.forward;
+        _originalMovementSpeed = _moveSpeed;
+        _doubleJumpForce = _jumpForce * 0.85f;
     }
 
     private void Update()
@@ -48,19 +65,17 @@ public class PlayerController : MonoBehaviour
         // Check for knockback control lock before processing movement input
         if (_knockback != null && _knockback.IsControlLocked)
         {
-            _animator.SetBool("isWalking", false);
+            UpdateAnimationStates();
             return;
         }
 
         if (_moveInput != Vector2.zero)
         {
-            Vector3 moveDir = GetCameraRelativeMovement(_moveInput);
-            _animator.SetBool("isWalking", true);
+            Vector3 moveDir = GetMoveDirection(_moveInput);
 
             if (moveDir != Vector3.zero)
             {
                 // Only rotate if moving forward or sideways (not backward)
-                float inputMagnitude = _moveInput.magnitude;
                 float forwardInput = _moveInput.y;
 
                 // If moving forward or mostly sideways, update rotation
@@ -79,14 +94,18 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            _animator.SetBool("isWalking", false);
-        }
+
+        UpdateAnimationStates();
     }
 
     private void FixedUpdate()
     {
+        // reset jumps when grounded
+        if (_isGrounded)
+        {
+            _jumpsUsed = 0;
+        }
+
         // Only apply movement if not under knockback control lock
         if (_knockback == null || !_knockback.IsControlLocked)
         {
@@ -100,7 +119,7 @@ public class PlayerController : MonoBehaviour
     {
         float currentYVelocity = _rb.velocity.y;
 
-        Vector3 moveDirection = GetCameraRelativeMovement(_moveInput);
+        Vector3 moveDirection = GetMoveDirection(_moveInput);
         Vector3 newVelocity = moveDirection * _moveSpeed;
 
         newVelocity.y = currentYVelocity;
@@ -108,20 +127,14 @@ public class PlayerController : MonoBehaviour
         _rb.velocity = newVelocity;
     }
 
-    private Vector3 GetCameraRelativeMovement(Vector2 input)
+    private void DecreaseMovementSpeed()
     {
-        Vector3 cameraForward = _cameraTransform.forward;
-        Vector3 cameraRight = _cameraTransform.right;
+        _moveSpeed = _decreasedMovementSpeed;
+    }
 
-        cameraForward.y = 0f;
-        cameraRight.y = 0f;
-
-        cameraForward.Normalize();
-        cameraRight.Normalize();
-
-        Vector3 moveDirection = (cameraRight * input.x) + (cameraForward * input.y);
-
-        return moveDirection;
+    private void ResetMovementSpeed()
+    {
+        _moveSpeed = _originalMovementSpeed;
     }
 
     public void SetMovementInput(Vector2 input)
@@ -131,40 +144,18 @@ public class PlayerController : MonoBehaviour
 
     public void OnJumpButtonPressed()
     {
-        if (_isGrounded)
-        {
-            Vector3 vel = _rb.velocity;
-            vel.y = 0;
-            _rb.velocity = vel;
-
-            _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
-
-            _animator.SetBool("isJumping", true);
-        }
-        else
-        {
-            _animator.SetBool("isJumping", false);
-        }
+        TryJump();
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
         _moveInput = context.ReadValue<Vector2>();
-        _animator.SetBool("isWalking", _moveInput != Vector2.zero);
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        // Check for knockback control lock before allowing jump
         if (!context.performed) return;
-        if (!_isGrounded) return;
-
-        Vector3 velocity = _rb.velocity;
-        velocity.y = 0f;
-        _rb.velocity = velocity;
-
-        _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
-        _animator.SetBool("isJumping", true);
+        TryJump();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -172,6 +163,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.layer == 3)
         {
             _isGrounded = true;
+
         }
     }
 
@@ -201,4 +193,97 @@ public class PlayerController : MonoBehaviour
 
         _rb.AddTorque(torque, ForceMode.Acceleration);
     }
+
+    private Vector3 GetMoveDirection(Vector2 input)
+    {
+        if (_cameraSettings == null)
+        {
+            if (!_missingCameraSettingsWarned)
+            {
+                Debug.LogWarning("PlayerController is missing a CameraSettings reference.", this);
+                _missingCameraSettingsWarned = true;
+            }
+
+            return Vector3.zero;
+        }
+
+        return _cameraSettings.GetCameraRelativeMovement(input);
+    }
+
+    private void TryJump()
+    {
+        if (_knockback != null && _knockback.IsControlLocked) return;
+        if (_jumpsUsed >= _maxJumpCount) return;
+        if (_jumpsUsed == 0 && !_isGrounded) return;
+
+        Vector3 velocity = _rb.velocity;
+        velocity.y = 0f;
+        _rb.velocity = velocity;
+
+        float jumpForce = _jumpsUsed == 0 ? _jumpForce : _doubleJumpForce;
+        _rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        _isGrounded = false;
+        _jumpsUsed++;
+    }
+
+    public void SetDashingState(bool isDashing)
+    {
+        _isDashing = isDashing;
+    }
+
+    public void SetDeadState(bool isDead)
+    {
+        _isDead = isDead;
+    }
+
+    public void SetGettingUpState(bool isGettingUp)
+    {
+        _isGettingUp = isGettingUp;
+    }
+
+    private void UpdateAnimationStates()
+    {
+        if (!TryGetAnimations(out PlayerAnimations animations))
+        {
+            return;
+        }
+
+        bool hasMoveInput = _moveInput.sqrMagnitude > 0.0001f;
+        bool isDead = _isDead;
+        bool isGettingUp = _isGettingUp && !isDead;
+        bool isDashing = _isDashing && !isDead && !isGettingUp;
+        bool isAirborne = !_isGrounded;
+        float verticalVelocity = _rb != null ? _rb.velocity.y : 0f;
+
+        bool isJumping = isAirborne && verticalVelocity > 0.01f && !isDead && !isGettingUp && !isDashing;
+        bool isFalling = isAirborne && verticalVelocity < -0.01f && !isDead && !isGettingUp && !isDashing;
+        bool isWalking = hasMoveInput && _isGrounded && !isDead && !isGettingUp && !isDashing;
+        bool isIdle = _isGrounded && !hasMoveInput && !isDead && !isGettingUp && !isDashing;
+
+        animations.SetIdle(isIdle);
+        animations.SetWalking(isWalking);
+        animations.SetDashing(isDashing);
+        animations.SetJumping(isJumping);
+        animations.SetFalling(isFalling);
+        animations.SetDeath(isDead);
+        animations.SetGettingUp(isGettingUp);
+    }
+
+    private bool TryGetAnimations(out PlayerAnimations animations)
+    {
+        animations = _playerAnimations;
+        if (animations != null)
+        {
+            return true;
+        }
+
+        if (!_missingAnimationsWarned)
+        {
+            Debug.LogWarning("PlayerController is missing a PlayerAnimations reference.", this);
+            _missingAnimationsWarned = true;
+        }
+
+        return false;
+    }
 }
+    
