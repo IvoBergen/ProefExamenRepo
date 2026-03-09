@@ -22,6 +22,16 @@ public class PlayerAnimations : MonoBehaviour
         _animator.SetBool("isWalking", isWalking);
     }
 
+    public void SetIdle(bool isIdle)
+    {
+        if (_animator == null)
+        {
+            return;
+        }
+
+        _animator.SetBool("isIdle", isIdle);
+    }
+
     public void SetJumping(bool isJumping)
     {
         if (_animator == null)
@@ -29,6 +39,46 @@ public class PlayerAnimations : MonoBehaviour
             return;
         }
 
-        _animator.SetTrigger("isJumping");
+        _animator.SetBool("isJumping", isJumping);
+    }
+
+    public void SetDashing(bool isDashing)
+    {
+        if (_animator == null)
+        {
+            return;
+        }
+
+        _animator.SetBool("isDashing", isDashing);
+    }
+
+    public void SetFalling(bool isFalling)
+    {
+        if (_animator == null)
+        {
+            return;
+        }
+
+        _animator.SetBool("isFalling", isFalling);
+    }
+
+    public void SetGettingUp(bool isGettingUp)
+    {
+        if (_animator == null)
+        {
+            return;
+        }
+
+        _animator.SetBool("isGettingUp", isGettingUp);
+    }
+
+    public void SetDeath(bool isDead)
+    {
+        if (_animator == null)
+        {
+            return;
+        }
+
+        _animator.SetBool("isDead", isDead);
     }
 }
