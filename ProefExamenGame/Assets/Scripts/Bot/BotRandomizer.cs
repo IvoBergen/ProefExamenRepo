@@ -3,9 +3,10 @@ using UnityEngine;
 using UnityEngine.AI;
 /// <summary>
 /// Makes the bot choose a path that is not the most optimal and gives it random stats
-/// </summary>
+/// </summary
 public class BotPathRandomizer : MonoBehaviour
 {
+
     private NavMeshAgent _agent;
 
     [Header("Speed Personality")]

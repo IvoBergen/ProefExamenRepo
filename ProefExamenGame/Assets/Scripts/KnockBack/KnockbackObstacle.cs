@@ -1,12 +1,13 @@
 using UnityEngine;
 
-/// <summary>
-/// Applies a knockback impulse to the player when entering this trigger.
-/// This obstacle is used in the obstacle course level to push the player away.
-/// </summary>
+
 [RequireComponent(typeof(Collider))]
 public class KnockbackObstacle : MonoBehaviour
 {
+    /// <summary>
+    /// Applies a knockback impulse to the player when entering this trigger.
+    /// This obstacle is used in the obstacle course level to push the player away.
+    /// </summary>
     #region Knockback Settings
 
     [Header("Knockback Settings")]
@@ -31,6 +32,7 @@ public class KnockbackObstacle : MonoBehaviour
     [Header("Detection")]
 
     [SerializeField] private string _playerTag = "Player";
+    [SerializeField] private string _AiTag = "Bot";
 
     #endregion
 
@@ -56,7 +58,7 @@ public class KnockbackObstacle : MonoBehaviour
     /// </summary>
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag(_playerTag))
+        if (!other.CompareTag(_playerTag) && !other.CompareTag(_AiTag))
         {
             return;
         }
