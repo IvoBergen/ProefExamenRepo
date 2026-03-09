@@ -416,7 +416,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331bbe12bff9c80448ebbc346661151b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 100794877}
   _rotationSpeed: 45
 --- !u!114 &100794879
 MonoBehaviour:
@@ -436,6 +435,7 @@ MonoBehaviour:
   - {fileID: 1496341108}
   - {fileID: 1687913849}
   - {fileID: 2129287272}
+  - {fileID: 1565357209}
 --- !u!65 &100794880
 BoxCollider:
   m_ObjectHideFlags: 0
