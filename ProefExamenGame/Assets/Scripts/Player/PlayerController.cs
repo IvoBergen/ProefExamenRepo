@@ -8,8 +8,13 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Player Settings")]
     [SerializeField] private bool _isGrounded;
+    [SerializeField] private bool _isDashing;
+    [SerializeField] private bool _isGettingUp;
+    [SerializeField] private bool _isDead;
     public float _moveSpeed { get; set; } = 5f;
     [SerializeField] private float _jumpForce = 12f;
+    [SerializeField] private float _doubleJumpForce;
+    [SerializeField] private int _maxJumpCount = 2;
     [SerializeField] private float _rotationSpeed = 10f;
     [SerializeField] private bool _allowBackwardMovement = true; // New option
 
@@ -29,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rb;
     private Vector2 _moveInput;
     private Vector3 lastForwardDirection; // Track last forward direction
+    private int _jumpsUsed;
     private bool _missingAnimationsWarned;
     private bool _missingCameraSettingsWarned;
 
@@ -51,6 +57,7 @@ public class PlayerController : MonoBehaviour
 
         lastForwardDirection = transform.forward;
         _originalMovementSpeed = _moveSpeed;
+        _doubleJumpForce = _jumpForce * 0.85f;
     }
 
     private void Update()
@@ -58,14 +65,13 @@ public class PlayerController : MonoBehaviour
         // Check for knockback control lock before processing movement input
         if (_knockback != null && _knockback.IsControlLocked)
         {
-            SetWalkingAnimation(false);
+            UpdateAnimationStates();
             return;
         }
 
         if (_moveInput != Vector2.zero)
         {
             Vector3 moveDir = GetMoveDirection(_moveInput);
-            SetWalkingAnimation(true);
 
             if (moveDir != Vector3.zero)
             {
@@ -88,14 +94,18 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            SetWalkingAnimation(false);
-        }
+
+        UpdateAnimationStates();
     }
 
     private void FixedUpdate()
     {
+        // reset jumps when grounded
+        if (_isGrounded)
+        {
+            _jumpsUsed = 0;
+        }
+
         // Only apply movement if not under knockback control lock
         if (_knockback == null || !_knockback.IsControlLocked)
         {
@@ -140,7 +150,6 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         _moveInput = context.ReadValue<Vector2>();
-        SetWalkingAnimation(_moveInput != Vector2.zero);
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -154,7 +163,6 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.layer == 3)
         {
             _isGrounded = true;
-            SetJumpingAnimation(false);
 
         }
     }
@@ -205,45 +213,77 @@ public class PlayerController : MonoBehaviour
     private void TryJump()
     {
         if (_knockback != null && _knockback.IsControlLocked) return;
-        if (!_isGrounded) return;
+        if (_jumpsUsed >= _maxJumpCount) return;
+        if (_jumpsUsed == 0 && !_isGrounded) return;
 
         Vector3 velocity = _rb.velocity;
         velocity.y = 0f;
         _rb.velocity = velocity;
 
-        _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
-        SetJumpingAnimation(true);
+        float jumpForce = _jumpsUsed == 0 ? _jumpForce : _doubleJumpForce;
+        _rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        _isGrounded = false;
+        _jumpsUsed++;
     }
 
-    private void SetWalkingAnimation(bool isWalking)
+    public void SetDashingState(bool isDashing)
     {
-        if (_playerAnimations == null)
-        {
-            if (!_missingAnimationsWarned)
-            {
-                Debug.LogWarning("PlayerController is missing a PlayerAnimations reference.", this);
-                _missingAnimationsWarned = true;
-            }
+        _isDashing = isDashing;
+    }
 
+    public void SetDeadState(bool isDead)
+    {
+        _isDead = isDead;
+    }
+
+    public void SetGettingUpState(bool isGettingUp)
+    {
+        _isGettingUp = isGettingUp;
+    }
+
+    private void UpdateAnimationStates()
+    {
+        if (!TryGetAnimations(out PlayerAnimations animations))
+        {
             return;
         }
 
-        _playerAnimations.SetWalking(isWalking);
+        bool hasMoveInput = _moveInput.sqrMagnitude > 0.0001f;
+        bool isDead = _isDead;
+        bool isGettingUp = _isGettingUp && !isDead;
+        bool isDashing = _isDashing && !isDead && !isGettingUp;
+        bool isAirborne = !_isGrounded;
+        float verticalVelocity = _rb != null ? _rb.velocity.y : 0f;
+
+        bool isJumping = isAirborne && verticalVelocity > 0.01f && !isDead && !isGettingUp && !isDashing;
+        bool isFalling = isAirborne && verticalVelocity < -0.01f && !isDead && !isGettingUp && !isDashing;
+        bool isWalking = hasMoveInput && _isGrounded && !isDead && !isGettingUp && !isDashing;
+        bool isIdle = _isGrounded && !hasMoveInput && !isDead && !isGettingUp && !isDashing;
+
+        animations.SetIdle(isIdle);
+        animations.SetWalking(isWalking);
+        animations.SetDashing(isDashing);
+        animations.SetJumping(isJumping);
+        animations.SetFalling(isFalling);
+        animations.SetDeath(isDead);
+        animations.SetGettingUp(isGettingUp);
     }
 
-    private void SetJumpingAnimation(bool isJumping)
+    private bool TryGetAnimations(out PlayerAnimations animations)
     {
-        if (_playerAnimations == null)
+        animations = _playerAnimations;
+        if (animations != null)
         {
-            if (!_missingAnimationsWarned)
-            {
-                Debug.LogWarning("PlayerController is missing a PlayerAnimations reference.", this);
-                _missingAnimationsWarned = true;
-            }
-
-            return;
+            return true;
         }
 
-        _playerAnimations.SetJumping(isJumping);
+        if (!_missingAnimationsWarned)
+        {
+            Debug.LogWarning("PlayerController is missing a PlayerAnimations reference.", this);
+            _missingAnimationsWarned = true;
+        }
+
+        return false;
     }
 }
+    
