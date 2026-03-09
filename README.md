@@ -9,7 +9,7 @@ Ivo Bergen
 Owen Stas:
 
 * [Respawnsysteem](https://github.com/IvoBergen/ProefExamenRepo/wiki/RespawnSystem)
-* [AI PathFinding](ProefExamenGame/Assets/Scripts/systems/bot)
+* [AI PathFinding](https://github.com/IvoBergen/ProefExamenRepo/wiki/BotProgamming)
 
 Christiaan Oosterwouder
 
