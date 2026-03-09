@@ -1,9 +1,11 @@
 using UnityEngine;
 
+/// <summary>
+/// <c>RotateCharacter</c> Rotates the character slowly for a preview in the main menu
+/// </summary>
+
 public class RotateCharacter : MonoBehaviour
 {
-    [SerializeField] private GameObject _player;
-
     [SerializeField] private float _rotationSpeed;
 
     private float _currentYRotation = 0f;
@@ -11,6 +13,6 @@ public class RotateCharacter : MonoBehaviour
     private void Update()
     {
         _currentYRotation += _rotationSpeed * Time.deltaTime;
-        _player.transform.rotation = Quaternion.Euler(0f, _currentYRotation, 0f);
+        transform.rotation = Quaternion.Euler(0f, _currentYRotation, 0f);
     }
 }

@@ -13,21 +13,29 @@ public class CharacterOutfitSwapper : MonoBehaviour
         RefreshOutfitDisplay();
     }
 
-    public void UpHatCounter()
+    /// <summary>
+    /// <c>UpOutfitCounter</c> Adds one to the hat counter and cycles through it
+    /// </summary>
+    public void UpOutfitCounter()
     {
         outfits[SelectedOutfitIndex].SetActive(false);
         SelectedOutfitIndex = (SelectedOutfitIndex + 1) % outfits.Length;
         outfits[SelectedOutfitIndex].SetActive(true);
     }
 
-    public void LowerHatCounter()
+    /// <summary>
+    /// <c>LowerOutfitCounter</c> Removes one to the hat counter an cycles through it
+    /// </summary>
+    public void LowerOutfitCounter()
     {
         outfits[SelectedOutfitIndex].SetActive(false);
         SelectedOutfitIndex = (SelectedOutfitIndex - 1 + outfits.Length) % outfits.Length;
         outfits[SelectedOutfitIndex].SetActive(true);
     }
 
-    // Ensures only the selected outfit is active, all others are hidden
+    /// <summary>
+    /// <c>RefreshOutfitDisplay</c> Ensures only the selected outfit is active, all others are hidden
+    /// </summary>
     private void RefreshOutfitDisplay()
     {
         for (int i = 0; i < outfits.Length; i++)
