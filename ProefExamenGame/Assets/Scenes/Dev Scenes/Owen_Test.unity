@@ -393,14 +393,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04b78f78d325914ab06f5da2c85eab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetPlatform: {fileID: 772695203}
-  _useParenting: 0
-  _jumpDuration: 1.2
-  _jumpHeight: 1.5
-  _jumpDelay: 0.2
-  _failChance: 0.2
-  _failRespawnDelay: 5
-  _failForwardLoss: 0.4
+  targetPlatform: {fileID: 0}
+  useParenting: 1
+  jumpDuration: 0.8
+  jumpHeight: 1.5
+  jumpDelay: 0.2
+  failChance: 0.15
+  failAtPercent: 0.6
+  failRespawnDelay: 5
+  failForwardLoss: 0.4
+  stuckTime: 10
 --- !u!65 &64277815
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -549,7 +551,7 @@ MonoBehaviour:
   _minZ: -11
   _maxZ: -11
   speed: 1
---- !u!4 &96646341 stripped
+--- !u!4 &96646343 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ae50cb51558ff904b999519d05d82865, type: 3}
   m_PrefabInstance: {fileID: 1572755747}
@@ -1226,7 +1228,7 @@ Animator:
   m_GameObject: {fileID: 252920262}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4b0c4956ec0e1504f9a467046244c754, type: 2}
+  m_Controller: {fileID: 9100000, guid: d64457e96eeaf494cbfe10a150a8087b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1665,14 +1667,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04b78f78d325914ab06f5da2c85eab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetPlatform: {fileID: 1834210628}
-  _useParenting: 1
-  _jumpDuration: 0.6
-  _jumpHeight: 1.5
-  _jumpDelay: 0.2
-  _failChance: 0.2
-  _failRespawnDelay: 5
-  _failForwardLoss: 0.4
+  targetPlatform: {fileID: 1834210628}
+  useParenting: 1
+  jumpDuration: 0.8
+  jumpHeight: 1.5
+  jumpDelay: 0.2
+  failChance: 0.253
+  failAtPercent: 0.6
+  failRespawnDelay: 5
+  failForwardLoss: 0.4
+  stuckTime: 10
 --- !u!1001 &353945419
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3474,14 +3478,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04b78f78d325914ab06f5da2c85eab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetPlatform: {fileID: 959304941}
-  _useParenting: 0
-  _jumpDuration: 1.2
-  _jumpHeight: 1.5
-  _jumpDelay: 0.2
-  _failChance: 0.2
-  _failRespawnDelay: 5
-  _failForwardLoss: 0.4
+  targetPlatform: {fileID: 0}
+  useParenting: 1
+  jumpDuration: 0.8
+  jumpHeight: 1.5
+  jumpDelay: 0.2
+  failChance: 0.15
+  failAtPercent: 0.6
+  failRespawnDelay: 5
+  failForwardLoss: 0.4
+  stuckTime: 10
 --- !u!65 &801613700
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3840,14 +3846,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04b78f78d325914ab06f5da2c85eab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetPlatform: {fileID: 1537808324}
-  _useParenting: 1
-  _jumpDuration: 0.6
-  _jumpHeight: 1.5
-  _jumpDelay: 0.2
-  _failChance: 0.2
-  _failRespawnDelay: 5
-  _failForwardLoss: 0.4
+  targetPlatform: {fileID: 1537808326}
+  useParenting: 1
+  jumpDuration: 0.8
+  jumpHeight: 1.5
+  jumpDelay: 0.2
+  failChance: 0.232
+  failAtPercent: 0.358
+  failRespawnDelay: 5
+  failForwardLoss: 0.4
+  stuckTime: 10
 --- !u!65 &824719020
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3928,8 +3936,8 @@ Transform:
   m_GameObject: {fileID: 824719018}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.42, y: 6.19, z: -10.75}
-  m_LocalScale: {x: 17.29031, y: 1, z: 1}
+  m_LocalPosition: {x: 4.42, y: 6.88, z: -10.88}
+  m_LocalScale: {x: 17.29031, y: 0.27099, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -3998,14 +4006,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04b78f78d325914ab06f5da2c85eab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetPlatform: {fileID: 96646341}
-  _useParenting: 1
-  _jumpDuration: 0.6
-  _jumpHeight: 1.5
-  _jumpDelay: 0.2
-  _failChance: 0.2
-  _failRespawnDelay: 5
-  _failForwardLoss: 0.4
+  targetPlatform: {fileID: 96646343}
+  useParenting: 1
+  jumpDuration: 0.8
+  jumpHeight: 1.5
+  jumpDelay: 0.2
+  failChance: 0.15
+  failAtPercent: 0.6
+  failRespawnDelay: 5
+  failForwardLoss: 0.4
+  stuckTime: 10
 --- !u!65 &833435033
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4086,8 +4096,8 @@ Transform:
   m_GameObject: {fileID: 833435031}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.29, y: 6.19, z: -4.84}
-  m_LocalScale: {x: 17.29031, y: 1, z: 1}
+  m_LocalPosition: {x: 4.29, y: 6.86, z: -5.01}
+  m_LocalScale: {x: 17.29031, y: 0.10856, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -4119,7 +4129,7 @@ Animator:
   m_GameObject: {fileID: 860278367}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4b0c4956ec0e1504f9a467046244c754, type: 2}
+  m_Controller: {fileID: 9100000, guid: d64457e96eeaf494cbfe10a150a8087b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -4725,14 +4735,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04b78f78d325914ab06f5da2c85eab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetPlatform: {fileID: 1684048901}
-  _useParenting: 1
-  _jumpDuration: 0.6
-  _jumpHeight: 1.5
-  _jumpDelay: 0.2
-  _failChance: 0
-  _failRespawnDelay: 5
-  _failForwardLoss: 0.4
+  targetPlatform: {fileID: 1684048903}
+  useParenting: 1
+  jumpDuration: 0.8
+  jumpHeight: 1.5
+  jumpDelay: 0.2
+  failChance: 0
+  failAtPercent: 0.6
+  failRespawnDelay: 5
+  failForwardLoss: 0.4
+  stuckTime: 10
 --- !u!65 &976876862
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6031,14 +6043,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04b78f78d325914ab06f5da2c85eab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetPlatform: {fileID: 1381754741}
-  _useParenting: 0
-  _jumpDuration: 1.2
-  _jumpHeight: 1.5
-  _jumpDelay: 0.2
-  _failChance: 0.2
-  _failRespawnDelay: 5
-  _failForwardLoss: 0.4
+  targetPlatform: {fileID: 0}
+  useParenting: 1
+  jumpDuration: 0.8
+  jumpHeight: 1.5
+  jumpDelay: 0.2
+  failChance: 0.15
+  failAtPercent: 0.6
+  failRespawnDelay: 5
+  failForwardLoss: 0.4
+  stuckTime: 10
 --- !u!65 &1322248357
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6440,11 +6454,6 @@ MonoBehaviour:
   _minZ: 36
   _maxZ: 36
   speed: 1
---- !u!4 &1381754741 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ae50cb51558ff904b999519d05d82865, type: 3}
-  m_PrefabInstance: {fileID: 1792828520}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1419888148
 GameObject:
   m_ObjectHideFlags: 0
@@ -6747,7 +6756,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.02, y: 0.019999996, z: 0.019999996}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!4 &1537808324 stripped
+--- !u!4 &1537808326 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ae50cb51558ff904b999519d05d82865, type: 3}
   m_PrefabInstance: {fileID: 778025257}
@@ -7302,7 +7311,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.02, y: 0.019999996, z: 0.019999996}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!4 &1684048901 stripped
+--- !u!4 &1684048903 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ae50cb51558ff904b999519d05d82865, type: 3}
   m_PrefabInstance: {fileID: 1933290402}
@@ -7456,14 +7465,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04b78f78d325914ab06f5da2c85eab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetPlatform: {fileID: 2063908976}
-  _useParenting: 0
-  _jumpDuration: 1.2
-  _jumpHeight: 1.5
-  _jumpDelay: 0.2
-  _failChance: 0.2
-  _failRespawnDelay: 5
-  _failForwardLoss: 0.4
+  targetPlatform: {fileID: 0}
+  useParenting: 1
+  jumpDuration: 0.8
+  jumpHeight: 1.5
+  jumpDelay: 0.2
+  failChance: 0.15
+  failAtPercent: 0.6
+  failRespawnDelay: 5
+  failForwardLoss: 0.4
+  stuckTime: 10
 --- !u!1001 &1736334676
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7567,7 +7578,7 @@ Animator:
   m_GameObject: {fileID: 1747011167}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4b0c4956ec0e1504f9a467046244c754, type: 2}
+  m_Controller: {fileID: 9100000, guid: d64457e96eeaf494cbfe10a150a8087b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -10734,7 +10745,7 @@ Animator:
   m_GameObject: {fileID: 7491472463786559967}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4b0c4956ec0e1504f9a467046244c754, type: 2}
+  m_Controller: {fileID: 9100000, guid: d64457e96eeaf494cbfe10a150a8087b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
