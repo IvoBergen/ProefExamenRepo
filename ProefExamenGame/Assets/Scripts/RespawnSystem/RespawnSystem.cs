@@ -2,12 +2,13 @@
 using UnityEngine.AI;
 using UnityEngine.Events;
 
-/// <summary>
-/// Handles killing volume logic and respawning players or bots.
-/// Works with AIMoveNavMesh bots for patrol and jump reset.
-/// </summary>
+
 public class RespawnSystem : MonoBehaviour
 {
+    /// <summary>
+    /// Handles killing volume logic and respawning players or bots.
+    /// Works with AIMoveNavMesh bots for patrol and jump reset.
+    /// </summary>
     public UnityEvent died;
 
     private void OnTriggerEnter(Collider other)
