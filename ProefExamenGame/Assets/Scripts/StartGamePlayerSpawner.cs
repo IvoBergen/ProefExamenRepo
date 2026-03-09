@@ -1,5 +1,8 @@
 using UnityEngine;
 
+///<summary>
+///<c>StartGamePlayerSpawner</c>Spawns the player in with the correct outfit
+///</summary>
 public class StartGamePlayerSpawner : MonoBehaviour
 {
     public GameObject[] outfits;
