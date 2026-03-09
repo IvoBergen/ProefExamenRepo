@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-
+/// <summary>
+/// Makes the ai cycle trough patrol points also handels jumping logic to turn off the agent
+/// </summary>
 public class AIMoveNavMesh : MonoBehaviour
 {
-    /// <summary>
-    /// Makes the ai cycle trough patrol points also handels jumping logic to turn off the agent
-    /// </summary>
+
     [Header("Patrol Points")]
     public Transform[] Locations;
 
@@ -43,7 +43,9 @@ public class AIMoveNavMesh : MonoBehaviour
             StartCoroutine(IdleRoutine());
         }
     }
-
+    /// <summary>
+    /// Moves to the next location and checks velocity of the agent and sets it to zero
+    /// </summary>
     void MoveToNextLocation()
     {
         _agent.SetDestination(Locations[_currentIndex].position);
@@ -55,7 +57,9 @@ public class AIMoveNavMesh : MonoBehaviour
             _agent.velocity = Vector3.zero;
         }
     }
-
+    /// <summary>
+    /// set idle
+    /// </summary>
     IEnumerator IdleRoutine()
     {
         _isWaiting = true;
@@ -72,7 +76,9 @@ public class AIMoveNavMesh : MonoBehaviour
 
         _isWaiting = false;
     }
-
+    /// <summary>
+    /// handels animation
+    /// </summary>
     void UpdateAnimation()
     {
         if (_agent.velocity.magnitude > 0.1f)
@@ -81,10 +87,11 @@ public class AIMoveNavMesh : MonoBehaviour
             _animator?.SetBool("isWalking", false);
     }
 
-    // -------------------------
     // Jump Control
-    // -------------------------
 
+    /// <summary>
+    /// Start jumping
+    /// </summary>
     public void StartJump()
     {
         IsJumping = true;
@@ -92,7 +99,9 @@ public class AIMoveNavMesh : MonoBehaviour
         _animator?.SetBool("isWalking", false);
         _animator?.SetBool("isJumping", true);
     }
-
+    /// <summary>
+    /// stops jumping
+    /// </summary>
     public void EndJump()
     {
         IsJumping = false;
@@ -102,9 +111,8 @@ public class AIMoveNavMesh : MonoBehaviour
             _agent.SetDestination(Locations[_currentIndex].position);
     }
 
-    // -------------------------
     // Respawn Reset
-    // -------------------------
+
 
     public void ResetPatrol()
     {

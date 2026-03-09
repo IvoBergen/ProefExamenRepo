@@ -1,10 +1,10 @@
 using UnityEngine;
-
+/// <summary>
+/// handels the animations of the AI 
+/// </summary>
 public class AIAnimator : MonoBehaviour
 {
-    /// <summary>
-    /// handels the animations of the AI 
-    /// </summary>
+
     [Header("Animation")]
     [SerializeField] private Animator _animator;
 

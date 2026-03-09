@@ -1,12 +1,12 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-
+/// <summary>
+/// Makes the bot choose a path that is not the most optimal and gives it random stats
+/// </summary
 public class BotPathRandomizer : MonoBehaviour
 {
-    /// <summary>
-    /// Makes the bot choose a path that is not the most optimal and gives it random stats
-    /// </summary
+
     private NavMeshAgent _agent;
 
     [Header("Speed Personality")]

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+/// <summary>
+/// makes the ai bot jump has a chance to fail the jump also
+/// </summary>
 public class AIPlatformJump : MonoBehaviour
 {
-    /// <summary>
-    /// makes the ai bot jump has a chance to fail the jump also
-    /// </summary>
+
     [Header("Target Platform")]
     public Transform targetPlatform;
 
