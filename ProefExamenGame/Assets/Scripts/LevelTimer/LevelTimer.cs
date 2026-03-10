@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
-/// Mario-style countdown timer using Legacy UI Text.
+/// Mario-style countdown timer using TextMeshPro.
 /// Counts down from a start time, updates UI, and fires milestone events.
 /// </summary>
 public class LevelTimer : MonoBehaviour
@@ -17,9 +17,9 @@ public class LevelTimer : MonoBehaviour
 
     [Header("UI")]
     /// <summary>
-    /// Legacy UI Text that displays the timer.
+    /// TextMeshPro UI element that displays the timer.
     /// </summary>
-    [SerializeField] private Text _timerText;
+    [SerializeField] private TMP_Text _timerText;
 
     [Header("Milestone Events")]
     /// <summary>Triggered when timer reaches 90 seconds remaining.</summary>
@@ -61,21 +61,9 @@ public class LevelTimer : MonoBehaviour
     /// <summary>Fire milestone events once.</summary>
     private void CheckMilestones()
     {
-        if (!_fired90 && _currentTime <= 90)
-        {
-            _fired90 = true;
-            on90Seconds.Invoke();
-        }
-        if (!_fired60 && _currentTime <= 60)
-        {
-            _fired60 = true;
-            on60Seconds.Invoke();
-        }
-        if (!_fired30 && _currentTime <= 30)
-        {
-            _fired30 = true;
-            on30Seconds.Invoke();
-        }
+        if (!_fired90 && _currentTime <= 90) { _fired90 = true; on90Seconds.Invoke(); }
+        if (!_fired60 && _currentTime <= 60) { _fired60 = true; on60Seconds.Invoke(); }
+        if (!_fired30 && _currentTime <= 30) { _fired30 = true; on30Seconds.Invoke(); }
     }
 
     /// <summary>

@@ -1,16 +1,15 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-/// <summary>
-/// Used to trigger the win condition
-/// </summary>
 public class WinCondition : MonoBehaviour
 {
     [SerializeField] UnityEvent Eventwin;
     [SerializeField] UnityEvent EventLose;
 
-    [SerializeField] GameObject StatsUi;
-    [SerializeField] GameObject UiLose;
+    [SerializeField] GameObject StatsUi;    // Win screen UI
+    [SerializeField] GameObject UiLose;     // Lose screen UI
+
+    [SerializeField] private PlayerStatsTracker playerStats; // Reference to player stats script
 
     private int _finishedAI;
     private int _totalAI;
@@ -34,23 +33,39 @@ public class WinCondition : MonoBehaviour
 
             if (_finishedAI >= _loseThreshold)
             {
-                EventLose.Invoke();
-                UiLose.SetActive(true);
+                TriggerLose();
             }
         }
 
         if (other.CompareTag("Player"))
         {
-            Win();
+            TriggerWin();
         }
     }
 
-    /// <summary>
-    /// Activates the win event.
-    /// </summary>
-    void Win()
+    void TriggerWin()
     {
         Eventwin.Invoke();
-        StatsUi.SetActive(true);
+
+        if (playerStats != null)
+        {
+            playerStats.Win(); // Calls PlayerStatsTracker.Win() for win screen
+        }
+
+        if (StatsUi != null)
+            StatsUi.SetActive(true);
+    }
+
+    void TriggerLose()
+    {
+        EventLose.Invoke();
+
+        if (playerStats != null)
+        {
+            playerStats.Lose(); // Calls PlayerStatsTracker.Lose() for lose screen
+        }
+
+        if (UiLose != null)
+            UiLose.SetActive(true);
     }
 }

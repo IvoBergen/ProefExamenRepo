@@ -1,69 +1,76 @@
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
+
 /// <summary>
 /// Keeps track of the stats of the player  
 /// </summary>
 public class PlayerStatsTracker : MonoBehaviour
 {
-
     private int _deaths;
     private float _currentTime;
-    private bool _hasWon = false;
-    [SerializeField] private Text _deathText;
-    [SerializeField] private Text _WinTime;
+    private bool _hasEnded = false;
+
+    [Header("Win Screen Text")]
+    [SerializeField] private TMP_Text _winDeathText;
+    [SerializeField] private TMP_Text _winTimeText;
+
+    [Header("Lose Screen Text")]
+    [SerializeField] private TMP_Text _loseDeathText;
+    [SerializeField] private TMP_Text _loseTimeText;
 
     /// <summary>
-    /// Adds one death to deaths
+    /// Adds one death to the counter
     /// </summary>
-    public void died()
+    public void Died()
     {
         _deaths += 1;
     }
-    /// <summary>
-    /// keeps track of time.
-    /// </summary>
+
     void Update()
     {
-        if (!_hasWon)
+        if (!_hasEnded)
         {
             _currentTime += Time.deltaTime;
         }
-        else { Time.timeScale = 0f; }
     }
+
     /// <summary>
-    /// Wins the game. activates Winscreen and shows deaths and time it took to complete 
+    /// Call when player wins
     /// </summary>
-
-    public void win()
+    public void Win()
     {
-        _hasWon = true;
+        if (_hasEnded) return;
 
-        _deathText.text = "deathCount: " + _deaths.ToString();
+        _hasEnded = true;
 
-        _currentTime = Mathf.FloorToInt(_currentTime % 60);
-        _WinTime.text = "Completed In: " + _currentTime.ToString();
-        {
-            /// this is for later development so that its easy to have things trigger when the timer reached a certain treshold 
-            switch (_currentTime)
-            {
-                case 0:
-                    Debug.Log("minder dan 10");
-                    break;
+        int displayTime = Mathf.FloorToInt(_currentTime);
 
-                case 1:
-                    Debug.Log("minder dan 30");
-                    break;
+        if (_winDeathText != null)
+            _winDeathText.text = "Death Count: " + _deaths;
 
-                case 2:
-                    Debug.Log("120");
-                    break;
+        if (_winTimeText != null)
+            _winTimeText.text = "Completed In: " + displayTime + "s";
 
-                default:
-                    break;
-            }
-        }
+        Debug.Log("Win stats: " + displayTime + " seconds, " + _deaths + " deaths.");
     }
 
+    /// <summary>
+    /// Call when player loses
+    /// </summary>
+    public void Lose()
+    {
+        if (_hasEnded) return;
 
+        _hasEnded = true;
 
+        int displayTime = Mathf.FloorToInt(_currentTime);
+
+        if (_loseDeathText != null)
+            _loseDeathText.text = "Death Count: " + _deaths;
+
+        if (_loseTimeText != null)
+            _loseTimeText.text = "Completed In: " + displayTime + "s";
+
+        Debug.Log("Lose stats: " + displayTime + " seconds, " + _deaths + " deaths.");
+    }
 }
