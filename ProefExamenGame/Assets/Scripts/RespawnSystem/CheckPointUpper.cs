@@ -13,7 +13,7 @@ public class CheckPointUpper : MonoBehaviour
             {
                 return;
             }
-            Debug.Log("NextCheckPoint");
+
             _manager.ActivateNextCheckpoint();
             Destroy(gameObject);
 

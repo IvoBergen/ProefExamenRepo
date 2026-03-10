@@ -51,7 +51,7 @@ public class PlayerStatsTracker : MonoBehaviour
         if (_winTimeText != null)
             _winTimeText.text = "Completed In: " + displayTime + "s";
 
-        Debug.Log("Win stats: " + displayTime + " seconds, " + _deaths + " deaths.");
+        
     }
 
     /// <summary>
@@ -71,6 +71,6 @@ public class PlayerStatsTracker : MonoBehaviour
         if (_loseTimeText != null)
             _loseTimeText.text = "Completed In: " + displayTime + "s";
 
-        Debug.Log("Lose stats: " + displayTime + " seconds, " + _deaths + " deaths.");
+       
     }
 }
