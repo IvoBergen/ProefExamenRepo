@@ -1,5 +1,7 @@
 using UnityEngine;
-
+/// <summary>
+/// Is used as the marble
+/// </summary>
 public class Knikker : MonoBehaviour
 {
     #region References
@@ -59,14 +61,14 @@ public class Knikker : MonoBehaviour
     }
 
 
-  
+
     private void Start()
     {
         Destroy(gameObject, _destroyAfterSeconds);
     }
 
 
-   
+
     private void FixedUpdate()
     {
         FollowPath();
