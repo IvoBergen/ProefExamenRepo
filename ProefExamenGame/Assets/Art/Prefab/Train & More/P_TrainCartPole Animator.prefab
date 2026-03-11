@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7408138632345562782}
   - component: {fileID: 403608643126557603}
   - component: {fileID: 4070277704379595598}
+  - component: {fileID: 501977085331482449}
   m_Layer: 0
   m_Name: Wiel-Klein.003
   m_TagString: Untagged
@@ -83,6 +84,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &501977085331482449
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 59040590490266640}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8452d00c577f8e740ad70a03e63803ac, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &599192545571780664
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,6 +116,7 @@ GameObject:
   - component: {fileID: 5962349614651499248}
   - component: {fileID: 8768646117560718809}
   - component: {fileID: 2333856249362614778}
+  - component: {fileID: 8580462642520767166}
   m_Layer: 0
   m_Name: Wiel-Klein.004
   m_TagString: Untagged
@@ -166,6 +189,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &8580462642520767166
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599192545571780664}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a9dd8606fe0ed584eb50a19422da2c8e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3620259196864035199
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,7 +236,7 @@ Transform:
   m_GameObject: {fileID: 3620259196864035199}
   serializedVersion: 2
   m_LocalRotation: {x: -2.4731287e-12, y: 0.68171, z: -7.524932e-13, w: 0.7316225}
-  m_LocalPosition: {x: -11.733663, y: 0.26936832, z: 50.13138}
+  m_LocalPosition: {x: -11.733663, y: 0.26936832, z: 13.508942}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
