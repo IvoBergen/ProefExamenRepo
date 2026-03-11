@@ -128,7 +128,7 @@ Transform:
   m_GameObject: {fileID: 513570919809103871}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 4.73085, y: 5.85487, z: 30.140617}
+  m_LocalPosition: {x: 4.73085, y: 5.85487, z: 30.11}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -174,11 +174,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15dadb5ebbbbcd2429afd9de244833c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Locations:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  Locations: []
   idleTime: 1
+  waypointOffsetRadius: 1.5
   _animator: {fileID: 192599235103179184}
 --- !u!114 &4473804415338078494
 MonoBehaviour:
@@ -567,7 +565,7 @@ Animator:
   m_GameObject: {fileID: 3518654922434108009}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4b0c4956ec0e1504f9a467046244c754, type: 2}
+  m_Controller: {fileID: 9100000, guid: d64457e96eeaf494cbfe10a150a8087b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
