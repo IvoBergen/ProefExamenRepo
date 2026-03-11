@@ -5,9 +5,9 @@ Ivo Bergen:
 * [Moving Cubes](ProefExamenGame/Assets/Scripts/MovingCubes)
 * [Ink Spot](ProefExamenGame/Assets/Scripts/InkSpot/InkSpot.cs)
 * [Speed Boost](ProefExamenGame/Assets/Scripts/PowerUps/SpeedBoost/PowerUpSpeedBoost.cs)
-* [Main Menu] (ProefExamenGame/Assets/Scripts/MainMenu/MainMenu.cs)
-* [Pause Menu] (ProefExamenGame/Assets/Scripts/PauseMenu/PauseMenu.cs)
-* [Character Customization] (ProefExamenGame/Assets/Scripts/CharacterCustomization)
+* [Main Menu](ProefExamenGame/Assets/Scripts/MainMenu/MainMenu.cs)
+* [Pause Menu](ProefExamenGame/Assets/Scripts/PauseMenu/PauseMenu.cs)
+* [Character Customization](ProefExamenGame/Assets/Scripts/CharacterCustomization)
 
 Owen Stas:
 
