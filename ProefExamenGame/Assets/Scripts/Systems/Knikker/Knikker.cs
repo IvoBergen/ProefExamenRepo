@@ -1,10 +1,11 @@
 using UnityEngine;
 
 public class Knikker : MonoBehaviour
-{ 
+{
     #region References
 
     [Header("References")]
+
     [SerializeField] private Rigidbody _rb;
 
     #endregion
@@ -13,6 +14,7 @@ public class Knikker : MonoBehaviour
     #region Path Settings
 
     [Header("Path Settings")]
+
     [SerializeField] private float _moveForce = 80f;
     [SerializeField] private float _maxSpeed = 5f;
     [SerializeField] private float _reachDistance = 1f;
@@ -23,6 +25,7 @@ public class Knikker : MonoBehaviour
     #region Knockback Settings
 
     [Header("Knockback Settings")]
+
     [SerializeField] private float _force = 12f;
     [SerializeField] private float _upForce = 2.5f;
 
@@ -32,6 +35,7 @@ public class Knikker : MonoBehaviour
     #region Detection
 
     [Header("Detection")]
+
     [SerializeField] private string _playerTag = "Player";
 
     #endregion
@@ -40,6 +44,7 @@ public class Knikker : MonoBehaviour
     #region Lifetime
 
     [Header("Lifetime")]
+
     [SerializeField] private float _destroyAfterSeconds = 12f;
 
     #endregion
@@ -48,25 +53,30 @@ public class Knikker : MonoBehaviour
     private Transform[] _waypoints;
     private int _currentWaypointIndex;
 
-
     private void Reset()
     {
         _rb = GetComponent<Rigidbody>();
     }
 
 
+  
     private void Start()
     {
         Destroy(gameObject, _destroyAfterSeconds);
     }
 
 
+   
     private void FixedUpdate()
     {
         FollowPath();
     }
 
 
+    /// <summary>
+    /// Sets the waypoint path that the ball should follow.
+    /// The ball starts at the first waypoint in the array.
+    /// </summary>
     public void SetPath(Transform[] waypoints)
     {
         _waypoints = waypoints;
@@ -74,6 +84,10 @@ public class Knikker : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Moves the ball toward the current waypoint using force.
+    /// When the ball reaches a waypoint, it continues to the next one.
+    /// </summary>
     private void FollowPath()
     {
         if (_rb == null)
@@ -91,15 +105,15 @@ public class Knikker : MonoBehaviour
             return;
         }
 
-        Transform target = _waypoints[_currentWaypointIndex];
+        Transform currentTarget = _waypoints[_currentWaypointIndex];
 
-        if (target == null)
+        if (currentTarget == null)
         {
             _currentWaypointIndex++;
             return;
         }
 
-        Vector3 direction = target.position - transform.position;
+        Vector3 direction = currentTarget.position - transform.position;
         direction.y = 0f;
 
         float distanceToTarget = direction.magnitude;
@@ -110,19 +124,35 @@ public class Knikker : MonoBehaviour
             return;
         }
 
-        direction = direction.normalized;
+        direction.Normalize();
 
         _rb.AddForce(direction * _moveForce, ForceMode.Force);
 
-        Vector3 velocity = _rb.velocity;
-
-        if (velocity.magnitude > _maxSpeed)
-        {
-            _rb.velocity = velocity.normalized * _maxSpeed;
-        }
+        ClampSpeed();
     }
 
 
+    /// <summary>
+    /// Limits the ball velocity so it does not exceed the configured maximum speed.
+    /// </summary>
+    private void ClampSpeed()
+    {
+        Vector3 velocity = _rb.velocity;
+
+        if (velocity.magnitude <= _maxSpeed)
+        {
+            return;
+        }
+
+        _rb.velocity = velocity.normalized * _maxSpeed;
+    }
+
+
+    /// <summary>
+    /// Detects collision with the player and applies knockback through the
+    /// player's KnockbackReceiver component.
+    /// </summary>
+    /// <param name="collision">The collision data of the object that was hit.</param>
     private void OnCollisionEnter(Collision collision)
     {
         if (!collision.gameObject.CompareTag(_playerTag))
@@ -130,14 +160,24 @@ public class Knikker : MonoBehaviour
             return;
         }
 
-        KnockbackReceiver receiver = collision.gameObject.GetComponent<KnockbackReceiver>();
+        KnockbackReceiver knockbackReceiver = collision.gameObject.GetComponent<KnockbackReceiver>();
 
-        if (receiver == null)
+        if (knockbackReceiver == null)
         {
             return;
         }
 
-        Vector3 direction = collision.transform.position - transform.position;
+        ApplyKnockback(knockbackReceiver, collision.transform);
+        Destroy(gameObject);
+    }
+
+
+    /// <summary>
+    /// Calculates the knockback impulse direction and applies it to the player.
+    /// </summary>
+    private void ApplyKnockback(KnockbackReceiver receiver, Transform targetTransform)
+    {
+        Vector3 direction = targetTransform.position - transform.position;
         direction.y = 0f;
 
         if (direction.sqrMagnitude <= 0.001f)
@@ -146,13 +186,11 @@ public class Knikker : MonoBehaviour
             direction.y = 0f;
         }
 
-        direction = direction.normalized;
+        direction.Normalize();
 
         Vector3 impulse = direction * _force;
         impulse.y = _upForce;
 
         receiver.ReceiveKnockback(impulse);
-
-        Destroy(gameObject);
     }
 }

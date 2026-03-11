@@ -5,6 +5,7 @@ public class KnikkerSpawn : MonoBehaviour
     #region References
 
     [Header("References")]
+
     [SerializeField] private GameObject _ballPrefab;
     [SerializeField] private Transform _spawnPoint;
     [SerializeField] private Transform[] _waypoints;
@@ -15,6 +16,7 @@ public class KnikkerSpawn : MonoBehaviour
     #region Spawn Settings
 
     [Header("Spawn Settings")]
+
     [SerializeField] private float _spawnInterval = 2f;
     [SerializeField] private bool _spawnOnStart = true;
 
@@ -47,22 +49,40 @@ public class KnikkerSpawn : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Spawns a new ball at the spawn point and gives it the configured waypoint path.
+    /// The method stops safely if required references are missing.
+    /// </summary>
     private void SpawnBall()
     {
-        if (_ballPrefab == null || _spawnPoint == null || _waypoints == null || _waypoints.Length == 0)
+        if (_ballPrefab == null)
         {
             return;
         }
 
-        GameObject newBall = Instantiate(_ballPrefab, _spawnPoint.position, _spawnPoint.rotation);
-
-        Knikker ball = newBall.GetComponent<Knikker>();
-
-        if (ball == null)
+        if (_spawnPoint == null)
         {
             return;
         }
 
-        ball.SetPath(_waypoints);
+        if (_waypoints == null || _waypoints.Length == 0)
+        {
+            return;
+        }
+
+        GameObject spawnedBall = Instantiate(
+            _ballPrefab,
+            _spawnPoint.position,
+            _spawnPoint.rotation
+        );
+
+        Knikker ballComponent = spawnedBall.GetComponent<Knikker>();
+
+        if (ballComponent == null)
+        {
+            return;
+        }
+
+        ballComponent.SetPath(_waypoints);
     }
 }
