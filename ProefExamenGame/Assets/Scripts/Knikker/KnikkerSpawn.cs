@@ -1,9 +1,6 @@
 using UnityEngine;
 
-/// <summary>
-/// Spawns a random ball prefab at a fixed interval and assigns a waypoint path.
-/// Multiple ball types can be added to create variation in obstacle behavior.
-/// </summary>
+
 public class KnikkerSpawn : MonoBehaviour
 {
     #region References
@@ -30,9 +27,7 @@ public class KnikkerSpawn : MonoBehaviour
     private float _spawnTimer;
 
 
-    /// <summary>
-    /// Optionally spawns a ball immediately when the game starts.
-    /// </summary>
+    
     private void Start()
     {
         if (_spawnOnStart)
@@ -42,9 +37,6 @@ public class KnikkerSpawn : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// Updates the spawn timer and spawns a new random ball when the interval is reached.
-    /// </summary>
     private void Update()
     {
         _spawnTimer += Time.deltaTime;
