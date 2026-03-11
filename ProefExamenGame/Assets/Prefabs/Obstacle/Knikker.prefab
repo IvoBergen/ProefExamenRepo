@@ -119,10 +119,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc9f53f73abafd447834d01316ea77dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _knockbackForce: 10
+  _rb: {fileID: 0}
+  _moveForce: 80
+  _maxSpeed: 5
+  _reachDistance: 1
+  _force: 12
   _upForce: 2
-  _destroyAfterSeconds: 8
   _playerTag: Player
+  _destroyAfterSeconds: 80
 --- !u!54 &4140651835037231494
 Rigidbody:
   m_ObjectHideFlags: 0

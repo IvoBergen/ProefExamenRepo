@@ -127,7 +127,7 @@ MonoBehaviour:
   _force: 10
   _upForce: 5
   _playerTag: Player
-  _destroyAfterSeconds: 8
+  _destroyAfterSeconds: 80
 --- !u!54 &5571594879944230660
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -171,3 +171,4 @@ MonoBehaviour:
   _upForce: 2.5
   _cooldown: 0.5
   _playerTag: Player
+  _AiTag: Bot
