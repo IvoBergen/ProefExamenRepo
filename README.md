@@ -1,25 +1,6 @@
 # ReadME van team 04 Stumble guys
 
-Ivo Bergen
-
-* [Moving Cubes](ProefExamenGame/Assets/Scripts/MovingCubes)
-* [Ink Spot](ProefExamenGame/Assets/Scripts/InkSpot/InkSpot.cs)
-* [Speed Boost](ProefExamenGame/Assets/Scripts/PowerUps/SpeedBoost/PowerUpSpeedBoost.cs)
-
-Owen Stas:
-
-* [Respawnsysteem](https://github.com/IvoBergen/ProefExamenRepo/wiki/RespawnSystem)
-* [AI PathFinding](https://github.com/IvoBergen/ProefExamenRepo/wiki/BotProgamming)
-
-Christiaan Oosterwouder
-
-* [Moving obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Battery_movement_spread_sheet.png)
-* Some other Game object
-
-Akari Le
-
-* [PlayerMovement](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Player-Movement-Visualsheet.png)
-* Some other Game object
+De mechanics van team 04 Stumble guys.
 
 ## moving platform by Ivo
 
@@ -35,6 +16,8 @@ This is the visual sheet for the moving cube scripts
 
 ![Moving Cubes visualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/VisualSheetMovingCube.png)
 
+* [Moving Cubes](ProefExamenGame/Assets/Scripts/MovingCubes)
+
 ## Ink Spot by Ivo
 
 The Ink spot is added onto the course to add extra challenge for the player to avoid them so their speed doesn't decrease. They work with a collision check and if the player walks through them their movement speed
@@ -44,6 +27,8 @@ This is the visual sheet for the ink spot
 
 ![Ink Spot visualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/InkSpot.png)
 
+* [Ink Spot](ProefExamenGame/Assets/Scripts/InkSpot/InkSpot.cs)
+
 ## Speed Boost by Ivo
 
 The power up, in this case a speed boost is added for extra variety in the gameplay loop. It adds extra challenge and a fun factor to the game. It does a collision check to check if the player touched it and then it
@@ -52,6 +37,29 @@ triggers an Action that calls the other script responsible for increasing and de
 This is the visual sheet for the speed boost power up.
 
 ![Speed Boost visualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/SpeedBoost.png)
+
+* [Speed Boost](ProefExamenGame/Assets/Scripts/PowerUps/SpeedBoost/PowerUpSpeedBoost.cs)
+
+## Menu's by Ivo
+
+These are the main menu and pause menu in the game, to help the player exit the game and to make sure the player has a start screen and isn't instantly dumped into the main game. The main menu also has a character customization menu where the players outfit can get changed.
+
+This is the visual sheet for the menu's.
+
+![Menu's visualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Menus.png)
+
+* [Main Menu](ProefExamenGame/Assets/Scripts/MainMenu/MainMenu.cs)
+* [Pause Menu](ProefExamenGame/Assets/Scripts/PauseMenu/PauseMenu.cs)
+
+## Character Customization by Ivo
+
+This is made for the player to change their characters outfit and make it so you can have a unique experience every single time. The player can cycle through the outfits with the buttons on the screen.
+
+![Customization Screenshot](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/CustomizationScreenshot.png)
+
+![Character Customization visualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/CharacterCustomization.png)
+
+* [Character Customization](ProefExamenGame/Assets/Scripts/CharacterCustomization)
 
 ## Respawn mechanic by Owen
 
@@ -66,12 +74,17 @@ After that, physics is reactivated so the player can continue playing normally.
 In short: falling = reset to checkpoint without any strange physics bugs
 
 ![Foto van respawn systeem](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/BWP-VWO-Visualsheet.png)
+
+* [Respawnsysteem](https://github.com/IvoBergen/ProefExamenRepo/wiki/RespawnSystem)
+
 ## AI pathfinding by Owen
 
-This mechanic is used to make the level more interesting to play. the bot is the main win/lose condition of the game. you're supposed to race against it and be faster than 50% of the ai to win the game. 
+This mechanic is used to make the level more interesting to play. the bot is the main win/lose condition of the game. you're supposed to race against it and be faster than 50% of the ai to win the game.
 
 ![AIVisualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Bot-MovementBWP-VWO-Visualsheet.png)
 ![AIJumpGif](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/AiJumping.gif)
+
+* [AI PathFinding](https://github.com/IvoBergen/ProefExamenRepo/wiki/BotProgamming)
 
 ## Moving obstackle by Christiaan Oosterwouder
 
@@ -85,20 +98,12 @@ In short: a moving obstacle = dynamic gameplay, increased challenge, and more ac
 
 ![moving obstackle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Battery_movement_spread_sheet.png)
 
+* [Moving obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Battery_movement_spread_sheet.png)
+
 ## Player movement by Akari
 
 movement for the player
 
 ![example](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Player-Movement-Visualsheet.png)
 
-## Some beautifull script by Student Z
-
-Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-![example](https://user-images.githubusercontent.com/1262745/189135129-34d15823-0311-46b5-a041-f0bbfede9e78.png)
-
-## Some other Game object by Student Z
-
-Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-![example](https://user-images.githubusercontent.com/1262745/189135129-34d15823-0311-46b5-a041-f0bbfede9e78.png)
+* [PlayerMovement](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Player-Movement-Visualsheet.png)
