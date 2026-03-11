@@ -1561,7 +1561,7 @@ GameObject:
   - component: {fileID: 1193159503408675635}
   - component: {fileID: 4497325014493317309}
   m_Layer: 0
-  m_Name: P-Train Animator
+  m_Name: P_Train Animator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

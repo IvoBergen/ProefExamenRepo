@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 7046897168427530280}
   - component: {fileID: 2576675752804222452}
   m_Layer: 0
-  m_Name: P-TrainCartPole Animator
+  m_Name: P_TrainCartPole Animator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

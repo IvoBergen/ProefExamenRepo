@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3610189586612981770}
   - component: {fileID: 1229726790134319450}
   m_Layer: 0
-  m_Name: P-SplineTrack
+  m_Name: P_SplineTrack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
