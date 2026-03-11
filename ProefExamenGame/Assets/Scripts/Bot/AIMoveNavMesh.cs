@@ -1,17 +1,21 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+
 /// <summary>
-/// Makes the ai cycle trough patrol points also handels jumping logic to turn off the agent
+/// Makes the AI cycle through patrol points and handles jumping logic.
+/// Includes waypoint offset to prevent AI stacking on the same location.
 /// </summary>
 public class AIMoveNavMesh : MonoBehaviour
 {
-
     [Header("Patrol Points")]
     public Transform[] Locations;
 
     [Header("Idle Settings")]
     public float idleTime = 2f;
+
+    [Header("Waypoint Settings")]
+    [SerializeField] private float waypointOffsetRadius = 1.5f;
 
     private NavMeshAgent _agent;
     private int _currentIndex = 0;
@@ -24,6 +28,9 @@ public class AIMoveNavMesh : MonoBehaviour
     void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
+
+        // Randomize avoidance priority so AI don't deadlock
+        _agent.avoidancePriority = Random.Range(20, 80);
 
         if (Locations.Length > 0 && _agent.isOnNavMesh)
         {
@@ -38,46 +45,52 @@ public class AIMoveNavMesh : MonoBehaviour
 
         UpdateAnimation();
 
-        if (!_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance && !_isWaiting)
+        // Slightly larger arrival radius so AI don't fight for the same point
+        if (!_agent.pathPending && _agent.remainingDistance <= 1.2f && !_isWaiting)
         {
             StartCoroutine(IdleRoutine());
         }
     }
+
     /// <summary>
-    /// Moves to the next location and checks velocity of the agent and sets it to zero
+    /// Moves to the next location with a small random offset.
     /// </summary>
     void MoveToNextLocation()
     {
-        _agent.SetDestination(Locations[_currentIndex].position);
+        Vector3 offset = Random.insideUnitSphere * waypointOffsetRadius;
+        offset.y = 0;
+
+        Vector3 targetPosition = Locations[_currentIndex].position + offset;
+
+        _agent.SetDestination(targetPosition);
+
         _animator?.SetBool("isWalking", true);
-
-
-        if (_agent.velocity.sqrMagnitude >= 20f * 20f)
-        {
-            _agent.velocity = Vector3.zero;
-        }
     }
+
     /// <summary>
-    /// set idle
+    /// Idle before moving to next patrol point
     /// </summary>
     IEnumerator IdleRoutine()
     {
         _isWaiting = true;
+
         _agent.isStopped = true;
         _animator?.SetBool("isWalking", false);
 
         yield return new WaitForSeconds(idleTime);
 
         _currentIndex++;
-        if (_currentIndex >= Locations.Length) _currentIndex = 0;
+        if (_currentIndex >= Locations.Length)
+            _currentIndex = 0;
 
         _agent.isStopped = false;
         MoveToNextLocation();
 
         _isWaiting = false;
     }
+
     /// <summary>
-    /// handels animation
+    /// Handles walking animation
     /// </summary>
     void UpdateAnimation()
     {
@@ -96,11 +109,13 @@ public class AIMoveNavMesh : MonoBehaviour
     {
         IsJumping = true;
         _agent.isStopped = true;
+
         _animator?.SetBool("isWalking", false);
         _animator?.SetBool("isJumping", true);
     }
+
     /// <summary>
-    /// stops jumping
+    /// Stop jumping
     /// </summary>
     public void EndJump()
     {
@@ -108,11 +123,10 @@ public class AIMoveNavMesh : MonoBehaviour
         _agent.isStopped = false;
 
         if (Locations.Length > 0)
-            _agent.SetDestination(Locations[_currentIndex].position);
+            MoveToNextLocation();
     }
 
     // Respawn Reset
-
 
     public void ResetPatrol()
     {
@@ -121,22 +135,22 @@ public class AIMoveNavMesh : MonoBehaviour
         _isWaiting = false;
         _currentIndex = 0;
 
-        // Stop Rigidbody motion
         Rigidbody rb = GetComponent<Rigidbody>();
+
         if (rb != null)
         {
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
-            rb.isKinematic = true;  // temporarily kinematic to prevent physics interference
+            rb.isKinematic = true;
         }
 
         if (_agent.isOnNavMesh && Locations.Length > 0)
         {
+            _agent.ResetPath();
             _agent.isStopped = false;
             MoveToNextLocation();
         }
 
-        // Re-enable physics after a short frame to avoid glitches
         if (rb != null)
         {
             rb.isKinematic = false;

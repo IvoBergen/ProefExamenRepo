@@ -12,6 +12,7 @@ public class RespawnSystem : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (!other.CompareTag("Player") && !other.CompareTag("Bot"))
             return;
 
@@ -36,6 +37,13 @@ public class RespawnSystem : MonoBehaviour
         Transform checkpoint = CheckPointManager.Instance.CurrentCheckpoint.transform;
         Vector3 respawnPos = checkpoint.position;
         Quaternion respawnRot = checkpoint.rotation;
+
+        // Disable NavMeshAgent BEFORE moving transform to prevent position conflict
+        NavMeshAgent agent = character.GetComponent<NavMeshAgent>();
+        if (agent != null)
+            agent.enabled = false;
+
+        // Reset and freeze rigidbody before teleporting
         Rigidbody rb = character.GetComponent<Rigidbody>();
         if (rb != null)
         {
@@ -43,22 +51,27 @@ public class RespawnSystem : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
             rb.isKinematic = true;
         }
+
+        // Teleport character to checkpoint
         character.transform.SetPositionAndRotation(respawnPos, respawnRot);
+
+        // Reset bot state if applicable
         AIMoveNavMesh bot = character.GetComponent<AIMoveNavMesh>();
         if (bot != null)
         {
             bot.ResetPatrol();
             bot.EndJump();
-            NavMeshAgent agent = bot.GetComponent<NavMeshAgent>();
+
             if (agent != null)
             {
+                // Re-enable agent then warp to sync NavMesh position
                 agent.enabled = true;
                 agent.Warp(respawnPos);
             }
         }
+
+        // Re-enable physics after teleport
         if (rb != null)
-        {
             rb.isKinematic = false;
-        }
     }
 }
