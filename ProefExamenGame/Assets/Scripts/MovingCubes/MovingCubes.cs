@@ -17,15 +17,21 @@ public class MovingCubes : MonoBehaviour
     [Header("Movement Settings")]
     public float speed;
 
-
-    private void Start()
-    {
-        _targetposition = RandomPosition();
-    }
+    private Vector3 _lastPosition;
 
     private void Update()
     {
         MoveTowardsTarget();
+    }
+
+    private void Start()
+    {
+        if (_minX == 0 && _maxX == 0 && _minZ == 0 && _maxZ == 0)
+        {
+            Debug.LogWarning("MovingCubes: All boundaries are 0! Did you forget to set them in the Inspector?");
+        }
+
+        _targetposition = RandomPosition();
     }
 
     /// <summary>
@@ -47,7 +53,7 @@ public class MovingCubes : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(transform.position, _targetposition, speed * Time.deltaTime);
 
-        if (Vector3.Distance(transform.position, _targetposition) < 0.1f)
+        if (transform.position == _targetposition)
         {
             _targetposition = RandomPosition();
         }
