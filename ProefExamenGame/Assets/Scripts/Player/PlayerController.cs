@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool _isDashing;
     [SerializeField] private bool _isGettingUp;
     [SerializeField] private bool _isDead;
-    public float _moveSpeed { get; set; } = 5f;
+    [SerializeField] public float _moveSpeed { get; set; } = 20f;
     [SerializeField] private float _jumpForce = 12f;
     [SerializeField] private float _doubleJumpForce;
     [SerializeField] private int _maxJumpCount = 2;
@@ -286,4 +286,4 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 }
-    
+

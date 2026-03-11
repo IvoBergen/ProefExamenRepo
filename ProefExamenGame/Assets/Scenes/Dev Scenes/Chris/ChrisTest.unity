@@ -574,6 +574,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: cef34d0f8ef19174a83c349ac105a810, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c28615169d1130344b24e1d7c7fd46b5, type: 2}
     - target: {fileID: 919132149155446097, guid: cef34d0f8ef19174a83c349ac105a810, type: 3}
       propertyPath: m_Name
       value: batter1
@@ -931,7 +935,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 614c2e837e3000a47b4c26534009971b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1643,7 +1647,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5af27a0598e262a4cacd414b90ee4ab7, type: 2}
+  - {fileID: 2100000, guid: 614c2e837e3000a47b4c26534009971b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1683,7 +1687,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -11.8306, y: 0.38, z: 0.6169}
-  m_LocalScale: {x: 31.774012, y: 2.1643078, z: 26.589584}
+  m_LocalScale: {x: 60.364265, y: 2.1643078, z: 26.589584}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
