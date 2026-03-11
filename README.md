@@ -1,22 +1,25 @@
 # ReadME van team 04 Stumble guys
 
-Ivo Bergen
+Ivo Bergen:
 
 * [Moving Cubes](ProefExamenGame/Assets/Scripts/MovingCubes)
 * [Ink Spot](ProefExamenGame/Assets/Scripts/InkSpot/InkSpot.cs)
 * [Speed Boost](ProefExamenGame/Assets/Scripts/PowerUps/SpeedBoost/PowerUpSpeedBoost.cs)
+* [Main Menu] (ProefExamenGame/Assets/Scripts/MainMenu/MainMenu.cs)
+* [Pause Menu] (ProefExamenGame/Assets/Scripts/PauseMenu/PauseMenu.cs)
+* [Character Customization] (ProefExamenGame/Assets/Scripts/CharacterCustomization)
 
 Owen Stas:
 
 * [Respawnsysteem](https://github.com/IvoBergen/ProefExamenRepo/wiki/RespawnSystem)
 * [AI PathFinding](https://github.com/IvoBergen/ProefExamenRepo/wiki/BotProgamming)
 
-Christiaan Oosterwouder
+Christiaan Oosterwouder:
 
 * [Moving obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Battery_movement_spread_sheet.png)
 * Some other Game object
 
-Akari Le
+Akari Le:
 
 * [PlayerMovement](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Player-Movement-Visualsheet.png)
 * Some other Game object
@@ -53,6 +56,22 @@ This is the visual sheet for the speed boost power up.
 
 ![Speed Boost visualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/SpeedBoost.png)
 
+## Menu's by Ivo
+
+These are the main menu and pause menu in the game, to help the player exit the game and to make sure the player has a start screen and isn't instantly dumped into the main game. The main menu also has a character customization menu where the players outfit can get changed.
+
+This is the visual sheet for the menu's.
+
+![Menu's visualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Menus.png)
+
+## Character Customization by Ivo
+
+This is made for the player to change their characters outfit and make it so you can have a unique experience every single time. The player can cycle through the outfits with the buttons on the screen.
+
+![Customization Screenshot](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/CustomizationScreenshot.png)
+
+![Character Customization visualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/CharacterCustomization.png)
+
 ## Respawn mechanic by Owen
 
 This respawn system ensures that the player is automatically placed back at the last reached checkpoint when they fall off the platform or hit a respawn trigger.
@@ -66,9 +85,10 @@ After that, physics is reactivated so the player can continue playing normally.
 In short: falling = reset to checkpoint without any strange physics bugs
 
 ![Foto van respawn systeem](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/BWP-VWO-Visualsheet.png)
+
 ## AI pathfinding by Owen
 
-This mechanic is used to make the level more interesting to play. the bot is the main win/lose condition of the game. you're supposed to race against it and be faster than 50% of the ai to win the game. 
+This mechanic is used to make the level more interesting to play. the bot is the main win/lose condition of the game. you're supposed to race against it and be faster than 50% of the ai to win the game.
 
 ![AIVisualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Bot-MovementBWP-VWO-Visualsheet.png)
 ![AIJumpGif](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/AiJumping.gif)
