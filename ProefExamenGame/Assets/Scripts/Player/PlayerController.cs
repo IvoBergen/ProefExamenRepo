@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int _maxJumpCount = 2;
     [SerializeField] private float _rotationSpeed = 10f;
     [SerializeField] private bool _allowBackwardMovement = true; // New option
+    [SerializeField] private float _movementDirectionThreshold = 0.2f;
 
     [Header("Ink Spot")]
     [SerializeField] private float _decreasedMovementSpeed = 3f;
@@ -34,9 +35,13 @@ public class PlayerController : MonoBehaviour
     private Rigidbody _rb;
     private Vector2 _moveInput;
     private Vector3 lastForwardDirection; // Track last forward direction
+    private Vector3 _stablePlanarMovementDirection;
     private int _jumpsUsed;
     private bool _missingAnimationsWarned;
     private bool _missingCameraSettingsWarned;
+
+    public Vector3 StablePlanarMovementDirection { get; private set; }
+    public float PlanarMovementMagnitude { get; private set; }
 
 
     private void OnEnable()
@@ -56,6 +61,8 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
 
         lastForwardDirection = transform.forward;
+        _stablePlanarMovementDirection = Vector3.ProjectOnPlane(transform.forward, Vector3.up).normalized;
+        StablePlanarMovementDirection = _stablePlanarMovementDirection;
         _originalMovementSpeed = _moveSpeed;
         _doubleJumpForce = _jumpForce * 0.85f;
     }
@@ -65,14 +72,16 @@ public class PlayerController : MonoBehaviour
         // Check for knockback control lock before processing movement input
         if (_knockback != null && _knockback.IsControlLocked)
         {
+            PlanarMovementMagnitude = 0f;
             UpdateAnimationStates();
             return;
         }
 
+        Vector3 moveDir = GetMoveDirection(_moveInput);
+        UpdateStableMovementDirection(moveDir);
+
         if (_moveInput != Vector2.zero)
         {
-            Vector3 moveDir = GetMoveDirection(_moveInput);
-
             if (moveDir != Vector3.zero)
             {
                 // Only rotate if moving forward or sideways (not backward)
@@ -94,7 +103,6 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-
         UpdateAnimationStates();
     }
 
@@ -208,6 +216,22 @@ public class PlayerController : MonoBehaviour
         }
 
         return _cameraSettings.GetCameraRelativeMovement(input);
+    }
+
+    /// <summary>
+    /// Keeps the last stable planar movement direction available for other systems.
+    /// </summary>
+    private void UpdateStableMovementDirection(Vector3 moveDirection)
+    {
+        moveDirection.y = 0f;
+        PlanarMovementMagnitude = Mathf.Clamp01(moveDirection.magnitude);
+
+        if (PlanarMovementMagnitude >= _movementDirectionThreshold)
+        {
+            _stablePlanarMovementDirection = moveDirection.normalized;
+        }
+
+        StablePlanarMovementDirection = _stablePlanarMovementDirection;
     }
 
     private void TryJump()
