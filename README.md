@@ -86,7 +86,7 @@ This mechanic is used to make the level more interesting to play. the bot is the
 
 * [AI PathFinding](https://github.com/IvoBergen/ProefExamenRepo/wiki/BotProgamming)
 
-## Moving obstackle by Christiaan Oosterwouder
+## Moving obstackle by Christiaan Oostwouder
 
 This moving obstacle is designed to increase the level of challenge and encourage the player to interact with the environment in a more dynamic way. Instead of allowing the player to move through the level in a static or predictable pattern, the obstacle forces them to constantly adjust their timing, positioning, and movement strategy.
 
@@ -100,17 +100,47 @@ In short: a moving obstacle = dynamic gameplay, increased challenge, and more ac
 
 * [Moving obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Battery_movement_spread_sheet.png)
 
-##  knikker obstackle by Christiaan Oosterwouder
+##  knikker obstackle by Christiaan Oostwouder
 
-The marble script creates a moving obstacle that spawns marbles from a fixed point above the level. Each marble follows a predefined waypoint path using physics forces, allowing it to move along a curved or irregular route through the obstacle section.
+The knikker script creates a moving obstacle that spawns knikker from a fixed point above the level. Each knikker follows a predefined waypoint path using physics forces, allowing it to move along a curved or irregular route through the obstacle section.
 
-While moving along the path, the marbles interact with the player through the existing knockback system. When a marble collides with a player, it triggers the KnockbackReceiver, pushing the player away from the obstacle.
+While moving along the path, the knikker interact with the player through the existing knockback system. When a knikker collides with a player, it triggers the KnockbackReceiver, pushing the player away from the obstacle.
 
-This system adds dynamic movement and environmental hazards to the level. Because the marbles follow a curved path and use physics-based movement, the obstacle feels less predictable and requires players to react quickly and adjust their movement to avoid being knocked off the course.
+This system adds dynamic movement and environmental hazards to the level. Because the knikker follow a curved path and use physics-based movement, the obstacle feels less predictable and requires players to react quickly and adjust their movement to avoid being knocked off the course.
 
 ![Knikker obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Knikker-Gif.gif)
 
 * [Knikker obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/KnikkerVisualSheet.png)
+
+##  knikkerSpawn by Christiaan Oostwouder
+
+The knikker spawner script is responsible for continuously creating marbles during gameplay. It spawns knikker at a fixed spawn point above the level at regular time intervals. After spawning, each knikker is given the waypoint path it needs to follow through the obstacle section.
+
+This system ensures that the obstacle remains active throughout the level by constantly generating new marbles. As a result, players must continuously avoid moving knikker instead of encountering a one-time obstacle.
+
+The spawner adds pacing and difficulty to the gameplay by controlling how frequently knikkers appear, creating a dynamic hazard that keeps the obstacle section challenging.
+
+![Knikker Spawn](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/KnikkerSpawnVisualSheet.png)
+
+##  KnockbackReceiver by Christiaan Oostwouder
+
+The KnockbackReceiver script handles knockback effects applied to the player when they collide with obstacles. When an obstacle sends a knockback impulse, the script applies this force to the player's Rigidbody, pushing the player away from the impact point.
+
+After receiving knockback, player control is temporarily locked for a short duration. This prevents the player from immediately correcting their movement and makes the hit feel more impactful.
+
+The script also clamps the player's horizontal velocity to prevent excessive launch speeds. This ensures the knockback remains consistent and avoids unrealistic physics behavior while keeping gameplay fair and controllable.
+
+![KnockbackReceiver](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/KnockbackReceiverVisualSheet.png)
+
+##  KnockbackObstacle by Christiaan Oostwouder
+
+The KnockbackObstacle script is used on environmental hazards that push players or AI characters away when they collide with the obstacle. When a player or bot enters the trigger collider, the script calculates the direction from the obstacle to the character and applies a knockback impulse using the KnockbackReceiver system.
+
+To prevent repeated hits in a very short time, the obstacle includes a cooldown that limits how often knockback can be applied. This ensures that the player is not pushed continuously while staying inside the trigger.
+
+This system adds interactive obstacles to the level that can push players off the course or disrupt their movement, increasing the challenge and encouraging careful navigation through the obstacle section.
+
+![KnockbackReceiver](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/KnockbackObstacleVisualSheet.png)
 
 ## Player movement by Akari
 
