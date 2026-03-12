@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4696983700336131234}
   - component: {fileID: 6392147944716731230}
   - component: {fileID: 8488636997898772712}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2801815429636255556}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: JumpPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 2782766198817083003}
   - component: {fileID: 8548347472663300772}
   - component: {fileID: 7531879607684989157}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PushBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
