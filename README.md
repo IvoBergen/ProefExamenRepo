@@ -119,3 +119,8 @@ movement for the player
 ![example](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Player-Movement-Visualsheet.png)
 
 * [PlayerMovement](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Player-Movement-Visualsheet.png)
+
+## Playtest
+ [PLaytest Delisha](https://youtu.be/gwe25sFgblg)
+ [Playtest Vragenlijst](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/)
+
