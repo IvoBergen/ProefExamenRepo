@@ -119,7 +119,7 @@ MonoBehaviour:
   _force: 10
   _upForce: 5
   _playerTag: Player
-  _destroyAfterSeconds: 80
+  _destroyAfterSeconds: 50
 --- !u!54 &3898513786520924470
 Rigidbody:
   m_ObjectHideFlags: 0
