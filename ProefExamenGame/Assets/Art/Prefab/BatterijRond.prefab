@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 17ba0a23283b1c740877af68a20d1358, type: 2}
     - target: {fileID: 919132149155446097, guid: 88bff8fc782038a42ab6b91112c5fdd0, type: 3}
       propertyPath: m_Name
-      value: 'batter2_rondje '
+      value: BatterijRond
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

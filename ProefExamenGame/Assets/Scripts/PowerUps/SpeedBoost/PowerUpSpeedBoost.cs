@@ -7,7 +7,7 @@ public class PowerUpSpeedBoost : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private PlayerController _playerController;
-    private float _increasedMovementSpeed = 25f;
+    private float _increasedMovementSpeed = 30f;
 
     private float _durationTime = 2f;
 

@@ -1,84 +1,74 @@
 using UnityEngine;
 
 /// <summary>
-/// <c>PlayerAnimations</c> Controls player animations.
+/// Controls player animations and applies them to the currently selected outfit.
 /// </summary>
 public class PlayerAnimations : MonoBehaviour
 {
-    [SerializeField] private Animator _animator;
+    [Header("Animators for each outfit")]
+    [SerializeField] private Animator[] _animators;
 
-    private void Reset()
+    /// <summary>
+    /// Returns the animator of the currently selected outfit
+    /// </summary>
+    private Animator CurrentAnimator
     {
-        _animator = GetComponent<Animator>();
+        get
+        {
+            if (_animators.Length == 0)
+                return null;
+
+            int index = CharacterOutfitSwapper.SelectedOutfitIndex;
+
+            if (index >= _animators.Length)
+                return null;
+
+            return _animators[index];
+        }
+    }
+
+    private void SetBool(string parameter, bool value)
+    {
+        Animator animator = CurrentAnimator;
+
+        if (animator == null)
+            return;
+
+        animator.SetBool(parameter, value);
     }
 
     public void SetWalking(bool isWalking)
     {
-        if (_animator == null)
-        {
-            return;
-        }
-
-        _animator.SetBool("isWalking", isWalking);
+        SetBool("isWalking", isWalking);
     }
 
     public void SetIdle(bool isIdle)
     {
-        if (_animator == null)
-        {
-            return;
-        }
-
-        _animator.SetBool("isIdle", isIdle);
+        SetBool("isIdle", isIdle);
     }
 
     public void SetJumping(bool isJumping)
     {
-        if (_animator == null)
-        {
-            return;
-        }
-
-        _animator.SetBool("isJumping", isJumping);
+        SetBool("isJumping", isJumping);
     }
 
     public void SetDashing(bool isDashing)
     {
-        if (_animator == null)
-        {
-            return;
-        }
-
-        _animator.SetBool("isDashing", isDashing);
+        SetBool("isDashing", isDashing);
     }
 
     public void SetFalling(bool isFalling)
     {
-        if (_animator == null)
-        {
-            return;
-        }
-
-        _animator.SetBool("isFalling", isFalling);
+        SetBool("isFalling", isFalling);
     }
 
     public void SetGettingUp(bool isGettingUp)
     {
-        if (_animator == null)
-        {
-            return;
-        }
-
-        _animator.SetBool("isGettingUp", isGettingUp);
+        SetBool("isGettingUp", isGettingUp);
     }
 
     public void SetDeath(bool isDead)
     {
-        if (_animator == null)
-        {
-            return;
-        }
-
-        _animator.SetBool("isDead", isDead);
+        SetBool("isDead", isDead);
     }
 }
