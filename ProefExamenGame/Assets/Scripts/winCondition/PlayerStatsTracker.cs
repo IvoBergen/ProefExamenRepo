@@ -1,5 +1,5 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 /// <summary>
 /// Keeps track of the stats of the player  
@@ -46,12 +46,10 @@ public class PlayerStatsTracker : MonoBehaviour
         int displayTime = Mathf.FloorToInt(_currentTime);
 
         if (_winDeathText != null)
-            _winDeathText.text = "Death Count: " + _deaths;
+            _winDeathText.text = _deaths.ToString();
 
         if (_winTimeText != null)
-            _winTimeText.text = "Completed In: " + displayTime + "s";
-
-        
+            _winTimeText.text = displayTime.ToString();
     }
 
     /// <summary>
@@ -66,11 +64,9 @@ public class PlayerStatsTracker : MonoBehaviour
         int displayTime = Mathf.FloorToInt(_currentTime);
 
         if (_loseDeathText != null)
-            _loseDeathText.text = "Death Count: " + _deaths;
+            _loseDeathText.text = _deaths.ToString();
 
         if (_loseTimeText != null)
-            _loseTimeText.text = "Completed In: " + displayTime + "s";
-
-       
+            _loseTimeText.text = displayTime.ToString();
     }
 }

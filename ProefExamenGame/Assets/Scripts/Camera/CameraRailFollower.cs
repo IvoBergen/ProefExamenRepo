@@ -7,6 +7,12 @@ using UnityEngine.Splines;
 [ExecuteAlways]
 public class CameraRailFollower : MonoBehaviour
 {
+    public enum CameraMode
+    {
+        POV,
+        SplineOrbit
+    }
+
     [Header("References")]
     [SerializeField] private SplineContainer _splineContainer;
     [SerializeField] private Transform _player;
@@ -43,6 +49,27 @@ public class CameraRailFollower : MonoBehaviour
     [Header("Spline End")]
     private float _splineEndThreshold = 0.001f;
 
+    [Header("Mode")]
+    [SerializeField] private CameraMode _cameraMode = CameraMode.POV;
+    [SerializeField] private float _modeTransitionSharpness = 12f;
+    [SerializeField] private int _orbitClosestGlobalSamples = 256;
+    [SerializeField] private int _orbitClosestRefineIterations = 4;
+    [SerializeField] private float _orbitClosestRefineWindow = 0.03f;
+
+    [Header("Spline Orbit Offset")]
+    [SerializeField] private float _splineOrbitSideOffset;
+    [SerializeField] private float _splineOrbitHeightOffset;
+    [SerializeField] private float _splineOrbitBackOffset;
+
+    [Header("Camera Collision")]
+    [SerializeField] private LayerMask _cameraCollisionMask = ~0;
+    [SerializeField] private float _collisionSphereRadius = 0.25f;
+    [SerializeField] private float _collisionWallPadding = 0.15f;
+    [SerializeField] private float _collisionMinDistance = 1f;
+    [SerializeField] private float _collisionRayHeight = 1.2f;
+    [SerializeField] private float _collisionMaxDrop = 2f;
+    [SerializeField] private float _collisionPositionSharpness = 14f;
+
     private float _currentT = 0f;
     private bool _hasAcquiredTarget;
 
@@ -56,6 +83,14 @@ public class CameraRailFollower : MonoBehaviour
     private bool _isFrozenAtSplineEnd;
     private Vector3 _frozenEndCameraPosition;
     private Quaternion _frozenEndCameraRotation;
+    private bool _hasSmoothedCollisionPosition;
+    private Vector3 _smoothedCollisionPosition;
+    private CameraMode _lastCameraMode;
+    private bool _isModeTransitioning;
+    private Vector3 _modeTransitionStartPosition;
+    private Quaternion _modeTransitionStartRotation;
+    private float _modeTransitionProgress = 1f;
+    private readonly RaycastHit[] _collisionHits = new RaycastHit[8];
 
     private void OnEnable()
     {
@@ -65,6 +100,13 @@ public class CameraRailFollower : MonoBehaviour
         _isFrozenAtSplineEnd = false;
         _frozenEndCameraPosition = transform.position;
         _frozenEndCameraRotation = transform.rotation;
+        _hasSmoothedCollisionPosition = false;
+        _smoothedCollisionPosition = transform.position;
+        _lastCameraMode = _cameraMode;
+        _isModeTransitioning = false;
+        _modeTransitionProgress = 1f;
+        _modeTransitionStartPosition = transform.position;
+        _modeTransitionStartRotation = transform.rotation;
 
         CacheSideOffset(_currentT);
         UpdateCameraOnSpline(_currentT);
@@ -81,9 +123,11 @@ public class CameraRailFollower : MonoBehaviour
             _hasAcquiredTarget = true;
         }
 
-        float targetT = FindBestNearbyT(_currentT);
+        float targetT = _cameraMode == CameraMode.SplineOrbit
+            ? FindClosestTToPlayerOnSpline()
+            : FindBestNearbyT(_currentT);
 
-        if (!_allowBackwardMovement && targetT < _currentT)
+        if (_cameraMode == CameraMode.POV && !_allowBackwardMovement && targetT < _currentT)
             targetT = _currentT;
 
         _currentT = targetT;
@@ -162,6 +206,57 @@ public class CameraRailFollower : MonoBehaviour
     }
 
     /// <summary>
+    /// Finds the continuous spline coordinate nearest to the player's world position.
+    /// </summary>
+    private float FindClosestTToPlayerOnSpline()
+    {
+        if (!HasValidSpline() || _player == null)
+            return _currentT;
+
+        int coarseSamples = Mathf.Max(16, _orbitClosestGlobalSamples);
+        float bestT = 0f;
+        float bestScore = float.MaxValue;
+
+        for (int i = 0; i < coarseSamples; i++)
+        {
+            float sampleT = (coarseSamples == 1) ? 0f : (float)i / (coarseSamples - 1);
+            float score = DistanceFromPlayerToSplinePoint(sampleT);
+            if (score < bestScore)
+            {
+                bestScore = score;
+                bestT = sampleT;
+            }
+        }
+
+        int refineIterations = Mathf.Max(0, _orbitClosestRefineIterations);
+        float refineWindow = Mathf.Max(0.0005f, _orbitClosestRefineWindow);
+
+        for (int iteration = 0; iteration < refineIterations; iteration++)
+        {
+            float minT = Mathf.Clamp01(bestT - refineWindow);
+            float maxT = Mathf.Clamp01(bestT + refineWindow);
+            const int refineSamples = 9;
+
+            for (int i = 0; i < refineSamples; i++)
+            {
+                float normalized = (refineSamples == 1) ? 0f : (float)i / (refineSamples - 1);
+                float sampleT = Mathf.Lerp(minT, maxT, normalized);
+                float score = DistanceFromPlayerToSplinePoint(sampleT);
+
+                if (score < bestScore)
+                {
+                    bestScore = score;
+                    bestT = sampleT;
+                }
+            }
+
+            refineWindow *= 0.5f;
+        }
+
+        return Mathf.Clamp01(bestT);
+    }
+
+    /// <summary>
     /// Applies the camera position and rotation for the current spline progress.
     /// </summary>
     private void UpdateCameraOnSpline(float t)
@@ -199,12 +294,14 @@ public class CameraRailFollower : MonoBehaviour
 
         _currentVerticalFollow = targetVerticalFollow;
 
-        Vector3 orbitOffset =
-            (offsetRight * (_sideOffset + _cachedSideOffset)) +
-            (up * (_heightOffset + _currentVerticalFollow)) -
-            (offsetForward * _backOffset);
-
-        Vector3 cameraPosition = GetOrbitCameraPosition(orbitOffset, splinePosition);
+        Vector3 pivotPosition = GetCameraPivotPosition(splinePosition);
+        Vector3 cameraPosition = GetModeCameraPosition(
+            _cameraMode,
+            splinePosition,
+            pivotPosition,
+            offsetRight,
+            offsetForward,
+            up);
         Quaternion targetRotation = Quaternion.LookRotation(rotationForward, up) * Quaternion.Euler(_pitchOffset, 0f, 0f);
 
         if (IsAtSplineEnd(t))
@@ -224,8 +321,26 @@ public class CameraRailFollower : MonoBehaviour
             _isFrozenAtSplineEnd = false;
         }
 
+        cameraPosition = ResolveCollisionAdjustedPosition(cameraPosition, pivotPosition, up);
+        HandleModeTransitionChange();
+        ApplyModeTransition(ref cameraPosition, ref targetRotation);
+
+        if (_cameraMode == CameraMode.SplineOrbit && _player != null)
+        {
+            Vector3 lookDirection = _player.position - cameraPosition;
+            if (lookDirection.sqrMagnitude > 0.0001f)
+            {
+                targetRotation = Quaternion.LookRotation(lookDirection.normalized, up);
+            }
+        }
+
         transform.position = cameraPosition;
         transform.rotation = targetRotation;
+    }
+
+    public void SetCameraMode(CameraMode mode)
+    {
+        _cameraMode = mode;
     }
 
     private bool HasValidSpline()
@@ -313,13 +428,157 @@ public class CameraRailFollower : MonoBehaviour
         return t >= 1f - _splineEndThreshold;
     }
 
-    private Vector3 GetOrbitCameraPosition(Vector3 orbitOffset, Vector3 fallbackPosition)
+    private Vector3 GetModeCameraPosition(
+        CameraMode mode,
+        Vector3 splinePosition,
+        Vector3 pivotPosition,
+        Vector3 offsetRight,
+        Vector3 offsetForward,
+        Vector3 up)
+    {
+        if (mode == CameraMode.SplineOrbit)
+        {
+            Vector3 splineOrbitOffset =
+                (offsetRight * _splineOrbitSideOffset) +
+                (up * (_splineOrbitHeightOffset + _currentVerticalFollow)) -
+                (offsetForward * _splineOrbitBackOffset);
+
+            return splinePosition + splineOrbitOffset;
+        }
+
+        Vector3 orbitOffset =
+            (offsetRight * (_sideOffset + _cachedSideOffset)) +
+            (up * (_heightOffset + _currentVerticalFollow)) -
+            (offsetForward * _backOffset);
+
+        return pivotPosition + orbitOffset;
+    }
+
+    private Vector3 GetCameraPivotPosition(Vector3 fallbackPosition)
     {
         if (_player != null)
         {
-            return _player.position + orbitOffset;
+            return _player.position;
         }
 
-        return fallbackPosition + orbitOffset;
+        return fallbackPosition;
+    }
+
+    private void HandleModeTransitionChange()
+    {
+        if (_cameraMode == _lastCameraMode)
+            return;
+
+        _lastCameraMode = _cameraMode;
+        _isModeTransitioning = true;
+        _modeTransitionProgress = 0f;
+        _modeTransitionStartPosition = transform.position;
+        _modeTransitionStartRotation = transform.rotation;
+    }
+
+    private void ApplyModeTransition(ref Vector3 targetPosition, ref Quaternion targetRotation)
+    {
+        if (!_isModeTransitioning)
+            return;
+
+        if (_modeTransitionSharpness <= 0f)
+        {
+            _isModeTransitioning = false;
+            _modeTransitionProgress = 1f;
+            return;
+        }
+
+        float deltaTime = GetSafeDeltaTime();
+        float step = 1f - Mathf.Exp(-_modeTransitionSharpness * deltaTime);
+        _modeTransitionProgress = Mathf.Clamp01(_modeTransitionProgress + step);
+
+        targetPosition = Vector3.Lerp(_modeTransitionStartPosition, targetPosition, _modeTransitionProgress);
+        targetRotation = Quaternion.Slerp(_modeTransitionStartRotation, targetRotation, _modeTransitionProgress);
+
+        if (_modeTransitionProgress >= 0.999f)
+        {
+            _isModeTransitioning = false;
+            _modeTransitionProgress = 1f;
+        }
+    }
+
+    private Vector3 ResolveCollisionAdjustedPosition(Vector3 desiredPosition, Vector3 pivotPosition, Vector3 up)
+    {
+        if (_collisionSphereRadius <= 0f || _collisionPositionSharpness <= 0f)
+            return desiredPosition;
+
+        Vector3 rayOrigin = pivotPosition + (up * _collisionRayHeight);
+        Vector3 toCamera = desiredPosition - rayOrigin;
+        float desiredDistance = toCamera.magnitude;
+
+        Vector3 resolvedPosition = desiredPosition;
+        if (desiredDistance > 0.0001f)
+        {
+            Vector3 direction = toCamera / desiredDistance;
+
+            if (TryGetCameraObstruction(rayOrigin, direction, desiredDistance, out RaycastHit hit))
+            {
+                float safeDistance = Mathf.Clamp(hit.distance - _collisionWallPadding, _collisionMinDistance, desiredDistance);
+                float blockedAmount = 1f - Mathf.Clamp01(safeDistance / desiredDistance);
+                float verticalDrop = _collisionMaxDrop * blockedAmount;
+                resolvedPosition = rayOrigin + (direction * safeDistance) - (up * verticalDrop);
+            }
+        }
+
+        if (!_hasSmoothedCollisionPosition)
+        {
+            _smoothedCollisionPosition = resolvedPosition;
+            _hasSmoothedCollisionPosition = true;
+            return _smoothedCollisionPosition;
+        }
+
+        float deltaTime = GetSafeDeltaTime();
+        float t = 1f - Mathf.Exp(-_collisionPositionSharpness * deltaTime);
+        _smoothedCollisionPosition = Vector3.Lerp(_smoothedCollisionPosition, resolvedPosition, t);
+        return _smoothedCollisionPosition;
+    }
+
+    private bool TryGetCameraObstruction(Vector3 origin, Vector3 direction, float distance, out RaycastHit closestHit)
+    {
+        closestHit = default;
+        int hitCount = Physics.SphereCastNonAlloc(
+            origin,
+            _collisionSphereRadius,
+            direction,
+            _collisionHits,
+            distance,
+            _cameraCollisionMask,
+            QueryTriggerInteraction.Ignore);
+
+        bool foundHit = false;
+        float bestDistance = float.MaxValue;
+
+        for (int i = 0; i < hitCount; i++)
+        {
+            RaycastHit hit = _collisionHits[i];
+
+            if (hit.collider == null)
+                continue;
+
+            if (_player != null && hit.collider.transform.IsChildOf(_player))
+                continue;
+
+            if (hit.distance < bestDistance)
+            {
+                bestDistance = hit.distance;
+                closestHit = hit;
+                foundHit = true;
+            }
+        }
+
+        return foundHit;
+    }
+
+    private float GetSafeDeltaTime()
+    {
+        if (Application.isPlaying)
+            return Mathf.Max(Time.deltaTime, 0.0001f);
+
+        return 1f / 60f;
     }
 }

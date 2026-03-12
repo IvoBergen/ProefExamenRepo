@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public float _moveSpeed { get; set; } = 20f;
     [SerializeField] private float _jumpForce = 12f;
     [SerializeField] private float _doubleJumpForce;
+    [SerializeField] private float _fallGravityMultiplier;
     [SerializeField] private int _maxJumpCount = 2;
     [SerializeField] private float _rotationSpeed = 10f;
     [SerializeField] private bool _allowBackwardMovement = true; // New option
@@ -120,6 +121,7 @@ public class PlayerController : MonoBehaviour
             ApplyMovement();
         }
 
+        ApplyEnhancedGravity();
         ApplyUprightTorque();
     }
 
@@ -133,6 +135,15 @@ public class PlayerController : MonoBehaviour
         newVelocity.y = currentYVelocity;
 
         _rb.velocity = newVelocity;
+    }
+
+    private void ApplyEnhancedGravity()
+    {
+        if (_isGrounded || _rb.velocity.y >= 0f) return;
+
+        float extraGravityScale = Mathf.Max(0f, _fallGravityMultiplier - 1f);
+        Vector3 extraGravity = Physics.gravity * extraGravityScale;
+        _rb.AddForce(extraGravity, ForceMode.Acceleration);
     }
 
     private void DecreaseMovementSpeed()
