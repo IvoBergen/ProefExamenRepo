@@ -343,6 +343,8 @@ public class CameraRailFollower : MonoBehaviour
         _cameraMode = mode;
     }
 
+    public CameraMode CurrentMode => _cameraMode;
+
     private bool HasValidSpline()
     {
         return _splineContainer != null && _splineContainer.Spline != null;
