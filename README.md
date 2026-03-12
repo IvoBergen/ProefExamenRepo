@@ -100,6 +100,18 @@ In short: a moving obstacle = dynamic gameplay, increased challenge, and more ac
 
 * [Moving obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Battery_movement_spread_sheet.png)
 
+##  knikker obstackle by Christiaan Oosterwouder
+
+The marble script creates a moving obstacle that spawns marbles from a fixed point above the level. Each marble follows a predefined waypoint path using physics forces, allowing it to move along a curved or irregular route through the obstacle section.
+
+While moving along the path, the marbles interact with the player through the existing knockback system. When a marble collides with a player, it triggers the KnockbackReceiver, pushing the player away from the obstacle.
+
+This system adds dynamic movement and environmental hazards to the level. Because the marbles follow a curved path and use physics-based movement, the obstacle feels less predictable and requires players to react quickly and adjust their movement to avoid being knocked off the course.
+
+![Knikker obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Knikker-Gif.gif)
+
+* [Knikker obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/KnikkerVisualSheet.png)
+
 ## Player movement by Akari
 
 movement for the player
