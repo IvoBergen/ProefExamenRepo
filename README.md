@@ -122,5 +122,9 @@ movement for the player
 
 ## Playtest
  ![PLaytest Delisha](https://youtu.be/gwe25sFgblg)
-  * [Playtest Vragenlijst](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/)
+  * [Playtest Vragenlijst](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Usertest-Delisha.png)
+
+ ![PLaytest Tim](https://www.youtube.com/shorts/Ecp9Lpt6ecY)
+  * [Playtest vragenlijst Tim](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/PlaytestTim.png)
+
 
