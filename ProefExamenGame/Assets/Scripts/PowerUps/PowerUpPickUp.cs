@@ -15,7 +15,6 @@ public class PowerUpPickUp : MonoBehaviour
         if (other.CompareTag(_target))
         {
             onPowerUpPickUp?.Invoke();
-            Destroy(gameObject);
         }
     }
 }
