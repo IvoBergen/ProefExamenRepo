@@ -3145,6 +3145,12 @@ PrefabInstance:
       insertIndex: 1
       addedObject: {fileID: 1837441309}
     - targetCorrespondingSourceObject: {fileID: 3159602896342625074, guid: 3f45159d06db8fb428b5562fc45db6f7, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 1837441314}
+    - targetCorrespondingSourceObject: {fileID: 3159602896342625074, guid: 3f45159d06db8fb428b5562fc45db6f7, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 1837441313}
+    - targetCorrespondingSourceObject: {fileID: 3159602896342625074, guid: 3f45159d06db8fb428b5562fc45db6f7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1837441306}
   m_SourcePrefab: {fileID: 100100000, guid: 3f45159d06db8fb428b5562fc45db6f7, type: 3}
@@ -12417,6 +12423,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _splineContainer: {fileID: 1915246092}
   _player: {fileID: 1902109064}
+  _povSwitcher: {fileID: 1837441314}
+  _cameraCollider: {fileID: 1837441313}
   _sideOffset: -10.49
   _heightOffset: 12.76
   _backOffset: 14.2
@@ -12425,12 +12433,23 @@ MonoBehaviour:
   _playerRotationWeight: 0.65
   _cameraMode: 0
   _modeTransitionSharpness: 1.36
-  _orbitClosestGlobalSamples: 340
-  _orbitClosestRefineIterations: 50
-  _orbitClosestRefineWindow: 0.03
-  _splineOrbitSideOffset: 1.08
-  _splineOrbitHeightOffset: 12.4
-  _splineOrbitBackOffset: 19
+--- !u!4 &1837441310 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7320535917817726792, guid: 3f45159d06db8fb428b5562fc45db6f7, type: 3}
+  m_PrefabInstance: {fileID: 397475963}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1837441313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1837441304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c8d118899f7a3e4aa41921cc34b26b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _cameraCollisionMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -12440,11 +12459,28 @@ MonoBehaviour:
   _collisionRayHeight: 1.2
   _collisionMaxDrop: 2
   _collisionPositionSharpness: 14
---- !u!4 &1837441310 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7320535917817726792, guid: 3f45159d06db8fb428b5562fc45db6f7, type: 3}
-  m_PrefabInstance: {fileID: 397475963}
+--- !u!114 &1837441314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1837441304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090bc21d7cd131b419962a38cd63cab6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cameraRailFollower: {fileID: 1837441309}
+  _startMode: 1
+  _orbitClosestGlobalSamples: 256
+  _orbitClosestRefineIterations: 4
+  _orbitClosestRefineWindow: 0.03
+  _splineOrbitSideOffset: 0
+  _splineOrbitHeightOffset: 0
+  _splineOrbitBackOffset: 0
+  _allowKeyboardToggle: 1
+  _toggleKey: 118
 --- !u!1001 &1841295886
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15460,6 +15496,10 @@ PrefabInstance:
       propertyPath: _crf
       value: 
       objectReference: {fileID: 1837441309}
+    - target: {fileID: 6078656340093451861, guid: 8b6ece5d4792f1640aeea075ebf5ebcf, type: 3}
+      propertyPath: _povSwitcher
+      value: 
+      objectReference: {fileID: 1837441314}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
