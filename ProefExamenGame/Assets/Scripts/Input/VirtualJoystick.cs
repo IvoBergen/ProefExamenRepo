@@ -6,6 +6,7 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
     [SerializeField] private RectTransform joystickBackground;
     [SerializeField] private RectTransform joystickHandle;
     [SerializeField] private float handleRange = 50f;
+    [SerializeField] private float deadzone = 0.2f;
     
     private Vector2 inputVector;
     
@@ -23,10 +24,21 @@ public class VirtualJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
         );
 
         position = Vector2.ClampMagnitude(position, handleRange);
-        
-        joystickHandle.anchoredPosition = position;
-        
-        inputVector = position / handleRange;
+        Vector2 rawInput = position / handleRange;
+        float magnitude = rawInput.magnitude;
+
+        if (magnitude <= deadzone)
+        {
+            inputVector = Vector2.zero;
+            joystickHandle.anchoredPosition = rawInput * handleRange;
+        }
+        else
+        {
+            Vector2 direction = rawInput / magnitude;
+            float remappedMagnitude = Mathf.InverseLerp(deadzone, 1f, Mathf.Clamp01(magnitude));
+            inputVector = direction * remappedMagnitude;
+            joystickHandle.anchoredPosition = inputVector * handleRange;
+        }
         
         // Send input to player controller
         if (playerController != null)
