@@ -121,6 +121,7 @@ This system ensures that the obstacle remains active throughout the level by con
 The spawner adds pacing and difficulty to the gameplay by controlling how frequently knikkers appear, creating a dynamic hazard that keeps the obstacle section challenging.
 
 ![Knikker Spawn](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/KnikkerSpawnVisualSheet.png)
+* [Knikker spawn gif](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/KnikkerSpawnGif.gif)
 
 ##  KnockbackReceiver by Christiaan Oostwouder
 
@@ -140,7 +141,8 @@ To prevent repeated hits in a very short time, the obstacle includes a cooldown 
 
 This system adds interactive obstacles to the level that can push players off the course or disrupt their movement, increasing the challenge and encouraging careful navigation through the obstacle section.
 
-![KnockbackReceiver](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/KnockbackObstacleVisualSheet.png)
+![KnockbackObstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/KnockbackObstacleVisualSheet.png)
+* [KnockbackReceiver](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/KnockbackGif.gif)
 
 ## Player movement by Akari
 
