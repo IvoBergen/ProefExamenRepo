@@ -43,7 +43,7 @@ public class WinCondition : MonoBehaviour
         }
     }
 
-    void TriggerWin()
+    public void TriggerWin()
     {
         Eventwin.Invoke();
 
@@ -56,7 +56,7 @@ public class WinCondition : MonoBehaviour
             StatsUi.SetActive(true);
     }
 
-    void TriggerLose()
+    public void TriggerLose()
     {
         EventLose.Invoke();
 
