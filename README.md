@@ -1,124 +1,162 @@
-# VoorbeeldExamenRepo
-Een voorbeeld repository voor het examenwerk
+# ReadME van team 04 Stumble guys
 
-In deze repository vind je de informatie over het examen project.
+De mechanics van team 04 Stumble guys.
 
-Omschrijf de examenopdracht evt de klant en wat het doel voor de klant is.
-Omschrijf ook beknopt wat het idee van je game is. 
-Een complete en uitgebreide beschrijving komt in het functioneel ontwerp (onderdeel van de [wiki](https://github.com/erwinhenraat/VoorbeeldExamenRepo/wiki))
+## moving platform by Ivo
 
-# Geproduceerde Game Onderdelen
+The moving platforms are added to challenge the player’s movement, timing, and overall control. Instead of simply walking or jumping across static surfaces, the player must carefully observe the platform’s motion and choose the right moment to move.
 
-Geef per teammember aan welke game onderdelen je hebt geproduceerd. Doe dit met behulp van omschrijvingen visual sheets en screenshots.
-Maak ook een overzicht van alle onderdelen met een link naar de map waarin deze terug te vinden zijn.
+## Moving Cubes
 
-Bijv..
+The moving cubes are made as an obstacle for the player. They Move to random locations decided by the input values on the X an Z axis. The cube also rotates between 90, 0 and -90 degrees to add for an extra layer of difficulty.
 
-Student X:
-  * [Wave System](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/some)
-  * [Some other mechanic X](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/mechanic_x)
-  * [Some other mechanic Y](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/mechanic_y)
-Student Y:
-  * Water Shader
-  * [Some textured and rigged model](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/assets/monsters)
+![MovingCubes gif](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/MovingCubes.gif)
 
-Student Z:
-  * [Some beautifull script](https://github.com/erwinhenraat/VoorbeeldExamenRepo/tree/master/src/beautifull)
-  * Some other Game object
+This is the visual sheet for the moving cube scripts
+
+![Moving Cubes visualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/VisualSheetMovingCube.png)
+
+* [Moving Cubes](ProefExamenGame/Assets/Scripts/MovingCubes)
+
+## Ink Spot by Ivo
+
+The Ink spot is added onto the course to add extra challenge for the player to avoid them so their speed doesn't decrease. They work with a collision check and if the player walks through them their movement speed
+will be decreased.
+
+This is the visual sheet for the ink spot
+
+![Ink Spot visualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/InkSpot.png)
+
+* [Ink Spot](ProefExamenGame/Assets/Scripts/InkSpot/InkSpot.cs)
+
+## Speed Boost by Ivo
+
+The power up, in this case a speed boost is added for extra variety in the gameplay loop. It adds extra challenge and a fun factor to the game. It does a collision check to check if the player touched it and then it
+triggers an Action that calls the other script responsible for increasing and decreasing the player's speed.
+
+This is the visual sheet for the speed boost power up.
+
+![Speed Boost visualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/SpeedBoost.png)
+
+* [Speed Boost](ProefExamenGame/Assets/Scripts/PowerUps/SpeedBoost/PowerUpSpeedBoost.cs)
+
+## Menu's by Ivo
+
+These are the main menu and pause menu in the game, to help the player exit the game and to make sure the player has a start screen and isn't instantly dumped into the main game. The main menu also has a character customization menu where the players outfit can get changed.
+
+This is the visual sheet for the menu's.
+
+![Menu's visualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Menus.png)
+
+* [Main Menu](ProefExamenGame/Assets/Scripts/MainMenu/MainMenu.cs)
+* [Pause Menu](ProefExamenGame/Assets/Scripts/PauseMenu/PauseMenu.cs)
+
+## Character Customization by Ivo
+
+This is made for the player to change their characters outfit and make it so you can have a unique experience every single time. The player can cycle through the outfits with the buttons on the screen.
+
+![Customization Screenshot](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/CustomizationScreenshot.png)
+
+![Character Customization visualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/CharacterCustomization.png)
+
+* [Character Customization](ProefExamenGame/Assets/Scripts/CharacterCustomization)
+
+## Respawn mechanic by Owen
+
+This respawn system ensures that the player is automatically placed back at the last reached checkpoint when they fall off the platform or hit a respawn trigger.
+
+When the player enters the trigger:
+The system checks whether there is an active checkpoint.
+The player’s current physics (velocity and angular velocity) are reset so they do not keep moving or sliding forward.
+The player is moved to the position and rotation of the checkpoint.
+After that, physics is reactivated so the player can continue playing normally.
+
+In short: falling = reset to checkpoint without any strange physics bugs
+
+![Foto van respawn systeem](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/BWP-VWO-Visualsheet.png)
+
+* [Respawnsysteem](https://github.com/IvoBergen/ProefExamenRepo/wiki/RespawnSystem)
+
+## AI pathfinding by Owen
+
+This mechanic is used to make the level more interesting to play. the bot is the main win/lose condition of the game. you're supposed to race against it and be faster than 50% of the ai to win the game.
+
+![AIVisualsheet](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Bot-MovementBWP-VWO-Visualsheet.png)
+![AIJumpGif](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/AiJumping.gif)
+
+* [AI PathFinding](https://github.com/IvoBergen/ProefExamenRepo/wiki/BotProgamming)
+
+## Moving obstackle by Christiaan Oostwouder
+
+This moving obstacle is designed to increase the level of challenge and encourage the player to interact with the environment in a more dynamic way. Instead of allowing the player to move through the level in a static or predictable pattern, the obstacle forces them to constantly adjust their timing, positioning, and movement strategy.
+
+As the obstacle moves, it creates changing gaps, shifting hazards, or temporary blockades that require the player to observe its behavior and respond accordingly. This adds a layer of timing-based gameplay, where success depends on reading movement patterns and choosing the right moment to act.
+
+Because the obstacle is not stationary, it keeps the gameplay engaging and prevents the level from feeling repetitive. The player must stay alert, react quickly, and adapt to the environment as it changes in real time.
+
+In short: a moving obstacle = dynamic gameplay, increased challenge, and more active player decision-making.
+
+![moving obstackle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Battery_movement_spread_sheet.png)
+
+* [Moving obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Battery_movement_spread_sheet.png)
+
+##  knikker obstackle by Christiaan Oostwouder
+
+The knikker script creates a moving obstacle that spawns knikker from a fixed point above the level. Each knikker follows a predefined waypoint path using physics forces, allowing it to move along a curved or irregular route through the obstacle section.
+
+While moving along the path, the knikker interact with the player through the existing knockback system. When a knikker collides with a player, it triggers the KnockbackReceiver, pushing the player away from the obstacle.
+
+This system adds dynamic movement and environmental hazards to the level. Because the knikker follow a curved path and use physics-based movement, the obstacle feels less predictable and requires players to react quickly and adjust their movement to avoid being knocked off the course.
+
+![Knikker obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Knikker-Gif.gif)
+
+* [Knikker obstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/KnikkerVisualSheet.png)
+
+##  knikkerSpawn by Christiaan Oostwouder
+
+The knikker spawner script is responsible for continuously creating marbles during gameplay. It spawns knikker at a fixed spawn point above the level at regular time intervals. After spawning, each knikker is given the waypoint path it needs to follow through the obstacle section.
+
+This system ensures that the obstacle remains active throughout the level by constantly generating new marbles. As a result, players must continuously avoid moving knikker instead of encountering a one-time obstacle.
+
+The spawner adds pacing and difficulty to the gameplay by controlling how frequently knikkers appear, creating a dynamic hazard that keeps the obstacle section challenging.
+
+![Knikker Spawn](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/KnikkerSpawnVisualSheet.png)
+* [Knikker spawn gif](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/KnikkerSpawnGif.gif)
+
+##  KnockbackReceiver by Christiaan Oostwouder
+
+The KnockbackReceiver script handles knockback effects applied to the player when they collide with obstacles. When an obstacle sends a knockback impulse, the script applies this force to the player's Rigidbody, pushing the player away from the impact point.
+
+After receiving knockback, player control is temporarily locked for a short duration. This prevents the player from immediately correcting their movement and makes the hit feel more impactful.
+
+The script also clamps the player's horizontal velocity to prevent excessive launch speeds. This ensures the knockback remains consistent and avoids unrealistic physics behavior while keeping gameplay fair and controllable.
+
+![KnockbackReceiver](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/KnockbackReceiverVisualSheet.png)
+
+##  KnockbackObstacle by Christiaan Oostwouder
+
+The KnockbackObstacle script is used on environmental hazards that push players or AI characters away when they collide with the obstacle. When a player or bot enters the trigger collider, the script calculates the direction from the obstacle to the character and applies a knockback impulse using the KnockbackReceiver system.
+
+To prevent repeated hits in a very short time, the obstacle includes a cooldown that limits how often knockback can be applied. This ensures that the player is not pushed continuously while staying inside the trigger.
+
+This system adds interactive obstacles to the level that can push players off the course or disrupt their movement, increasing the challenge and encouraging careful navigation through the obstacle section.
+
+![KnockbackObstacle](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/KnockbackObstacleVisualSheet.png)
+* [KnockbackReceiver](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/KnockbackGif.gif)
+
+## Player movement by Akari
+
+movement for the player
+
+![example](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Player-Movement-Visualsheet.png)
+
+* [PlayerMovement](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Player-Movement-Visualsheet.png)
+
+## Playtest
+ ![PLaytest Delisha](https://youtu.be/gwe25sFgblg)
+  * [Playtest Vragenlijst](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/Usertest-Delisha.png)
+
+ ![PLaytest Tim](https://www.youtube.com/shorts/Ecp9Lpt6ecY)
+  * [Playtest vragenlijst Tim](https://github.com/IvoBergen/ProefExamenRepo/blob/develop/ReadMEFiles/PlaytestTim.png)
 
 
-## Wave System by Student X
-
-Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line.
-
-![Animation](https://user-images.githubusercontent.com/1262745/217570184-90dc4701-d60d-4816-80d0-5007fdd3f6be.gif)
-
-### flowchart voor enemy wave system:
-```mermaid
-flowchart TD
-
-start((Start)) -->|wait 10 seconds| spawn_w(spawn wave)
-spawn_w --> checken(check enemies in list)
-checken --> spawn_e(spawn enemies at once)
-spawn_e --> reached_base{enemy reached base?}
-reached_base -->|yes| lose_life(player loses a life)
-reached_base -->|no| money(player makes money)
-lose_life --> wave_done{wave done?}
-money --> wave_done
-wave_done -->|no| reached_base
-no_more_waves{no more waves?} -->|no more| more_lev(more levels?)
-wave_done -->|yes| no_more_waves
-no_more_waves -->|still waves| next_wave(goto next wave)
-next_wave --> start_wave
-start_wave --> spawn_w
-more_lev -->|yes, there's more| next_lev(start next level)
-more_lev -->|no more levels| end_d((end))
-next_lev --> start
-
-
-
-```
-### class diagram voor game entities:
-
-```mermaid
-classDiagram
-
-Unit <|-- Tower:Is A
-Unit <|-- Monster
-Unit <|-- Boss
-Unit : +int life
-Unit : +int speed
-Unit : +bool alive
-Unit: +isMovable()
-Unit: +Destroy()
-class Tower{
-+String turretType
-+target()
-+shoot()
-}
-class Monster{
--int reward
--regenerates()
-}
-class Boss{
-+bool is_unique
-+specialSkill()
-}
-```
-
-
-## Some other Mechanic X by Student X
-
-Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-![example](https://user-images.githubusercontent.com/1262745/189135129-34d15823-0311-46b5-a041-f0bbfede9e78.png)
-
-## Some other Mechanic Y by Student X
-
-Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-![example](https://user-images.githubusercontent.com/1262745/189135129-34d15823-0311-46b5-a041-f0bbfede9e78.png)
-
-## Water Shader by Student Y
-
-Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-![example](https://user-images.githubusercontent.com/1262745/189135129-34d15823-0311-46b5-a041-f0bbfede9e78.png)
-
-## Some textured and rigged model by Student Y
-
-Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-![example](https://user-images.githubusercontent.com/1262745/189135129-34d15823-0311-46b5-a041-f0bbfede9e78.png)
-
-## Some beautifull script by Student Z
-
-Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-![example](https://user-images.githubusercontent.com/1262745/189135129-34d15823-0311-46b5-a041-f0bbfede9e78.png)
-
-## Some other Game object by Student Z
-
-Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-
-![example](https://user-images.githubusercontent.com/1262745/189135129-34d15823-0311-46b5-a041-f0bbfede9e78.png)
